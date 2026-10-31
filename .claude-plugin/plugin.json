@@ -9,6 +9,11 @@
   },
   "homepage": "https://github.com/Facta-Dev/beautifulgo",
   "repository": "https://github.com/Facta-Dev/beautifulgo",
+  "skills": [
+    "./skills/go-best-practices",
+    "./skills/go-review",
+    "./skills/go-port"
+  ],
   "keywords": [
     "api-design",
     "best-practices",

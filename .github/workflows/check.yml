@@ -38,4 +38,4 @@ jobs:
         with:
           go-version: stable
       - name: Syntax-check every Go example in the skills and docs
-        run: python3 scripts/check-examples.py
+        run: python3 scripts/check-examples.py --require-toolchain
