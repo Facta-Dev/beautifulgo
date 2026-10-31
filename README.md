@@ -36,6 +36,11 @@ Where the sources disagree, the skill picks a side and says which.
 
 *Status: first release in progress — see the [changelog](CHANGELOG.md).*
 
+<p align="center">
+  <img src="docs/architecture/overview.svg"
+       alt="Architecture overview: HTTP, WS, SSE, and CLI clients reach cmd/api (wired with google/wire, routed with chi); feature slices (auth, widgets, realtime) hold six files whose use cases call consumer-defined ports; adapters beneath the slices (pgx/v5 + sqlc, go-redis on Dragonfly, River, authx) satisfy those ports; depguard pills — slice-isolation, usecase-transport-free, domain-pure, platform-no-features — guard each ring boundary, and CI runs the checker, lints harness, examples, and unittest gates." />
+</p>
+
 ## What it changes
 
 Asked to add an order to a Go backend, an agent without the skill put the pgx import
@@ -340,6 +345,31 @@ other, and the domain imports nothing that does I/O. The stack mandate is delibe
 narrow: leave the template's shape alone (a correct six-file slice is already lint-clean)
 and spend judgment on the code inside it.
 
+## What the libraries do and why
+
+Each choice in the [stack table](#the-stack) exists to hold one boundary of the
+architecture — the composition root, the slice, the port, or the domain. On a
+facta backend-go repo the skills treat the whole set as mandated; every reason
+below traces back to the handbook digest in
+[`references/backend-go-stack.md`](skills/go-best-practices/references/backend-go-stack.md),
+which the skills read before writing or regenerating anything in a slice.
+
+| Library | Why this one | What it gives the stack |
+|---|---|---|
+| [chi](https://github.com/go-chi/chi/v5) | The stack's one sanctioned router, and `net/http`-native: handlers keep the plain `func (w http.ResponseWriter, r *http.Request)` signature the stdlib ServeMux had, and chi is excluded from `domain-pure`'s allow-list. Everything else stays stdlib — dependencies cost supply-chain surface. | Routes declared per slice in `module.go: Register(r chi.Router, Deps)`, a composable middleware chain (otelhttp → RequestID → Logger → Recover), and `/metrics` mounted off the same chi tree at the root. |
+| [pgx/v5](https://github.com/jackc/pgx) → `pgxpool` | The one Postgres driver; `database/sql` is denied outright, and `pgx/v5` is on the `domain-pure` deny-list. | The pool is built once at the composition root; adapters get narrow store interfaces, never `*pgxpool.Pool`; driver errors are translated inward at `postgres.go`. |
+| [sqlc](https://github.com/sqlc-dev/sqlc) | Queries compile to type-safe Go instead of living as runtime strings, so a typo fails at generation, not at request time. | Per-slice `queries.sql` → committed `internal/gen/db`; the `postgres.go` adapter is the only consumer, `gen-check` keeps the committed code honest, and hand-editing `internal/gen/**` is forbidden. |
+| [golang-migrate](https://github.com/golang-migrate/migrate) | Migrations are a deploy step, never a server-startup concern — under PgBouncer's transaction pooling, schema work cannot ride a pooled connection anyway. (goose is the sanctioned alternative with the same discipline.) | Paired Up/Down files in `migrations/`, paired 1:1 with every `queries.sql` change (a MUST of the contract), walked apply → down → apply in the integration suite so reversal stays honest. |
+| [River](https://github.com/riverqueue/river) | Durable jobs without hand-rolling the outbox: no outbox tables, no polling loops, no janitor goroutines. The write and its after-effect must commit together — River ships that mechanism instead of leaving teams to invent it. | `AddTx` enqueue inside the same Postgres transaction as the sqlc write, retries with backoff, dedup via `UniqueOpts`, periodic schedules, and a graceful drain of in-flight jobs on SIGTERM. |
+| [go-redis](https://github.com/redis/go-redis/v9) | The mandated cache client — Dragonfly speaks the Redis protocol. Slices never import the client; the same consumer-defined port law as everything else. | `platform/redis` owns the client; slices consume a narrow `Cache interface { Get… Set… }` port they defined, so unit tests fake it in memory. |
+| [google/wire](https://github.com/google/wire) | Compile-time DI codegen: wiring is generated, type-checked Go with no runtime reflection and no container to misconfigure. | Wiring lives at `cmd/api` in provider sets — a wiring change is a `main.go` + provider-set edit, and nothing downstream knows how anything is constructed. |
+| [go-playground/validator](https://github.com/go-playground/validator) | Input validation belongs at the trust boundary, applied once at the edge instead of re-argued deep in business code. | DTOs validated in `http.go` at the transport edge; the domain never sees or repeats the validation. |
+| [slog](https://pkg.go.dev/log/slog) | Structured logging in the standard library, so the logging dependency is zero and the format is one thing everywhere. | The JSON handler with `request_id` from middleware on every per-request record, logged at the boundary — never inside `domain.go`, never log-and-return on the same error. |
+| [OpenTelemetry](https://opentelemetry.io) | REQUIRED, not optional: spans start at `otelhttp.NewHandler` wrapping the whole server at the chain head. | Trace context propagates untouched into use cases and adapters, so adding a span inside a slice touches only that slice. |
+| [Prometheus](https://github.com/prometheus/client_golang) | Metrics ride the same chi tree — no second server, no per-slice metrics dependency. | `/metrics` mounted off the root; instrumentation state stays in `platform/`, out of the slices. |
+| [PgBouncer](https://www.pgbouncer.org) | Transaction pooling in front of `pgxpool` keeps connection counts bounded when many slices share one database. | The pool is sized for it, prepared statements stay behind the gen/db adapter, and migrations are pushed into the deploy step where they belong. |
+| [Docker](https://www.docker.com) + [Kubernetes](https://kubernetes.io) | The deployment target the topology assumes: images built per service, orchestrated processes that send SIGTERM. | The API server and the River worker both drain in-flight work on SIGTERM — a contract that only means something under a scheduler that guarantees the signal. |
+
 ## Enforcing the rules with golangci-lint
 
 The skills teach the rules; the lints keep them from slipping back in. Copy
@@ -452,6 +482,8 @@ beautifulgo/
 │   └── test_*.py           unittest suites for the checkers
 ├── examples/
 │   └── review-inventory.md a real review report
+├── docs/
+│   └── architecture/       rendered HTML diagrams + overview.svg
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── PRIVACY.md
