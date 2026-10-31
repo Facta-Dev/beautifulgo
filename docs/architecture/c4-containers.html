@@ -5573,6 +5573,19 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <div class="cards">
       <div class="card">
         <div class="card-header">
+          <div class="card-dot violet"></div>
+          <h3>The CI contract gates — contracts, made unbreakable</h3>
+        </div>
+        <ul>
+          <li>the contract is unbreakable and non-waivable: developers cannot opt out, and neither can you. When a depguard rule fires, the fix is to re-cut the layout — never to weaken, rename, or delete the rule, and never to silence it with //nolint (that nolint is itself a review finding in go-review)</li>
+          <li>CI job lints runs scripts/check-lints.sh: the lints/check/ proof module shows every depguard rule in lints/.golangci.yml firing (one violating file per rule against a clean reference slice that must stay quiet)</li>
+          <li>CI job check runs scripts/check-skill.py + unittest over tests/ — tests/contracts pins the chi REQUIRED wording and the depguard tables in lockstep across SKILL.md, the backend-go-stack digest, README and the config</li>
+          <li>CI job examples runs check-examples.py --require-toolchain: every Go example in the skills and docs compiles</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
           <div class="card-dot cyan"></div>
           <h3>The three skills</h3>
         </div>
