@@ -13,7 +13,7 @@
           "api",
           "pg"
         ],
-        "note": "one pgx transaction stores the pending user, the code row and the outbox job"
+        "note": "one pgx transaction stores the pending user, the code row and the enqueued River email job"
       },
       {
         "id": "deliver",
@@ -23,7 +23,7 @@
           "mail",
           "pg"
         ],
-        "note": "the worker claims due email_jobs and ships the 6-digit code"
+        "note": "the River worker fetches due jobs and ships the 6-digit code"
       },
       {
         "id": "verify-login",
@@ -49,19 +49,19 @@
       "id": "api",
       "type": "backend",
       "label": "auth slices",
-      "sublabel": "stdlib mux · authx"
+      "sublabel": "chi · authx · validator"
     },
     {
       "id": "pg",
       "type": "database",
       "label": "Postgres",
-      "sublabel": "pgx/v5 pool"
+      "sublabel": "pgxpool · PgBouncer"
     },
     {
       "id": "worker",
       "type": "backend",
-      "label": "outbox worker",
-      "sublabel": "drain · janitor"
+      "label": "River worker",
+      "sublabel": "fetch · periodic cron"
     },
     {
       "id": "mail",
@@ -74,12 +74,12 @@
     {
       "from": 146,
       "to": 276,
-      "label": "Signup + enqueue"
+      "label": "river.AddTx + signup"
     },
     {
       "from": 298,
       "to": 452,
-      "label": "Deliver code"
+      "label": "River delivers"
     },
     {
       "from": 484,
@@ -93,7 +93,7 @@
       "from": "client",
       "to": "api",
       "y": 164,
-      "label": "POST /auth/signup",
+      "label": "POST /auth/signup — chi route",
       "variant": "emphasis"
     },
     {
@@ -108,14 +108,14 @@
       "from": "api",
       "to": "pg",
       "y": 232,
-      "label": "INSERT email_jobs (same tx)"
+      "label": "river.AddTx email job (same tx)"
     },
     {
       "id": "m4",
       "from": "api",
       "to": "client",
       "y": 264,
-      "label": "201 · code queued",
+      "label": "201 · job durable",
       "variant": "return"
     },
     {
@@ -123,14 +123,14 @@
       "from": "worker",
       "to": "pg",
       "y": 310,
-      "label": "claim due email_jobs (SKIP LOCKED)"
+      "label": "River fetch: at-least-once email jobs"
     },
     {
       "id": "m6",
       "from": "pg",
       "to": "worker",
       "y": 342,
-      "label": "rows · 5m sending lease",
+      "label": "Work(ctx, job) · unique-deduped",
       "variant": "return"
     },
     {
@@ -152,7 +152,7 @@
       "from": "worker",
       "to": "pg",
       "y": 446,
-      "label": "mark_sent"
+      "label": "Ack() → completed"
     },
     {
       "id": "m10",
@@ -242,8 +242,8 @@
       "dot": "cyan",
       "title": "One transaction",
       "items": [
-        "signup writes the user, the code row and the email_jobs job in the same pgx transaction — zero-broker outbox",
-        "claims use FOR UPDATE SKIP LOCKED; the 5-minute sending lease recovers a crashed worker"
+        "signup writes the user and the code row, then enqueues the email job with river.AddTx in the same pgx transaction — the outbox pattern, zero-broker, no outbox table",
+        "River jobs are durable and deduped by UniqueOpts; a crashed worker loses nothing — the client drains in-flight jobs on SIGTERM"
       ]
     },
     {
@@ -259,7 +259,7 @@
       "title": "Login + tokens",
       "items": [
         "password first — one constant 401; then inactive → blocked → unverified, each a stable 403",
-        "access JWT 15m; refresh is a 128-char opaque token rotated in place (replay misses the CAS → 401)"
+        "DTOs validate at http.go with go-playground/validator; access JWT 15m, refresh is an opaque token rotated in place (replay misses the CAS → 401)"
       ]
     }
   ]

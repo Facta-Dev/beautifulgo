@@ -1,10 +1,12 @@
-// HTTP adapter: ServeMux handlers, edge validation, {detail, code} envelope.
+// HTTP adapter: chi route handlers, edge validation, {detail, code} envelope.
 package widgets
 
 import (
 	"encoding/json"
 	"errors"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
 
 	"github.com/example/widgetsapp/internal/platform/httpx"
 	"github.com/example/widgetsapp/internal/shared/apperr"
@@ -38,7 +40,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 // ByID handles GET /api/v1/widgets/{id}.
 func (h *Handler) ByID(w http.ResponseWriter, r *http.Request) {
-	widget, err := h.use.ByID(r.Context(), WidgetID(r.PathValue("id")))
+	widget, err := h.use.ByID(r.Context(), WidgetID(chi.URLParam(r, "id")))
 	if err != nil {
 		writeWidgetErr(w, err)
 		return

@@ -5206,22 +5206,22 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Boundaries (behind everything) -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="0" data-composition-frame-label="Composition root" x="10" y="70" width="200" height="110" rx="12" class="c-region" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="0" data-composition-frame-label="Composition root — google/wire" x="10" y="70" width="200" height="110" rx="12" class="c-region" stroke-width="1"/>
 
         <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="1" data-composition-frame-label="Feature slices — one capability, one directory" x="290" y="70" width="530" height="110" rx="12" class="c-region" stroke-width="1"/>
 
         <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="2" data-composition-frame-label="Platform" x="10" y="230" width="1040" height="110" rx="12" class="c-region" stroke-width="1"/>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="3" data-composition-frame-label="Kernel + outbox state" x="5" y="390" width="810" height="110" rx="12" class="c-region" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="region" data-composition-frame-id="3" data-composition-frame-label="Kernel + River state" x="5" y="390" width="810" height="110" rx="12" class="c-region" stroke-width="1"/>
 
         <!-- Connection paths (before components for correct z-order) -->
         <g data-graph-role="automatic-crossover" style="--step:0">
           <path data-graph-role="automatic-crossover-underlay" d="M 180 130 L 320 130" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
-          <path data-edge-from="composition" data-edge-to="auth-slices" data-edge-label="Register(mux)" data-edge-key="0" data-edge-id="s1" data-composition-points="180,130;320,130" data-composition-crossover="halo" data-composition-independent="true" d="M 180 130 L 320 130" class="a-default" data-animate="edge" style="--step:0" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <path data-edge-from="composition" data-edge-to="auth-slices" data-edge-label="Register(chi.Router)" data-edge-key="0" data-edge-id="s1" data-composition-points="180,130;320,130" data-composition-crossover="halo" data-composition-independent="true" d="M 180 130 L 320 130" class="a-default" data-animate="edge" style="--step:0" stroke-width="1.5" marker-end="url(#arrowhead)"/>
         </g>
         <g data-graph-role="automatic-crossover" style="--step:1">
           <path data-graph-role="automatic-crossover-underlay" d="M 110 160 L 110 260" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
-          <path data-edge-from="composition" data-edge-to="authx" data-edge-label="wire adapters" data-edge-key="1" data-edge-id="s2" data-composition-points="110,160;110,260" data-composition-crossover="halo" data-composition-independent="true" d="M 110 160 L 110 260" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <path data-edge-from="composition" data-edge-to="authx" data-edge-label="wire providers" data-edge-key="1" data-edge-id="s2" data-composition-points="110,160;110,260" data-composition-crossover="halo" data-composition-independent="true" d="M 110 160 L 110 260" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.5" marker-end="url(#arrowhead)"/>
         </g>
         <g data-graph-role="automatic-crossover" style="--step:2">
           <path data-graph-role="automatic-crossover-underlay" d="M 400 160 L 400 260" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
@@ -5229,7 +5229,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </g>
         <g data-graph-role="automatic-crossover" style="--step:3">
           <path data-graph-role="automatic-crossover-underlay" d="M 705 160 L 705 260" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
-          <path data-edge-from="widgets-realtime" data-edge-to="platform-email" data-edge-label="enqueue · publish" data-edge-key="3" data-edge-id="s4" data-composition-points="705,160;705,260" data-composition-crossover="halo" data-composition-independent="true" d="M 705 160 L 705 260" class="a-default" data-animate="edge" style="--step:3" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <path data-edge-from="widgets-realtime" data-edge-to="platform-email" data-edge-label="river.AddTx · publish" data-edge-key="3" data-edge-id="s4" data-composition-points="705,160;705,260" data-composition-crossover="halo" data-composition-independent="true" d="M 705 160 L 705 260" class="a-default" data-animate="edge" style="--step:3" stroke-width="1.5" marker-end="url(#arrowhead)"/>
         </g>
         <g data-graph-role="automatic-crossover" style="--step:4">
           <path data-graph-role="automatic-crossover-underlay" d="M 775 290 L 880 290" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
@@ -5237,7 +5237,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </g>
         <g data-graph-role="automatic-crossover" style="--step:5">
           <path data-graph-role="automatic-crossover-underlay" d="M 705 320 L 705 420" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
-          <path data-edge-from="platform-email" data-edge-to="email-jobs" data-edge-label="claim · mark_sent" data-edge-key="5" data-edge-id="s6" data-composition-points="705,320;705,420" data-composition-crossover="halo" data-composition-independent="true" d="M 705 320 L 705 420" class="a-default" data-animate="edge" style="--step:5" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <path data-edge-from="platform-email" data-edge-to="email-jobs" data-edge-label="River fetch · ack" data-edge-key="5" data-edge-id="s6" data-composition-points="705,320;705,420" data-composition-crossover="halo" data-composition-independent="true" d="M 705 320 L 705 420" class="a-default" data-animate="edge" style="--step:5" stroke-width="1.5" marker-end="url(#arrowhead)"/>
         </g>
         <g data-graph-role="automatic-crossover" style="--step:6">
           <path data-graph-role="automatic-crossover-underlay" d="M 105 320 L 105 420" fill="none" stroke="var(--mask)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>
@@ -5245,15 +5245,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </g>
 
         <!-- Components -->
-        <g id="node-composition" data-node-id="composition" data-node-label="cmd/api" tabindex="0" role="button" aria-label="Focus cmd/api, config · pgxpool · mux, Composition root" aria-pressed="false" data-node-kind="backend" data-node-sublabel="config · pgxpool · mux" data-node-context="Composition root">
-          <title>cmd/api · config · pgxpool · mux · Composition root</title>
+        <g id="node-composition" data-node-id="composition" data-node-label="cmd/api" tabindex="0" role="button" aria-label="Focus cmd/api, config · wire · chi, Composition root — google/wire" aria-pressed="false" data-node-kind="backend" data-node-sublabel="config · wire · chi" data-node-context="Composition root — google/wire">
+          <title>cmd/api · config · wire · chi · Composition root — google/wire</title>
           <rect x="40" y="100" width="140" height="60" rx="8" class="c-mask"/>
           <rect x="40" y="100" width="140" height="60" rx="8" class="c-backend" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(46 106) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="110" y="128" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">cmd/api</text>
-        <text data-detail="context" x="110" y="144" class="t-muted" font-size="9" text-anchor="middle">config · pgxpool · mux</text>
+        <text data-detail="context" x="110" y="144" class="t-muted" font-size="9" text-anchor="middle">config · wire · chi</text>
         </g>
 
         <g id="node-auth-slices" data-node-id="auth-slices" data-node-label="auth slices" tabindex="0" role="button" aria-label="Focus auth slices, signup · session · password, Feature slices — one capability, one directory" aria-pressed="false" data-node-kind="backend" data-node-sublabel="signup · session · password" data-node-context="Feature slices — one capability, one directory">
@@ -5300,15 +5300,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <text data-detail="context" x="400" y="304" class="t-muted" font-size="9" text-anchor="middle">sqlc · pgx/v5</text>
         </g>
 
-        <g id="node-platform-email" data-node-id="platform-email" data-node-label="platform/email" tabindex="0" role="button" aria-label="Focus platform/email, outbox · senders, Platform" aria-pressed="false" data-node-kind="backend" data-node-sublabel="outbox · senders" data-node-context="Platform">
-          <title>platform/email · outbox · senders · Platform</title>
+        <g id="node-platform-email" data-node-id="platform-email" data-node-label="platform/email" tabindex="0" role="button" aria-label="Focus platform/email, River emails · senders, Platform" aria-pressed="false" data-node-kind="backend" data-node-sublabel="River emails · senders" data-node-context="Platform">
+          <title>platform/email · River emails · senders · Platform</title>
           <rect x="635" y="260" width="140" height="60" rx="8" class="c-mask"/>
           <rect x="635" y="260" width="140" height="60" rx="8" class="c-backend" data-animate="node" style="--step:4" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(641 266) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="705" y="288" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">platform/email</text>
-        <text data-detail="context" x="705" y="304" class="t-muted" font-size="9" text-anchor="middle">outbox · senders</text>
+        <text data-detail="context" x="705" y="304" class="t-muted" font-size="9" text-anchor="middle">River emails · senders</text>
         </g>
 
         <g id="node-platform-hub" data-node-id="platform-hub" data-node-label="platform/realtime" tabindex="0" role="button" aria-label="Focus platform/realtime, hub rooms user:&lt;id&gt;, Platform" aria-pressed="false" data-node-kind="backend" data-node-sublabel="hub rooms user:&lt;id&gt;" data-node-context="Platform">
@@ -5322,8 +5322,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <text data-detail="context" x="950" y="304" class="t-muted" font-size="9" text-anchor="middle">hub rooms user:&lt;id&gt;</text>
         </g>
 
-        <g id="node-kernel" data-node-id="kernel" data-node-label="internal/shared" tabindex="0" role="button" aria-label="Focus internal/shared, apperr · rolex · authz, Kernel + outbox state" aria-pressed="false" data-node-kind="backend" data-node-sublabel="apperr · rolex · authz" data-node-context="Kernel + outbox state">
-          <title>internal/shared · apperr · rolex · authz · Kernel + outbox state</title>
+        <g id="node-kernel" data-node-id="kernel" data-node-label="internal/shared" tabindex="0" role="button" aria-label="Focus internal/shared, apperr · rolex · authz, Kernel + River state" aria-pressed="false" data-node-kind="backend" data-node-sublabel="apperr · rolex · authz" data-node-context="Kernel + River state">
+          <title>internal/shared · apperr · rolex · authz · Kernel + River state</title>
           <rect x="35" y="420" width="140" height="60" rx="8" class="c-mask"/>
           <rect x="35" y="420" width="140" height="60" rx="8" class="c-backend" data-animate="node" style="--step:7" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(41 426) scale(0.6875)">
@@ -5333,42 +5333,42 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <text data-detail="context" x="105" y="464" class="t-muted" font-size="9" text-anchor="middle">apperr · rolex · authz</text>
         </g>
 
-        <g id="node-email-jobs" data-node-id="email-jobs" data-node-label="email_jobs" tabindex="0" role="button" aria-label="Focus email_jobs, outbox · SKIP LOCKED, Kernel + outbox state" aria-pressed="false" data-node-kind="database" data-node-sublabel="outbox · SKIP LOCKED" data-node-context="Kernel + outbox state">
-          <title>email_jobs · outbox · SKIP LOCKED · Kernel + outbox state</title>
+        <g id="node-email-jobs" data-node-id="email-jobs" data-node-label="river_job" tabindex="0" role="button" aria-label="Focus river_job, River · unique + periodic, Kernel + River state" aria-pressed="false" data-node-kind="database" data-node-sublabel="River · unique + periodic" data-node-context="Kernel + River state">
+          <title>river_job · River · unique + periodic · Kernel + River state</title>
           <rect x="635" y="420" width="150" height="60" rx="8" class="c-mask"/>
           <rect x="635" y="420" width="150" height="60" rx="8" class="c-database" data-animate="node" style="--step:6" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(641 426) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="710" y="448" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">email_jobs</text>
-        <text data-detail="context" x="710" y="464" class="t-muted" font-size="9" text-anchor="middle">outbox · SKIP LOCKED</text>
+          <text data-node-label="" data-detail-anchor="" x="710" y="448" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">river_job</text>
+        <text data-detail="context" x="710" y="464" class="t-muted" font-size="9" text-anchor="middle">River · unique + periodic</text>
         </g>
 
         <!-- Connection labels -->
-        <g data-detail="context" data-edge-from="composition" data-edge-to="auth-slices" data-edge-label="Register(mux)" data-edge-key="0" data-edge-id="s1">
-          <rect x="213.8" y="110" width="72.4" height="14" rx="3" class="c-mask"/>
-          <text x="250" y="120" class="t-edge-default" font-size="8" text-anchor="middle">Register(mux)</text>
+        <g data-detail="context" data-edge-from="composition" data-edge-to="auth-slices" data-edge-label="Register(chi.Router)" data-edge-key="0" data-edge-id="s1">
+          <rect x="197" y="110" width="106" height="14" rx="3" class="c-mask"/>
+          <text x="250" y="120" class="t-edge-default" font-size="8" text-anchor="middle">Register(chi.Router)</text>
         </g>
-        <g data-detail="context" data-edge-from="composition" data-edge-to="authx" data-edge-label="wire adapters" data-edge-key="1" data-edge-id="s2">
-          <rect x="31.599999999999994" y="203" width="72.4" height="14" rx="3" class="c-mask"/>
-          <text x="67.8" y="213" class="t-edge-default" font-size="8" text-anchor="middle">wire adapters</text>
+        <g data-detail="context" data-edge-from="composition" data-edge-to="authx" data-edge-label="wire providers" data-edge-key="1" data-edge-id="s2">
+          <rect x="26.800000000000004" y="203" width="77.2" height="14" rx="3" class="c-mask"/>
+          <text x="65.4" y="213" class="t-edge-default" font-size="8" text-anchor="middle">wire providers</text>
         </g>
         <g data-detail="context" data-edge-from="auth-slices" data-edge-to="gen-db" data-edge-label="queries.sql" data-edge-key="2" data-edge-id="s3">
           <rect x="331.20000000000005" y="203" width="62.8" height="14" rx="3" class="c-mask"/>
           <text x="362.6" y="213" class="t-edge-default" font-size="8" text-anchor="middle">queries.sql</text>
         </g>
-        <g data-detail="context" data-edge-from="widgets-realtime" data-edge-to="platform-email" data-edge-label="enqueue · publish" data-edge-key="3" data-edge-id="s4">
-          <rect x="607.4000000000001" y="203" width="91.6" height="14" rx="3" class="c-mask"/>
-          <text x="653.2" y="213" class="t-edge-default" font-size="8" text-anchor="middle">enqueue · publish</text>
+        <g data-detail="context" data-edge-from="widgets-realtime" data-edge-to="platform-email" data-edge-label="river.AddTx · publish" data-edge-key="3" data-edge-id="s4">
+          <rect x="588.2" y="203" width="110.8" height="14" rx="3" class="c-mask"/>
+          <text x="643.6" y="213" class="t-edge-default" font-size="8" text-anchor="middle">river.AddTx · publish</text>
         </g>
         <g data-detail="context" data-edge-from="platform-email" data-edge-to="platform-hub" data-edge-label="event bus" data-edge-key="4" data-edge-id="s5">
           <rect x="800.9" y="270" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
           <text x="827.5" y="280" class="t-edge-default" font-size="8" text-anchor="middle">event bus</text>
         </g>
-        <g data-detail="context" data-edge-from="platform-email" data-edge-to="email-jobs" data-edge-label="claim · mark_sent" data-edge-key="5" data-edge-id="s6">
+        <g data-detail="context" data-edge-from="platform-email" data-edge-to="email-jobs" data-edge-label="River fetch · ack" data-edge-key="5" data-edge-id="s6">
           <rect x="607.4000000000001" y="363" width="91.6" height="14" rx="3" class="c-mask"/>
-          <text x="653.2" y="373" class="t-edge-default" font-size="8" text-anchor="middle">claim · mark_sent</text>
+          <text x="653.2" y="373" class="t-edge-default" font-size="8" text-anchor="middle">River fetch · ack</text>
         </g>
         <g data-detail="context" data-edge-from="authx" data-edge-to="kernel" data-edge-label="rolex · apperr" data-edge-key="6" data-edge-id="s7">
           <rect x="21.800000000000004" y="363" width="77.2" height="14" rx="3" class="c-mask"/>
@@ -5376,9 +5376,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </g>
 
         <!-- Boundary labels (foreground masks keep routes out of titles) -->
-        <g data-graph-role="structural-frame-label" data-composition-frame-id="0" data-composition-frame-kind="region" data-composition-frame-label="Composition root">
-          <rect data-graph-role="structural-frame-label-mask" x="14" y="80" width="96.39999999999999" height="16" rx="3" class="c-mask"/>
-          <text data-boundary-label="" x="18" y="93" class="t-cloud" font-size="9" font-weight="600">Composition root</text>
+        <g data-graph-role="structural-frame-label" data-composition-frame-id="0" data-composition-frame-kind="region" data-composition-frame-label="Composition root — google/wire">
+          <rect data-graph-role="structural-frame-label-mask" x="14" y="80" width="172" height="16" rx="3" class="c-mask"/>
+          <text data-boundary-label="" x="18" y="93" class="t-cloud" font-size="9" font-weight="600">Composition root — google/wire</text>
         </g>
 
         <g data-graph-role="structural-frame-label" data-composition-frame-id="1" data-composition-frame-kind="region" data-composition-frame-label="Feature slices — one capability, one directory">
@@ -5391,9 +5391,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-boundary-label="" x="18" y="253" class="t-cloud" font-size="9" font-weight="600">Platform</text>
         </g>
 
-        <g data-graph-role="structural-frame-label" data-composition-frame-id="3" data-composition-frame-kind="region" data-composition-frame-label="Kernel + outbox state">
-          <rect data-graph-role="structural-frame-label-mask" x="113" y="400" width="123.39999999999999" height="16" rx="3" class="c-mask"/>
-          <text data-boundary-label="" x="117" y="413" class="t-cloud" font-size="9" font-weight="600">Kernel + outbox state</text>
+        <g data-graph-role="structural-frame-label" data-composition-frame-id="3" data-composition-frame-kind="region" data-composition-frame-label="Kernel + River state">
+          <rect data-graph-role="structural-frame-label-mask" x="113" y="400" width="118" height="16" rx="3" class="c-mask"/>
+          <text data-boundary-label="" x="117" y="413" class="t-cloud" font-size="9" font-weight="600">Kernel + River state</text>
         </g>
 
         <!-- Legend -->
@@ -5592,19 +5592,20 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>internal/features/&lt;slice&gt; ships the same files, always: domain.go · ports.go · usecase.go · http.go · postgres.go · queries.sql · module.go</li>
-          <li>module.go Register(mux, Deps) is the whole wiring contract; acceptance tests call the same Register with fakes — the root is the only knower of concretions</li>
-          <li>adding a slice = one directory + queries.sql + migration + make generate + one line in cmd/api/main.go; anything else editing means the template regressed</li>
+          <li>module.go Register(r chi.Router, Deps) is the whole wiring contract; chi.URLParam reads the same {id} wildcards ServeMux did, so handlers stay net/http</li>
+          <li>adding a slice = one directory + queries.sql + golang-migrate migration + make generate + one line in cmd/api/main.go; anything else editing means the template regressed</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-dot emerald"></div>
-          <h3>Platform + gen</h3>
+          <h3>Root + platform</h3>
         </div>
         <ul>
+          <li>the composition root wires everything with google/wire (compile-time codegen) — pgxpool built once, sitting behind PgBouncer transaction pooling</li>
           <li>platform/authx mints HS256 access tokens and hashes bcrypt cost 10 over a pepper pre-hash that sidesteps the 72-byte cap</li>
-          <li>sqlc compiles each slice&#39;s queries.sql against migrations/ into committed internal/gen/db; make gen-check fails on drift, never hand-edit gen/**</li>
+          <li>sqlc compiles each slice&#39;s queries.sql against migrations/ into committed internal/gen/db; make gen-check fails on drift, never hand-edit gen/** — transport DTOs validate with go-playground/validator</li>
         </ul>
       </div>
 
@@ -5615,7 +5616,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>slices never import slices: shared capability gets promoted into internal/shared or platform/, or duplicated through a port</li>
-          <li>widgets publishes created/updated/deleted through the event-bus port, never into the realtime slice&#39;s handler</li>
+          <li>widgets publishes created/updated/deleted through the event-bus port; durable email/webhook work enqueues River jobs in the same transaction — no goroutine in a handler</li>
           <li>depguard (lints/) makes domain-pure and slice-isolation violations red before review — fix the shape, not the lint</li>
         </ul>
       </div>

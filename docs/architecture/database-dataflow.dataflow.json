@@ -2,7 +2,7 @@
   "schema_version": 1,
   "diagram_type": "dataflow",
   "meta": {
-    "title": "beautifulgo — Dataflow: identity + outbox",
+    "title": "beautifulgo — Dataflow: identity + River jobs",
     "quality_profile": "showcase",
     "output": "database-dataflow.dataflow.html"
   },
@@ -17,7 +17,7 @@
       "label": "Postgres"
     },
     {
-      "label": "Outbox"
+      "label": "River"
     },
     {
       "label": "Delivery"
@@ -44,7 +44,7 @@
       "id": "slices",
       "type": "backend",
       "label": "Use-case slices",
-      "sublabel": "authsignup · session · admin",
+      "sublabel": "signup · session · admin",
       "stage": 1,
       "row": 1,
       "width": 160
@@ -53,7 +53,7 @@
       "id": "users",
       "type": "database",
       "label": "users · sessions",
-      "sublabel": "pgx pool · one tx",
+      "sublabel": "pgxpool → PgBouncer",
       "stage": 2,
       "row": 0
     },
@@ -68,17 +68,17 @@
     {
       "id": "jobs",
       "type": "database",
-      "label": "email_jobs",
-      "sublabel": "outbox statuses",
+      "label": "river_job",
+      "sublabel": "durable · unique",
       "stage": 3,
       "row": 1,
-      "tag": "outbox"
+      "tag": "river"
     },
     {
       "id": "worker",
       "type": "backend",
       "label": "cmd/worker",
-      "sublabel": "poll 2s · batch 10",
+      "sublabel": "River workers · drain",
       "stage": 3,
       "row": 2
     },
@@ -122,7 +122,7 @@
       "id": "df5",
       "from": "slices",
       "to": "jobs",
-      "label": "enqueue in auth tx",
+      "label": "river.AddTx in auth tx",
       "variant": "emphasis",
       "route": "straight"
     },
@@ -130,7 +130,7 @@
       "id": "df6",
       "from": "jobs",
       "to": "worker",
-      "label": "claim CTE",
+      "label": "River fetch",
       "labelAt": [
         689,
         315
@@ -147,7 +147,7 @@
       "id": "df8",
       "from": "worker",
       "to": "jobs",
-      "label": "complete · retry",
+      "label": "ack · retry → discard",
       "variant": "dashed",
       "labelAt": [
         812,
@@ -166,18 +166,18 @@
     },
     {
       "dot": "emerald",
-      "title": "Outbox",
+      "title": "Postgres path",
       "items": [
-        "each slice's queries.sql compiles through sqlc against migrations/ into committed internal/gen/db — adapters in postgres.go are its only consumers",
-        "email_jobs INSERT rides the same pgx transaction as the state change; the claim CTE needs the partial index on (status, scheduled_at) WHERE status = 'queued'"
+        "every write rides pgx/v5 through pgxpool tucked behind PgBouncer transaction pooling; queries.sql compiles through sqlc into committed internal/gen/db, adapters in postgres.go its only consumers",
+        "the email job is enqueued with river.AddTx inside the same pgx transaction as the state change — the outbox pattern without an outbox table"
       ]
     },
     {
       "dot": "rose",
-      "title": "Delivery + ledgers",
+      "title": "Delivery + purge",
       "items": [
-        "failures back off 2^n minutes ±20% jitter and dead-letter to failed at max_retries 3",
-        "the janitor (<APP>_JANITOR_POLL 1h) purges expired sessions and code rows with idempotent DELETEs — replica-safe, audit rows untouched"
+        "failures follow River's backoff and discard after max attempts — at-least-once without a claim CTE or sending lease",
+        "river.PeriodicJobs (cron) covers the old janitor: expired sessions and code rows purged hourly with idempotent DELETEs — audit rows untouched"
       ]
     }
   ]

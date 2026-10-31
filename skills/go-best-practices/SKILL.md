@@ -5,8 +5,9 @@ description: >-
   write, refactor, debug, or explain Go code: new packages, files, functions, structs,
   interfaces, error types, goroutines, channels, context, generics, go.mod, or
   table-driven tests. Trigger on any mention of Go, golang, .go files, gofmt, go vet,
-  golangci-lint, pgx, sqlc, goose, slog, net/http, ServeMux, context, goroutines, or
-  channels, even when the user does not say "best practices" or "idiomatic" code.
+  golangci-lint, pgx, pgxpool, sqlc, golang-migrate, goose, river, chi, wire, redis,
+  validator, slog, net/http, ServeMux, context, goroutines, or channels, even when
+  the user does not say "best practices" or "idiomatic" code.
   Synthesized from Effective Go, the Go Code Review Comments wiki, the Google Go Style
   Guide, Rob Pike's Go Concurrency Patterns, and the backend-go handbook. For auditing
   existing code use go-review; for translating C, Python, or JavaScript into Go use
@@ -51,8 +52,8 @@ the lints config:
 
 | Rule | Files it governs | Forbidden imports |
 |---|---|---|
-| `domain-pure` | `**/internal/features/**/domain.go` | everything outside the allow-list: the standard library plus `<app>/internal/shared` only — notably `net/http`, `database/sql`, `github.com/jackc/pgx/v5`, `internal/gen`, `internal/platform`, other slices |
-| `usecase-transport-free` | `**/internal/features/**/usecase.go`, `**/internal/features/**/ports.go` | `net/http`, `database/sql`, `pgx/v5`, `internal/gen`, `internal/platform` |
+| `domain-pure` | `**/internal/features/**/domain.go` | everything outside the allow-list: the standard library plus `<app>/internal/shared` only — notably `net/http`, `github.com/go-chi/chi/v5`, `database/sql`, `github.com/jackc/pgx/v5`, `github.com/riverqueue/river`, `github.com/redis/go-redis/v9`, `go.opentelemetry.io/*`, `github.com/prometheus/client_golang`, `internal/gen`, `internal/platform`, other slices |
+| `usecase-transport-free` | `**/internal/features/**/usecase.go`, `**/internal/features/**/ports.go` | `net/http`, `github.com/go-chi/chi/v5`, `database/sql`, `pgx/v5`, `internal/gen`, `internal/platform` |
 | `slice-isolation` | `**/internal/features/**` | any other `internal/features` package |
 | `platform-no-features` | `**/internal/platform/**` | `internal/features` |
 
@@ -67,7 +68,8 @@ substitute the placeholder once (see `lints/README.md` in the repo). Only the
 MUST rules:
 
 - **MUST keep `domain.go` zero-I/O.** It imports the standard library +
-  `internal/shared` only. No `net/http`, no `database/sql`, no pgx, no generated
+  `internal/shared` only. No `net/http`, no chi, no `database/sql`, no pgx, no
+  river, no redis, no generated
   code, no platform packages, no cross-slice imports. A rule that needs data from
   the world receives it as an argument.
 
@@ -121,14 +123,18 @@ MUST rules:
   `queries.sql` names only tables its migration created; both change in the same
   commit; generated `internal/gen/**` is committed and never hand-edited
   (`make generate` must be a no-op).
-- **MUST keep migrations reversible and out of startup.** Every goose file has
-  Up and Down sections; migrations run in a deploy step (`make migrate`), never
-  when the server boots.
+- **MUST keep migrations reversible and out of startup.** golang-migrate is the
+  standard: paired Up and Down migration files in `migrations/`, applied by a
+  deploy step (`make migrate`), never when the server boots. goose is an
+  acceptable explicit alternative with the same Up/Down discipline; whichever
+  tool runs, reversibility stays honest (the integration suite walks
+  apply -> down -> apply).
 - **MUST follow the request lifecycle.** Routes declared per-slice in
-  `module.go` via `Register(mux, Deps)` using stdlib ServeMux method+wildcard
-  patterns (`"POST /api/v1/widgets"`, `r.PathValue("id")`); the composition root
-  in `cmd/` wires everything; identity travels in context; `r.Context()` flows
-  into every use case and port call.
+  `module.go` via `Register(r chi.Router, Deps)` mounting chi's method+wildcard
+  pattern shape (`"POST /api/v1/widgets"`, `r.Get("/widgets/{id}")`,
+  `chi.URLParam(r, "id")` — the ServeMux `PathValue` shape carried by chi); the
+  composition root in `cmd/` wires everything with wire; identity travels in
+  context; `r.Context()` flows into every use case and port call.
 - **MUST wrap errors with `%w` and match with `errors.Is`/`errors.As`.** Adapters
   never invent envelope codes; the stable `{detail, code}` vocabulary lives in
   `internal/shared/apperr`.
@@ -374,6 +380,44 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
   }
   ```
 
+- **Durable work is River work, not a goroutine.** Anything that must survive
+  the process — emails, webhooks, reindexes, scheduled sweeps — goes through
+  River: a job struct with a `Kind()`, enqueued with `AddTx` inside the **same
+  Postgres transaction** as the write, retried with backoff, deduped by
+  `UniqueOpts` when a repeat send is intolerable; periodic sweeps ride
+  `river.PeriodicJobs` (old janitor loops). A fire-and-forget goroutine is by
+  definition *not* durable: one crash and the work is gone without a trace.
+  The worker process itself shuts down gracefully — River drains in-flight
+  jobs on SIGTERM.
+
+  ```go
+  // postgres.go — the write and its after-effect commit together
+  type NotifyArgs struct {
+      WidgetID WidgetID
+  }
+
+  func (NotifyArgs) Kind() string { return "widgets.notify" }
+
+  type store struct {
+      river *river.Client[pgx.Tx]
+  }
+
+  func (s store) enqueueNotify(ctx context.Context, tx pgx.Tx, id WidgetID) error {
+      _, err := s.river.AddTx(ctx, river.AddTxArgs{
+          Tx:   tx,
+          Args: NotifyArgs{WidgetID: id},
+          Opts: &river.InsertOpts{
+              Queue:      "widgets",
+              UniqueOpts: river.UniqueOpts{ByArgs: true}, // a retry never double-sends
+          },
+      })
+      if err != nil {
+          return fmt.Errorf("enqueue widget notify %s: %w", id, err)
+      }
+      return nil
+  }
+  ```
+
 - **Channels for ownership transfer, mutexes for state.** Don't share memory by
   communicating when a `sync.Mutex` around one map says it in three lines; don't
   bolt a mutex onto what is already an ownership handoff.
@@ -389,14 +433,44 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
 
 ## 8. Standard library first
 
-- **No framework routers.** The stack mandates stdlib `net/http` ServeMux with
-  method + wildcard matching. No gin, echo, fiber, or chi in stack projects.
+- **chi is the router.** The stack mandates `github.com/go-chi/chi/v5` — a
+  net/http-native router, so handlers stay plain `http.HandlerFunc`s and
+  nothing custom crosses the port boundary. The ServeMux pattern shape is
+  still the contract: chi mounts the same method + wildcard strings
+  (`"POST /api/v1/widgets"`, `"GET /api/v1/widgets/{id}"`), just via
+  `r.Post`/`r.Get` instead of `mux.HandleFunc`. gin and echo are acceptable
+  alternatives when a review approves the deviation; fiber only for
+  extreme-throughput gateways — never the default choice.
 
   ```go
-  // module.go — per-slice wiring; the pattern is the router
+  // module.go — the port-compatibility shape: the pattern is the router.
+  // The ServeMux spelling still stands on non-stack ports and legacy code;
+  // on the stack the chi form below is the router.
   func Register(mux *http.ServeMux, d Deps) {
       mux.HandleFunc("POST /api/v1/widgets", d.Handler.Create)
       mux.HandleFunc("GET /api/v1/widgets/{id}", d.Handler.ByID)
+  }
+  ```
+
+  ```go
+  // module.go — the same wiring on chi, the stack's router. Middleware order
+  // is registration order: r.Use first (every route in the group), then
+  // r.With for per-route guards inside it.
+  func Register(r chi.Router, d Deps) {
+      r.Route("/api/v1", func(r chi.Router) {
+          r.Use(httpx.RequestID, httpx.Logger, httpx.Recover)
+          r.With(d.Auth).Post("/widgets", d.Handler.Create)
+          r.With(httpx.RequireRole("admin")).Get("/widgets/{id}", d.Handler.ByID)
+      })
+  }
+  ```
+
+  ```go
+  // http.go — the handler reads the wildcard by its chi name, the
+  // URLParam spelling of the ServeMux r.PathValue("id") shape.
+  func (h Handler) ByID(w http.ResponseWriter, r *http.Request) {
+      id, err := widgets.ParseWidgetID(chi.URLParam(r, "id"))
+      ...
   }
   ```
 
@@ -407,9 +481,14 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
 - Single go module; no per-slice modules, no workspaces for an application's
   internal packages. `go.mod` pins direct dependencies at modern majors; commit
   both `go.mod` and `go.sum`.
-- Deliberately allowed by the stack: pgx/v5 + pgxpool, sqlc, goose, testify/go-cmp
-  in tests, validator/v10 at edges, jwt/v5, env/v11. Anything beyond that list is
-  a review conversation.
+- Mandated by the stack: chi (router), pgx/v5 + pgxpool, sqlc, golang-migrate
+  (goose is the explicit acceptable alternative), river (durable jobs), go-redis
+  (cache), google/wire (compile-time DI at the composition root),
+  go-playground/validator at transport edges, slog (zap the acceptable
+  alternative), OpenTelemetry (otelhttp at the chain head), the prometheus
+  client, PgBouncer in transaction pooling mode, and Docker/K8s for delivery.
+  Also allowed: testify/go-cmp in tests, jwt/v5, env/v11. Anything beyond that
+  list is a review conversation.
 
 ## 9. Packages and file organization
 
@@ -421,10 +500,10 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
   ├── domain.go    pure types + rules + errors (stdlib + shared only)
   ├── ports.go     the interfaces this feature needs (consumer-defined)
   ├── usecase.go   orchestration: rules first, I/O last
-  ├── http.go      ServeMux adapters, edge validation, envelope
+  ├── http.go      chi route adapters, edge validation, envelope
   ├── postgres.go  pgx/gen-db adapters, error translation inward
   ├── queries.sql  sqlc source for this slice (schema = migrations/)
-  └── module.go    Register(mux, Deps) — the wiring contract
+  └── module.go    Register(r chi.Router, Deps) — the wiring contract
   ```
 
 - "Where does X live?" is answerable by file kind, never by grep.
@@ -436,7 +515,10 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
   types). Anything "util" is either a mechanism (→ `platform/`) or a domain
   concept (→ the slice that owns it).
 - `internal/platform/` holds transversal infra (`config`, `httpx`, `pgx`, `authx`,
-  `email`, `realtime`). It serves features; it never imports them.
+  `email`, `realtime`, `river` for the durable-jobs client and workers, `redis`
+  for the cache client, `otel` for tracing setup, `metrics` for the prometheus
+  registry). It serves features; it never imports them. `wire` is not a package
+  at all — it is compile-time DI generation for the composition root in `cmd/`.
 - In non-stack repos, keep packages small and cohesive, one package per
   directory, leaf packages importing sideways never; the same taste applies
   without the six-file law.
@@ -501,7 +583,8 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
   regression forever.
 - Stack projects: unit tests per slice with fakes over `ports.go`; integration
   (testcontainers Postgres) under `-tags=integration`; godog acceptance over the
-  real mux wired with fakes.
+  real chi server wired with fakes; River worker tests assert on `river.Job`
+  state or run against a testcontainers River schema.
 
 ## 12. Performance, in order
 
@@ -515,7 +598,10 @@ go tool sqlc generate && make gen-check   # stack projects; must be a no-op
 - Never optimize away correctness or clarity; a deliberate simplification gets a
   comment naming its ceiling (`// naive: O(n²), fine under ~10k rows`).
 - The default posture is the boring one: pgxpool is shared and reused, queries
-  are indexed, the outbox worker batches — the stack already made the big calls.
+  are indexed, River's workers batch and pace themselves under PgBouncer's
+  transaction pooling — the stack already made the big calls. Nothing to
+  hand-roll here: no outbox tables, no janitor loops, no fire-and-forget
+  goroutines.
 
 ## 13. Final checklist
 

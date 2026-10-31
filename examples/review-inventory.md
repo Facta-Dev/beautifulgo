@@ -9,8 +9,9 @@ golangci-lint, and the report notes that it reviewed by reading.
 # Go review: the `store` slice
 
 `store` is a vertical slice for customer orders: it validates orders, saves
-them, lists a customer's orders by email, and queues the receipt mail through
-an outbox-style `MailQueue` port. The module declares `go 1.27` and imports
+them, lists a customer's orders by email, and hands receipt mail off through
+a `MailQueue` port backed by a River durable job (enqueued in the same
+transaction as the save, delivered by a River worker). The module declares `go 1.27` and imports
 pgx/v5, and the `internal/features/store/` layout with `domain.go`, `ports.go`,
 `usecase.go`, and `postgres.go` means I reviewed it under the **stack mode** of
 the architecture rules (hexagonal ports and adapters plus vertical slices) at
@@ -119,12 +120,17 @@ handbook; Go wiki CodeReviewComments, "Goroutine lifetimes")
 **Problem:** `Place` starts `go func()` with `context.Background()`, logs
 failure with `log.Printf`, and returns while the goroutine races the process
 shutting down — the mail request is lost silently on shutdown, and nothing
-waits for or cancels it. The stack's answer is the outbox pattern: the mail
-queue port enqueues a row and the outbox worker delivers it, so there is no
-goroutine to own at the use-case layer at all.
+waits for or cancels it. The stack's answer is not an owner goroutine but a
+durable job: enqueue a River job in the same transaction as the order write
+(`river.AddTx` inserts the job row inside that same Postgres transaction) and
+let a River worker deliver it — the write and its side effect commit
+together, so there is no goroutine left to own at the use-case layer and
+nothing to lose on shutdown.
 **Fix:**
 ```go
-// usecase.go, lines 18-23 — Enqueue is a durable row insert, not a send:
+// usecase.go, lines 18-23 — Enqueue becomes a durable River job: the port's
+// adapter calls river.AddTx inside the same transaction as the order write
+// (write and side-effect commit together), and a River worker delivers it:
 if err := q.Enqueue(ctx, o.Email); err != nil {
 	return Order{}, fmt.Errorf("queue receipt mail: %w", err)
 }

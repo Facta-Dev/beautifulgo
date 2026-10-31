@@ -2,8 +2,9 @@
 package widgets
 
 import (
-	"net/http"
 	"time"
+
+	"github.com/go-chi/chi/v5"
 )
 
 // Deps carries the slice's collaborators; the root builds them from concrete
@@ -13,9 +14,9 @@ type Deps struct {
 	Now   func() time.Time
 }
 
-// Register mounts the slice's routes on the root's mux.
-func Register(mux *http.ServeMux, d Deps) {
-    h := NewHandler(NewCreator(d.Store, d.Now))
-    mux.HandleFunc("POST /api/v1/widgets", h.Create)
-    mux.HandleFunc("GET /api/v1/widgets/{id}", h.ByID)
+// Register mounts the slice's routes on the root's chi router.
+func Register(r chi.Router, d Deps) {
+	h := NewHandler(NewCreator(d.Store, d.Now))
+	r.Post("/api/v1/widgets", h.Create)
+	r.Get("/api/v1/widgets/{id}", h.ByID)
 }

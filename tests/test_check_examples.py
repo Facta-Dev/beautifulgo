@@ -132,6 +132,7 @@ class DomainTest(RepoTest):
     def test_forbidden_imports(self):
         for path in ("net/http", "net/http/httptest", "database/sql",
                      "github.com/jackc/pgx/v5", "github.com/jackc/pgx/v5/pgxpool",
+                     "github.com/go-chi/chi/v5", "github.com/go-chi/chi/v5/middleware",
                      "example.com/app/internal/platform/httpx",
                      "example.com/app/internal/gen/db",
                      "example.com/app/internal/features/other"):

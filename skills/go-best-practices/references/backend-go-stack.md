@@ -23,8 +23,8 @@ same table; drift between the two is a checklist failure.
 
 | depguard rule | Files governed | Forbidden imports |
 |---|---|---|
-| `domain-pure` | `**/internal/features/**/domain.go` | everything outside the allow-list: the standard library plus `<app>/internal/shared` only — notably `net/http`, `database/sql`, `github.com/jackc/pgx/v5`, `internal/gen`, `internal/platform`, other slices |
-| `usecase-transport-free` | `**/internal/features/**/usecase.go`, `**/internal/features/**/ports.go` | `net/http`, `database/sql`, `github.com/jackc/pgx/v5`, `internal/gen`, `internal/platform` |
+| `domain-pure` | `**/internal/features/**/domain.go` | everything outside the allow-list: the standard library plus `<app>/internal/shared` only — notably `net/http`, `github.com/go-chi/chi/v5`, `database/sql`, `github.com/jackc/pgx/v5`, `github.com/riverqueue/river`, `github.com/redis/go-redis/v9`, `go.opentelemetry.io/*`, `github.com/prometheus/client_golang`, `internal/gen`, `internal/platform`, other slices |
+| `usecase-transport-free` | `**/internal/features/**/usecase.go`, `**/internal/features/**/ports.go` | `net/http`, `github.com/go-chi/chi/v5`, `database/sql`, `github.com/jackc/pgx/v5`, `internal/gen`, `internal/platform` |
 | `slice-isolation` | `**/internal/features/**` | any other `internal/features` package |
 | `platform-no-features` | `**/internal/platform/**` | `internal/features` |
 
@@ -44,16 +44,17 @@ internal/features/widgets/
 ├── domain.go    pure types + rules + errors (stdlib + shared only)
 ├── ports.go     the interfaces this feature needs (consumer-defined)
 ├── usecase.go   orchestration: rules first, I/O last
-├── http.go      ServeMux adapters; edge validation; envelope via httpx
+├── http.go      chi route adapters; edge validation; envelope via httpx
 ├── postgres.go  pgx/gen-db adapter; rows to domain; errors inward
 ├── queries.sql  sqlc source for this slice (schema = migrations/)
-└── module.go    Register(mux, Deps) — the wiring contract
+└── module.go    Register(r chi.Router, Deps) — the wiring contract
 ```
 
 - "Where does X live?" is answerable by file kind: a business rule change is a
   `domain.go` change; a new query is `queries.sql` + `postgres.go`; a new
   endpoint is an `http.go` route registered in `module.go`; a new vendor is a
-  new `platform/<x>` port + adapter; a wiring change is `cmd/api/main.go` only.
+  new `platform/<x>` port + adapter; a wiring change is `cmd/api/main.go` and
+  its wire provider sets only.
 - The same six files always; tests ride alongside (`*_test.go`). A slice whose
   `domain.go` passes ~200 lines is usually two features sharing a directory —
   split by behavior, not by file count.
@@ -69,7 +70,7 @@ internal/features/widgets/
 | `domain.go` | stdlib + `internal/shared` | yes, only that |
 | slice `postgres.go` | `internal/gen/db` | yes |
 | adapters | `gen/api` models only from `http.go` | wire types stop at the edge |
-| `internal/platform/**` | stdlib, `gen/db`, `shared/` | yes, never `internal/features/**` |
+| `internal/platform/**` | stdlib, `gen/db`, `shared/`, the stack's vetted clients (`river`, `go-redis`, `otel`, prometheus) | yes, never `internal/features/**` |
 | anything | `cmd/**` | NO — nothing depends on the root |
 
 ## Ports: consumer-defined, one or two methods
@@ -95,8 +96,10 @@ type WidgetStore interface {
 ## Request lifecycle (handbook doc 07)
 
 - **Routes are declared per-slice.** Each slice's `module.go` exposes
-  `Register(mux *http.ServeMux, d Deps)` — the whole wiring contract — using
-  stdlib method+wildcard patterns:
+  `Register(r chi.Router, d Deps)` — the whole wiring contract — carrying the
+  same method+wildcard pattern shape the stdlib ServeMux contract used: the
+  method prefix as the verb method, the `{id}` wildcard, wildcard access via
+  `chi.URLParam(r, "id")` (the chi spelling of `r.PathValue("id")`):
 
   ```go
   // internal/features/widgets/module.go
@@ -105,21 +108,32 @@ type WidgetStore interface {
   import (
       "net/http"
 
+      "github.com/go-chi/chi/v5"
+
       "github.com/<scope>/<app>/internal/platform/httpx"
   )
 
-  func Register(mux *http.ServeMux, d Deps) {
-      chain := httpx.Chain(httpx.RequestID, httpx.Logger, httpx.Recover, d.Auth)
-      mux.Handle("POST /api/v1/widgets", chain(d.Handler.Create))
-      mux.Handle("GET /api/v1/widgets/{id}", chain(d.Handler.ByID))
+  func Register(r chi.Router, d Deps) {
+      r.Route("/api/v1", func(r chi.Router) {
+          r.Use(httpx.RequestID, httpx.Logger, httpx.Recover)
+          r.With(d.Auth).Post("/widgets", d.Handler.Create)
+          r.Get("/widgets/{id}", d.Handler.ByID)
+      })
   }
   ```
 
   (The exact `httpx` helper names vary by project; the contract is the pattern
-  shape — method prefix, `{id}` wildcard, `PathValue` on the handler side, and
-  `Register` as the single mount point the root calls.)
-- **The middleware chain** (`httpx.Chain`): RequestID -> Logger(slog) ->
-  Recover -> RequireAuth -> RequireRole -> handler. `authx.RequireAuth` parses
+  shape — `r.Post`/`r.Get` over the `{id}` wildcard, `chi.URLParam`/`PathValue`
+  on the handler side, and `Register` as the single mount point the root
+  `chi.NewRouter()` tree calls.) Because chi is net/http-native, handlers keep
+  the `func (w http.ResponseWriter, r *http.Request)` signature a ServeMux
+  handler had.
+- **The middleware chain** — order is registration order inside the route
+  group: `otelhttp` wraps the whole server at the chain head (OpenTelemetry is
+  REQUIRED, so `http.Server{Handler: otelhttp.NewHandler(mux, "")}` is part of
+  the root wiring), then RequestID -> Logger(slog) -> Recover -> RequireAuth ->
+  RequireRole -> handler via `r.Use`; per-route extras ride `r.With(...)`.
+  `authx.RequireAuth` parses
   the token with the HS256 verifier, builds `authx.Identity`, stores it in
   context, and answers 401 with the `{detail, code}` envelope on failure.
 - **Identity in context**: use cases never re-parse tokens and never see
@@ -129,9 +143,41 @@ type WidgetStore interface {
 - **Streaming aside (WS/SSE)**: read from `r.Context()`; the client disconnect
   *is* the cancellation; never hold a database row while streaming. WS
   authentication failure closes with code 4001; SSE flushes per event.
-- **The worker** (`cmd/worker`) runs two loops — email outbox and janitor —
-  exiting on SIGTERM via the same context discipline. Migrations never run at
-  server startup.
+- **The worker** (`cmd/worker`) runs the River client, not hand-written loops:
+  queues for email and webhooks, `river.PeriodicJobs` (cron spec) for the old
+  janitor sweeps. On SIGTERM the client drains in-flight jobs before exiting —
+  the same context discipline as the API server. Migrations never run at server
+  startup.
+- **Durable jobs are River's law.** The outbox *pattern* stays the requirement
+  — the write and its after-effect must commit together — but its
+  implementation is never hand-rolled: no outbox tables, no polling loops, no
+  janitor goroutines. Those are the canonical "what you must NOT build
+  yourself" example now that the stack ships the mechanism. Work is a job
+  struct with a `Kind()`, enqueued with `riverClient.AddTx` inside the **same
+  Postgres transaction** as the sqlc write, retried with backoff, deduped via
+  `UniqueOpts`, and only then handed to a `river.WorkerDefaults`-based worker:
+
+  ```go
+  // postgres.go — the write and the enqueue commit together
+  func (s Store) SaveAndNotify(ctx context.Context, tx pgx.Tx, w widgets.Widget) error {
+      if err := s.q.WithTx(tx).SaveWidget(ctx, db.SaveWidgetParams{
+          ID:   w.ID,
+          Name: w.Name,
+      }); err != nil {
+          return fmt.Errorf("save widget %s: %w", w.ID, err)
+      }
+      _, err := s.river.AddTx(ctx, river.AddTxArgs{
+          Tx:   tx,
+          Args: widgets.NotifyArgs{WidgetID: w.ID},
+          Opts: &river.InsertOpts{Queue: "widgets", UniqueOpts: river.UniqueOpts{ByArgs: true}},
+      })
+      return err
+  }
+  ```
+- **Caching is go-redis through a port.** `platform/redis` owns the client;
+  slices consume a narrow port like `Cache interface { Get(ctx, key) ...
+  Set(...) }`, never `*redis.Client` — the same consumer-defined port law as
+  everything else.
 
 ## Persistence rules (handbook doc 08)
 
@@ -142,10 +188,13 @@ type WidgetStore interface {
   `internal/gen/db` (package db); the `postgres.go` adapter is the only
   consumer. `make generate` / `make gen-check` keep it honest; never hand-edit
   `internal/gen/**`.
-- **Goose migrations**: paired Up/Down sections in timestamped files
-  (`make migrate-add NAME=add_orders`), applied with `go tool goose` as a
-  deploy step — **never at server startup**. The integration suite walks
-  apply -> down -> apply so reversal stays honest.
+- **golang-migrate migrations**: paired Up/Down files in `migrations/`
+  (`make migrate-add NAME=add_orders`), applied with `go tool migrate` as a
+  **deploy step** — **never at server startup**; under PgBouncer's transaction
+  pooling mode schema work cannot ride a pooled connection anyway. The
+  integration suite walks apply -> down -> apply so reversal stays honest.
+  goose (`go tool goose`) is the explicit acceptable alternative with the same
+  Up/Down discipline.
 - **The adapter is dumb**: call gen/db, map rows to domain, translate driver
   errors inward. No SQL outside the slice's `queries.sql`; no pgx types leak
   past `postgres.go`.
@@ -161,15 +210,20 @@ type WidgetStore interface {
 - **`slog` with the JSON handler is the only logger**; `request_id` from
   middleware on every per-request log. Log at the boundary where context
   exists; never log inside `domain.go`; never log-and-return the same error.
-- OpenTelemetry is deliberately cut; context propagation is real, so adding
-  `otelhttp` at the chain head later touches no slice code.
+- **OpenTelemetry is REQUIRED**: `otelhttp.NewHandler` wraps the server at the
+  chain head; context propagation is real, so the trace context flows into use
+  cases and adapters untouched and adding a span inside a slice touches only
+  that slice. Metrics ride the prometheus client (`client_golang`), mounted as
+  `/metrics` off the same chi tree at the root.
+- PgBouncer runs in transaction pooling mode in front of pgxpool; the pool is
+  sized for it and prepared statements stay behind the gen/db adapter.
 
 ## Testing shape and the gate
 
 - **Fakes, not mocks**: port interfaces are 1-2 methods, so unit tests write
   plain in-memory fakes over `ports.go` — no mocking framework, no database,
   no network. Integration (testcontainers Postgres) runs under
-  `-tags=integration`; godog acceptance runs over the real mux wired with
+  `-tags=integration`; godog acceptance runs over the real chi server wired with
   fakes.
 - The gate: `make ci` = gofmt check + `go vet ./...` + `golangci-lint run` +
   gen-check + `go test ./...`.

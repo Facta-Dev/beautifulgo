@@ -10,9 +10,10 @@ backend-go stack, plus a proof module that shows every rule firing.
   staticcheck, and unused; the `enable` list adds contextcheck, depguard,
   errname, errorlint, and noctx; `formatters` enables gofmt.
 - `lints/check/` — the "every rule fires" proof. A throwaway Go module
-  (`github.com/beautifulgo/check`) with a clean six-file slice that must
-  produce zero findings, and one deliberately violating file per rule, each
-  violation on a line ending with a `// want <linter>` marker.
+  (`github.com/beautifulgo/check`) with a clean reference slice (domain,
+  ports, usecase) that must produce zero findings, and one deliberately
+  violating file per rule, each violation on a line ending with a
+  `// want <linter>` marker.
 - `scripts/check-lints.sh` — runs the proof: `golangci-lint run` over
   `lints/check/` with the config (machine-readable output), failing if a
   marker stays quiet, if anything unmarked reports, if the clean slice
@@ -57,8 +58,8 @@ slice-isolation, platform-no-features.
 | errname | enable | sentinels not named `ErrX`, error types not named `XError` | §5 |
 | errorlint | enable | `%s` wrapping an error, type assertion on an error, `==` on errors | §5 |
 | noctx | enable | `http.Get`/`NewRequest`/`Client.Get` without a context | §6 |
-| depguard: domain-pure | enable, files `**/internal/features/**/domain.go` | allow-list: the standard library ($gostd) plus `internal/shared` only — so domain.go importing net/http, database/sql, pgx, a third-party package, internal/gen, internal/platform, or another slice all fail | §2 architecture contract |
-| depguard: usecase-transport-free | enable, files `**/internal/features/**/usecase.go` + `ports.go` | use case or ports files importing net/http, database/sql, pgx, internal/gen, internal/platform | §2 (mechanism names belong to adapters, doc 04) |
+| depguard: domain-pure | enable, files `**/internal/features/**/domain.go` | allow-list: the standard library ($gostd) plus `internal/shared` only — so domain.go importing net/http, database/sql, pgx, chi, a third-party package, internal/gen, internal/platform, or another slice all fail | §2 architecture contract |
+| depguard: usecase-transport-free | enable, files `**/internal/features/**/usecase.go` + `ports.go` | use case or ports files importing net/http, database/sql, pgx, chi, internal/gen, internal/platform | §2 (mechanism names belong to adapters, doc 04) |
 | depguard: slice-isolation | enable, files `**/internal/features/**` | any file under a slice importing another slice's package | §2 (slices sealed; composition in cmd/api) |
 | depguard: platform-no-features | enable, files `**/internal/platform/**` | platform code importing a feature slice | §2 (platform serves features, never consumes) |
 

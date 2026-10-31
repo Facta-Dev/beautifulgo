@@ -37,6 +37,8 @@ linters:
           deny:
             - pkg: net/http
               desc: domain stays transport-agnostic — adapters live in http.go
+            - pkg: github.com/go-chi/chi/v5
+              desc: chi is a routing mechanism — routes live in http.go (this prefix-match covers chi's subpackages)
             - pkg: database/sql
               desc: persistence is a port; declare it in ports.go
             - pkg: github.com/jackc/pgx/v5
@@ -52,6 +54,8 @@ linters:
           deny:
             - pkg: net/http
               desc: mechanism names belong to adapters (doc 04)
+            - pkg: github.com/go-chi/chi/v5
+              desc: the router belongs to http.go — use cases call ports, never chi (prefix-match covers its subpackages)
             - pkg: database/sql
               desc: persistence is a port
             - pkg: github.com/jackc/pgx/v5

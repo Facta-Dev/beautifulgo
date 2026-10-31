@@ -11,7 +11,7 @@
       "id": "composition",
       "type": "backend",
       "label": "cmd/api",
-      "sublabel": "config · pgxpool · mux",
+      "sublabel": "config · wire · chi",
       "pos": [
         40,
         100
@@ -81,7 +81,7 @@
       "id": "platform-email",
       "type": "backend",
       "label": "platform/email",
-      "sublabel": "outbox · senders",
+      "sublabel": "River emails · senders",
       "pos": [
         635,
         260
@@ -122,8 +122,8 @@
     {
       "id": "email-jobs",
       "type": "database",
-      "label": "email_jobs",
-      "sublabel": "outbox · SKIP LOCKED",
+      "label": "river_job",
+      "sublabel": "River · unique + periodic",
       "pos": [
         635,
         420
@@ -137,7 +137,7 @@
   "boundaries": [
     {
       "kind": "region",
-      "label": "Composition root",
+      "label": "Composition root — google/wire",
       "wraps": [
         "composition"
       ]
@@ -162,7 +162,7 @@
     },
     {
       "kind": "region",
-      "label": "Kernel + outbox state",
+      "label": "Kernel + River state",
       "wraps": [
         "kernel",
         "email-jobs"
@@ -174,13 +174,13 @@
       "id": "s1",
       "from": "composition",
       "to": "auth-slices",
-      "label": "Register(mux)"
+      "label": "Register(chi.Router)"
     },
     {
       "id": "s2",
       "from": "composition",
       "to": "authx",
-      "label": "wire adapters"
+      "label": "wire providers"
     },
     {
       "id": "s3",
@@ -192,7 +192,7 @@
       "id": "s4",
       "from": "widgets-realtime",
       "to": "platform-email",
-      "label": "enqueue · publish"
+      "label": "river.AddTx · publish"
     },
     {
       "id": "s5",
@@ -204,7 +204,7 @@
       "id": "s6",
       "from": "platform-email",
       "to": "email-jobs",
-      "label": "claim · mark_sent"
+      "label": "River fetch · ack"
     },
     {
       "id": "s7",
@@ -219,16 +219,17 @@
       "title": "Vertical slices",
       "items": [
         "internal/features/<slice> ships the same files, always: domain.go · ports.go · usecase.go · http.go · postgres.go · queries.sql · module.go",
-        "module.go Register(mux, Deps) is the whole wiring contract; acceptance tests call the same Register with fakes — the root is the only knower of concretions",
-        "adding a slice = one directory + queries.sql + migration + make generate + one line in cmd/api/main.go; anything else editing means the template regressed"
+        "module.go Register(r chi.Router, Deps) is the whole wiring contract; chi.URLParam reads the same {id} wildcards ServeMux did, so handlers stay net/http",
+        "adding a slice = one directory + queries.sql + golang-migrate migration + make generate + one line in cmd/api/main.go; anything else editing means the template regressed"
       ]
     },
     {
       "dot": "emerald",
-      "title": "Platform + gen",
+      "title": "Root + platform",
       "items": [
+        "the composition root wires everything with google/wire (compile-time codegen) — pgxpool built once, sitting behind PgBouncer transaction pooling",
         "platform/authx mints HS256 access tokens and hashes bcrypt cost 10 over a pepper pre-hash that sidesteps the 72-byte cap",
-        "sqlc compiles each slice's queries.sql against migrations/ into committed internal/gen/db; make gen-check fails on drift, never hand-edit gen/**"
+        "sqlc compiles each slice's queries.sql against migrations/ into committed internal/gen/db; make gen-check fails on drift, never hand-edit gen/** — transport DTOs validate with go-playground/validator"
       ]
     },
     {
@@ -236,7 +237,7 @@
       "title": "Ports over imports",
       "items": [
         "slices never import slices: shared capability gets promoted into internal/shared or platform/, or duplicated through a port",
-        "widgets publishes created/updated/deleted through the event-bus port, never into the realtime slice's handler",
+        "widgets publishes created/updated/deleted through the event-bus port; durable email/webhook work enqueues River jobs in the same transaction — no goroutine in a handler",
         "depguard (lints/) makes domain-pure and slice-isolation violations red before review — fix the shape, not the lint"
       ]
     }

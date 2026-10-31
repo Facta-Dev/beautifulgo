@@ -30,7 +30,7 @@ Go example out of nested fences, or extend this script.
 
 Domain snippets keep the architecture law: a ```go domain fence, a block whose
 first comment names domain.go, or a `package domain` clause must not import
-net/http, database/sql, pgx, internal/gen, internal/platform, or sibling
+net/http, database/sql, pgx, chi, internal/gen, internal/platform, or sibling
 slices -- the domain-pure rule from lints/.golangci.yml, enforced in the docs.
 
 Fragments with no harness entry are auto-wrapped as `package p` / `func _()` /
@@ -68,7 +68,7 @@ DOC_GLOBS = (
 FENCE_RE = re.compile(r"^(\s*)(`{3,}|~{3,})\s*(.*)$")
 CODE = "{code}"
 
-DOMAIN_FORBIDDEN_PREFIXES = ("net/http", "database/sql", "github.com/jackc/pgx/")
+DOMAIN_FORBIDDEN_PREFIXES = ("net/http", "database/sql", "github.com/jackc/pgx/", "github.com/go-chi/chi/")
 DOMAIN_FORBIDDEN_PARTS = ("/internal/gen", "/internal/platform", "/internal/features")
 DOMAIN_COMMENT_RE = re.compile(r"^\s*//\s*.*\bdomain\.go\b")
 PACKAGE_RE = re.compile(r"^\s*package\s+[A-Za-z_]\w*\s*$", re.M)
@@ -88,7 +88,6 @@ class Problem:
     message: str
 
 
-@dataclass
 @dataclass
 class Block:
     path: str

@@ -13,10 +13,12 @@
           "edge",
           "hexagon-api",
           "outbox-worker",
+          "pgbouncer",
           "postgres",
+          "redis",
           "mail-vendor"
         ],
-        "note": "HTTP, WS and SSE cross the edge into the hexagon; cmd/api and cmd/worker are one image, Postgres is the only state, the vendor is a port."
+        "note": "chi routes into the hexagon; pgxpool hides behind PgBouncer, Redis rides go-redis, River powers cmd/worker — Docker images on Kubernetes."
       },
       {
         "id": "auth",
@@ -25,9 +27,10 @@
           "http-clients",
           "edge",
           "hexagon-api",
+          "pgbouncer",
           "postgres"
         ],
-        "note": "Signup, verify and login ride the slices; codes and sessions persist in Postgres, access JWTs never leave the response."
+        "note": "Signup, verify and login ride the slices; codes and sessions persist in Postgres through PgBouncer, access JWTs never leave the response."
       },
       {
         "id": "realtime",
@@ -35,9 +38,10 @@
         "focus": [
           "http-clients",
           "edge",
-          "hexagon-api"
+          "hexagon-api",
+          "redis"
         ],
-        "note": "WS /api/v1/ws?token= closes 4001 on a bad token; SSE flushes hub events per write and dies with the request context."
+        "note": "WS /api/v1/ws?token= closes 4001 on a bad token; SSE flushes per write and dies with the request; cache reads ride go-redis."
       },
       {
         "id": "ops",
@@ -46,10 +50,11 @@
           "edge",
           "hexagon-api",
           "outbox-worker",
+          "pgbouncer",
           "postgres",
           "mail-vendor"
         ],
-        "note": "readyz pings the pool; migrations are a separate goose step, never startup; the worker claims email_jobs with SKIP LOCKED."
+        "note": "readyz pings the pool; golang-migrate runs as a deploy step, never startup; cmd/worker runs the River client and drains jobs on SIGTERM."
       }
     ],
     "output": "c4-containers.html"
@@ -60,60 +65,132 @@
       "type": "external",
       "label": "HTTP clients",
       "sublabel": "browser · SDK · WS",
-      "pos": [30, 240],
-      "size": [120, 60]
+      "pos": [
+        30,
+        240
+      ],
+      "size": [
+        120,
+        60
+      ]
     },
     {
       "id": "edge",
       "type": "cloud",
       "label": "Edge proxy",
-      "sublabel": "upstream :80 · TLS",
-      "pos": [280, 240],
-      "size": [130, 60]
+      "sublabel": "K8s ingress · TLS",
+      "pos": [
+        280,
+        240
+      ],
+      "size": [
+        130,
+        60
+      ]
     },
     {
       "id": "hexagon-api",
       "type": "backend",
       "label": "cmd/api hexagon",
-      "sublabel": "stdlib mux · slices",
-      "pos": [500, 240],
-      "size": [140, 60]
+      "sublabel": "chi mux · slices · otelhttp",
+      "pos": [
+        500,
+        240
+      ],
+      "size": [
+        150,
+        60
+      ]
     },
     {
       "id": "outbox-worker",
       "type": "backend",
       "label": "cmd/worker",
-      "sublabel": "outbox drain · janitor",
-      "pos": [720, 240],
-      "size": [140, 60]
+      "sublabel": "River workers · drain",
+      "pos": [
+        720,
+        240
+      ],
+      "size": [
+        150,
+        60
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis (Dragonfly)",
+      "sublabel": "go-redis · cache",
+      "pos": [
+        280,
+        120
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "pgbouncer",
+      "type": "backend",
+      "label": "PgBouncer",
+      "sublabel": "transaction pooling",
+      "pos": [
+        500,
+        120
+      ],
+      "size": [
+        140,
+        60
+      ]
     },
     {
       "id": "postgres",
       "type": "database",
       "label": "PostgreSQL 17",
-      "sublabel": "pgx/v5 pool · goose",
-      "pos": [720, 80],
-      "size": [150, 60]
+      "sublabel": "pgx/v5 · river_job · golang-migrate",
+      "pos": [
+        720,
+        120
+      ],
+      "size": [
+        170,
+        60
+      ]
     },
     {
       "id": "mail-vendor",
       "type": "external",
       "label": "Mail vendor",
       "sublabel": "SMTP · offline console",
-      "pos": [960, 80],
-      "size": [140, 60]
+      "pos": [
+        960,
+        240
+      ],
+      "size": [
+        140,
+        60
+      ]
     }
   ],
   "boundaries": [
     {
       "kind": "region",
-      "label": "The <app> runtime — one image, two entrypoints",
-      "wraps": ["edge", "hexagon-api", "outbox-worker"]
+      "label": "The <app> runtime — Docker images on Kubernetes",
+      "wraps": [
+        "edge",
+        "hexagon-api",
+        "outbox-worker"
+      ]
     },
     {
       "kind": "region",
       "label": "State plane — the only persistence boundary",
-      "wraps": ["postgres", "mail-vendor"]
+      "wraps": [
+        "redis",
+        "pgbouncer",
+        "postgres"
+      ]
     }
   ],
   "connections": [
@@ -128,37 +205,42 @@
       "id": "k2",
       "from": "edge",
       "to": "hexagon-api",
-      "label": "route /api"
+      "label": "route /api — chi"
+    },
+    {
+      "id": "k6",
+      "from": "hexagon-api",
+      "to": "redis",
+      "label": "go-redis"
     },
     {
       "id": "k3",
       "from": "hexagon-api",
-      "to": "postgres",
-      "label": "sqlc typed queries",
+      "to": "pgbouncer",
+      "label": "pgxpool (pgx/v5)",
       "fromSide": "top",
-      "toSide": "left",
-      "via": [[570, 110], [680, 110]],
-      "labelAt": [645, 102]
+      "toSide": "bottom"
+    },
+    {
+      "id": "k5",
+      "from": "pgbouncer",
+      "to": "postgres",
+      "label": "transaction pooling"
     },
     {
       "id": "k4",
       "from": "outbox-worker",
-      "to": "postgres",
-      "label": "claim + settle jobs",
-      "fromSide": "top",
-      "toSide": "bottom",
-      "labelDx": 44
+      "to": "pgbouncer",
+      "label": "river.AddTx · fetch · ack"
     },
     {
-      "id": "k5",
+      "id": "k7",
       "from": "outbox-worker",
       "to": "mail-vendor",
       "label": "render + send",
       "variant": "dashed",
       "fromSide": "right",
-      "toSide": "left",
-      "via": [[930, 270], [930, 110]],
-      "labelAt": [930, 200]
+      "toSide": "left"
     }
   ],
   "cards": [
@@ -175,18 +257,18 @@
       "dot": "emerald",
       "title": "The stack it teaches",
       "items": [
-        "Go 1.27 stdlib net/http: method + wildcard ServeMux matching, no router library",
-        "pgx/v5 pool opened once at the composition root; sqlc compiles per-slice queries.sql into committed internal/gen/db",
-        "goose annotated reversible migrations applied by go tool goose — never at server startup (readyz catches drift)"
+        "chi is the router: go-chi/chi/v5 mounts the same method + wildcard patterns (POST /api/v1/widgets/{id}) — the ServeMux shape carried by chi.URLParam; gin/echo are acceptable alternatives, fiber only for throughput-critical gateways",
+        "pgx/v5 + pgxpool is built once at the composition root and hides behind PgBouncer transaction pooling; cache traffic rides go-redis over the Dragonfly-compatible protocol",
+        "golang-migrate applies reversible migrations as a deploy step — never at server startup (readyz catches drift); goose is the sanctioned alternative"
       ]
     },
     {
       "dot": "rose",
-      "title": "The lint law",
+      "title": "Jobs, observability, deploy",
       "items": [
-        "lints/ is a drop-in golangci-lint v2 config whose depguard rules are the architecture: domain-pure, slice-isolation",
-        "every rule in the config is proven to fire against the check module in lints/check/",
-        "slog is the only logging dependency; otel is deliberately cut — ctx-first seams make it an addition, not a refactor"
+        "durable email/webhook delivery runs on River: river.AddTx inside the same Postgres transaction, retries with backoff, unique + periodic schedules — the hand-rolled outbox drain is what you must NOT build yourself",
+        "OpenTelemetry is required — otelhttp wraps the mux at the chain head — and Prometheus serves /metrics; google/wire wires cmd/api, go-playground/validator checks DTOs at http.go; slog (zap alt) is the only logging dep",
+        "one Docker image, two Deployments, Kubernetes under the edge proxy; slog keeps request_id from the middleware, never domain.go"
       ]
     }
   ]

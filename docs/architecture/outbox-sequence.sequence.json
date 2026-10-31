@@ -2,31 +2,31 @@
   "schema_version": 1,
   "diagram_type": "sequence",
   "meta": {
-    "title": "beautifulgo — Outbox Sequence",
+    "title": "beautifulgo — Durable Delivery Sequence (River)",
     "quality_profile": "showcase",
     "output": "outbox-sequence.sequence.html"
   },
   "participants": [
     { "id": "slices", "type": "backend", "label": "auth slices", "sublabel": "use-cases" },
-    { "id": "pg", "type": "database", "label": "Postgres", "sublabel": "email_jobs rows" },
-    { "id": "worker", "type": "backend", "label": "outbox worker", "sublabel": "drain · janitor" },
+    { "id": "pg", "type": "database", "label": "Postgres", "sublabel": "river_job rows · PgBouncer" },
+    { "id": "worker", "type": "backend", "label": "River worker", "sublabel": "fetch · periodic cron" },
     { "id": "smtp", "type": "external", "label": "Mail vendor", "sublabel": "SMTP · console" }
   ],
   "segments": [
-    { "from": 146, "to": 216, "label": "Enqueue in tx" },
-    { "from": 240, "to": 458, "label": "Claim · send · settle" },
-    { "from": 478, "to": 548, "label": "Janitor" }
+    { "from": 146, "to": 216, "label": "river.AddTx in tx" },
+    { "from": 240, "to": 458, "label": "Fetch · work · settle" },
+    { "from": 478, "to": 548, "label": "Janitor (PeriodicJobs)" }
   ],
   "messages": [
-    { "id": "q1", "from": "slices", "to": "pg", "y": 170, "label": "INSERT user + email_jobs in one tx", "variant": "emphasis" },
-    { "id": "q2", "from": "pg", "to": "slices", "y": 206, "label": "committed", "variant": "return" },
-    { "id": "q3", "from": "worker", "to": "pg", "y": 264, "label": "poll 2s · claim CTE (SKIP LOCKED)" },
-    { "id": "q4", "from": "pg", "to": "worker", "y": 298, "label": "queued rows · sending lease", "variant": "return" },
+    { "id": "q1", "from": "slices", "to": "pg", "y": 170, "label": "INSERT user + river.AddTx(job) in one tx", "variant": "emphasis" },
+    { "id": "q2", "from": "pg", "to": "slices", "y": 206, "label": "committed · job durable", "variant": "return" },
+    { "id": "q3", "from": "worker", "to": "pg", "y": 264, "label": "River fetch: at-least-once, unique jobs" },
+    { "id": "q4", "from": "pg", "to": "worker", "y": 298, "label": "job row · Work(ctx, job)", "variant": "return" },
     { "id": "q5", "from": "worker", "to": "smtp", "y": 336, "label": "render verify_email → send" },
     { "id": "q6", "from": "smtp", "to": "worker", "y": 370, "label": "ack · or error", "variant": "return" },
-    { "id": "q7", "from": "worker", "to": "pg", "y": 408, "label": "mark_sent" },
-    { "id": "q8", "from": "worker", "to": "pg", "y": 442, "label": "on error: backoff 2^n ±20% · dead-letter" },
-    { "id": "q9", "from": "worker", "to": "pg", "y": 504, "label": "hourly janitor: purge expired sessions + codes" },
+    { "id": "q7", "from": "worker", "to": "pg", "y": 408, "label": "Ack() → river_job completed" },
+    { "id": "q8", "from": "worker", "to": "pg", "y": 442, "label": "on error: River backoff → discarded" },
+    { "id": "q9", "from": "worker", "to": "pg", "y": 504, "label": "river.PeriodicJobs cron: purge expired sessions + codes" },
     { "id": "q10", "from": "pg", "to": "worker", "y": 538, "label": "purged rows", "variant": "return" }
   ],
   "activations": [
@@ -41,26 +41,26 @@
   "cards": [
     {
       "dot": "cyan",
-      "title": "Zero-broker outbox",
+      "title": "Outbox pattern via River",
       "items": [
-        "the enqueue rides the same pgx transaction as the auth write — no dual-write gap, at-least-once by construction",
-        "claim = queued due now OR sending older than the 5-minute lease, FOR UPDATE SKIP LOCKED, safe per replica"
+        "the user write and its email must commit together — River's river.AddTx delivers the outbox pattern with no outbox table, no claim CTE, no leases",
+        "enqueues ride riverClient.AddTx(ctx, args) with Tx: the SAME Postgres transaction as the sqlc write — at-least-once by construction"
       ]
     },
     {
       "dot": "emerald",
-      "title": "Delivery",
+      "title": "Fetch + work",
       "items": [
-        "render + send: templates live in platform/email; Console when <APP>_OFFLINE or host empty, else net/smtp PlainAuth STARTTLS",
-        "batch <APP>_OUTBOX_BATCH (10) per tick, poll <APP>_OUTBOX_POLL (2s) — one in-process worker in cmd/api or a standalone cmd/worker"
+        "River workers pull durable river_job rows — at-least-once, deduped by UniqueOpts; no poll interval, batch size or SKIP LOCKED CTE to tune",
+        "the worker calls Work(ctx, job): render + send via the sender port — Console in dev, SMTP in prod; migrations ran with golang-migrate as a deploy step, never startup"
       ]
     },
     {
       "dot": "rose",
       "title": "Failure + purge",
       "items": [
-        "failure requeues with 2^n-minute backoff (±20% jitter) and dead-letters to failed at max_retries 3 — visible in email_jobs and in slog rows",
-        "the janitor sweeps expired sessions, email_verifications and password_resets hourly; it never touches audit rows or rotation history"
+        "errors follow River's backoff and discard after the configured max attempts — visible in river_job and in slog rows, not in email_jobs",
+        "river.PeriodicJobs (cron spec) covers the old janitor sweep: expired sessions, email_verifications and password_resets purged hourly; audit rows and rotation history untouched"
       ]
     }
   ]

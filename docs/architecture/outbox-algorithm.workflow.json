@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "beautifulgo — Outbox Algorithm",
+    "title": "beautifulgo — Durable Email Delivery (River)",
     "quality_profile": "showcase",
     "output": "outbox-algorithm.workflow.html"
   },
@@ -13,11 +13,11 @@
     },
     {
       "id": "outbox",
-      "label": "Outbox"
+      "label": "river_job"
     },
     {
       "id": "worker",
-      "label": "Drain loop"
+      "label": "River workers"
     },
     {
       "id": "delivery",
@@ -25,7 +25,7 @@
     },
     {
       "id": "ledger",
-      "label": "Ledger"
+      "label": "Settle"
     }
   ],
   "phases": [
@@ -37,7 +37,7 @@
     },
     {
       "id": "drain",
-      "label": "Drain",
+      "label": "River fetch",
       "fromCol": 2,
       "toCol": 3,
       "variant": "emphasis"
@@ -71,23 +71,23 @@
       "lane": "outbox",
       "col": 1,
       "type": "database",
-      "label": "email_jobs",
-      "sublabel": "transactional INSERT"
+      "label": "river.AddTx",
+      "sublabel": "same Postgres tx"
     },
     {
       "id": "claim",
       "lane": "worker",
       "col": 2,
-      "type": "database",
-      "label": "Claim CTE",
-      "sublabel": "SKIP LOCKED · 5m lease"
+      "type": "backend",
+      "label": "River workers",
+      "sublabel": "Kind() · WorkerDefaults"
     },
     {
       "id": "render",
       "lane": "worker",
       "col": 3,
       "type": "backend",
-      "label": "Render",
+      "label": "Render + send",
       "sublabel": "template · locale"
     },
     {
@@ -95,24 +95,24 @@
       "lane": "delivery",
       "col": 4,
       "type": "cloud",
-      "label": "Sender",
-      "sublabel": "Console · SMTP"
+      "label": "Sender port",
+      "sublabel": "SMTP · console dev"
     },
     {
       "id": "backoff",
       "lane": "delivery",
       "col": 2,
       "type": "backend",
-      "label": "Backoff",
-      "sublabel": "2^n ±20% jitter"
+      "label": "River retries",
+      "sublabel": "backoff · discard"
     },
     {
       "id": "settle",
       "lane": "ledger",
       "col": 5,
       "type": "database",
-      "label": "Settle",
-      "sublabel": "sent · failed dead-letter"
+      "label": "river_job states",
+      "sublabel": "running · completed · discarded"
     }
   ],
   "edges": [
@@ -125,14 +125,14 @@
       "id": "o2",
       "from": "enqueue",
       "to": "claim",
-      "label": "poll 2s · batch 10",
+      "label": "durable river_job rows",
       "toSide": "top"
     },
     {
       "id": "o3",
       "from": "claim",
       "to": "render",
-      "label": "due rows"
+      "label": "Work(ctx, job)"
     },
     {
       "id": "o4",
@@ -144,20 +144,20 @@
       "id": "o5",
       "from": "send",
       "to": "settle",
-      "label": "sent"
+      "label": "complete"
     },
     {
       "id": "o6",
       "from": "send",
       "to": "backoff",
-      "label": "failed"
+      "label": "error"
     },
     {
       "id": "o7",
       "from": "backoff",
       "to": "claim",
       "route": "return-left",
-      "label": "requeue 2^n",
+      "label": "retry → max attempts → discarded",
       "fromSide": "left",
       "toSide": "left",
       "labelSegment": 1
@@ -166,26 +166,26 @@
   "cards": [
     {
       "dot": "cyan",
-      "title": "Transactional enqueue",
+      "title": "The outbox pattern, already built",
       "items": [
-        "auth use-cases INSERT email_jobs in the same pgx transaction as the users/sessions writes — no dual-write gap (platform/email/queue.go, deliberately sqlc-free)",
-        "the claim CTE takes queued rows due now PLUS sending rows older than the 5-minute lease, FOR UPDATE SKIP LOCKED — at-least-once, replica-safe"
+        "the write and its after-effect must commit together — hand-rolled outbox tables, polling loops and janitor goroutines are the canonical NOT-built-here example now that River ships the mechanism",
+        "riverClient.AddTx(ctx, river.AddTxArgs{Tx: tx, ...}) enqueues inside the SAME Postgres transaction as the sqlc write — no dual-write gap, at-least-once by construction"
       ]
     },
     {
       "dot": "emerald",
-      "title": "Drain",
+      "title": "Workers, not loops",
       "items": [
-        "the worker polls every <APP>_OUTBOX_POLL (2s) with batch <APP>_OUTBOX_BATCH (10); cmd/api runs one in-process worker, cmd/worker a standalone drain",
-        "SelectSender picks Console when <APP>_OFFLINE=true or the SMTP host is empty; otherwise net/smtp PlainAuth STARTTLS"
+        "work is a job struct with a Kind() (+ Validate), handed to a river.WorkerDefaults worker; no poll intervals, no SKIP LOCKED CTE, no leases to tune",
+        "cmd/worker runs the River client: queues for email and webhooks; river.PeriodicJobs (cron spec) covers the old janitor sweeps like purging expired sessions and codes"
       ]
     },
     {
       "dot": "rose",
-      "title": "Outcomes",
+      "title": "Durability",
       "items": [
-        "success lands sent with sent_at; failure backs off 2^n minutes with ±20% jitter up to max_retries 3, then dead-letters to status failed",
-        "the janitor loop (<APP>_JANITOR_POLL 1h) purges expired sessions and code rows; audit_logs is never touched"
+        "UniqueOpts dedupes resubmits so re-signup doesn't double-email; failures follow River's backoff and discard after the configured max attempts, visible in river_job and slog rows",
+        "the client drains in-flight jobs on SIGTERM — the same graceful-shutdown context discipline as the API server; migrations run with golang-migrate as a deploy step, never at worker startup"
       ]
     }
   ]

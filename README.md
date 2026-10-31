@@ -314,15 +314,20 @@ the general rules apply: the skills do not impose six-file slices on a CLI.
 | Concern | The stack says |
 |---|---|
 | Language and module | Go 1.27, one `go.mod` per repo, no per-slice modules |
-| Routing | stdlib `net/http` `ServeMux` with method + wildcard patterns — **no gin/echo/fiber/chi** |
+| Routing | chi — REQUIRED, `net/http`-native (`github.com/go-chi/chi/v5`); gin/echo acceptable alternatives, fiber only for throughput-critical gateways |
 | Database | `pgx/v5` through `pgxpool`, built once at the composition root |
 | Queries | sqlc, per-slice `queries.sql` → committed `internal/gen/db`, never hand-edited |
-| Migrations | goose with `+goose Up` and `+goose Down` sections, never applied at server startup |
+| Migrations | golang-migrate, applied as an ops/CI step — never at server startup (goose is the sanctioned alternative) |
 | Logging | `slog` with the JSON handler, `request_id` from middleware, never inside `domain.go` |
 | Linting | `golangci-lint run` with the depguard architecture law after `gofmt -l` and `go vet` |
 | Auth | bcrypt + pepper and JWT through the `authx` platform adapter |
-| Async work | an outbox worker pattern, not goroutines spawned in handlers |
-| Cache and realtime | Dragonfly over the Redis protocol via go-redis, and pgvector, only where the template's realtime and persistence docs define them |
+| Jobs | River durable jobs — same-transaction enqueue, automatic retries, unique and periodic schedules; not goroutines spawned in handlers |
+| DI | google/wire, compile-time codegen — no runtime reflection |
+| Validation | go-playground/validator at the transport DTOs (`http.go`), never in the domain |
+| Cache and realtime | go-redis is the mandated cache client — Dragonfly over the Redis protocol (unconditional where the stack runs) — and pgvector for realtime and persistence only where the template's docs define them |
+| Observability | OpenTelemetry spans plus Prometheus `/metrics` |
+| DB pooling | PgBouncer in transaction mode in front of `pgxpool` |
+| Deployment | Docker images, running on Kubernetes |
 
 The template's topology is part of the contract, not a suggestion: hexagonal (ports and
 adapters) plus vertical slicing, dependencies pointing inward (composition root → slices
@@ -330,7 +335,7 @@ adapters) plus vertical slicing, dependencies pointing inward (composition root 
 `http.go`, `postgres.go`, `module.go` — plus its `queries.sql`; `platform/` holds the
 transversal adapters (config, httpx, pgx, email, realtime, authx); `internal/shared/`
 holds the kernel (`apperr`, `rolex`, `clockx`, `idgen`). Routes are declared per slice in
-`module.go: Register(mux, Deps)` and composed at `cmd/api`. Slices never import each
+`module.go: Register(r chi.Router, Deps)` and composed at `cmd/api`. Slices never import each
 other, and the domain imports nothing that does I/O. The stack mandate is deliberately
 narrow: leave the template's shape alone (a correct six-file slice is already lint-clean)
 and spend judgment on the code inside it.
@@ -359,8 +364,8 @@ in four depguard rules:
 
 | Rule | Files | What it enforces |
 |---|---|---|
-| `domain-pure` | `**/domain.go` | an allow-list: the standard library plus `internal/shared` only — notably denying `net/http`, `database/sql`, `pgx/v5`, `internal/gen`, `internal/platform`, and other slices |
-| `usecase-transport-free` | `**/usecase.go`, `**/ports.go` | `net/http`, `database/sql`, `pgx/v5`, `internal/gen`, `internal/platform` |
+| `domain-pure` | `**/domain.go` | an allow-list: the standard library plus `internal/shared` only — notably denying `net/http`, chi (`github.com/go-chi/chi/v5`, prefix-matching its subpackages), `database/sql`, `pgx/v5`, `internal/gen`, `internal/platform`, and other slices |
+| `usecase-transport-free` | `**/usecase.go`, `**/ports.go` | `net/http`, chi (`github.com/go-chi/chi/v5`), `database/sql`, `pgx/v5`, `internal/gen`, `internal/platform` |
 | `slice-isolation` | `**/internal/features/**` | any import from `internal/features` — slices stay sealed, composition happens in `cmd/api` |
 | `platform-no-features` | `**/internal/platform/**` | any import from `internal/features` — platform serves features, never consumes them |
 
@@ -374,7 +379,8 @@ all on, so `%s`-wrapped errors, `err == sentinel` comparisons, and
 cast-asserted error types all fail the gate.
 
 Every rule in the file is proven to fire. [`lints/check/`](lints/check/) is a throwaway
-Go module with a clean six-file slice that must produce zero findings, next to one
+Go module with a clean reference slice (domain, ports, usecase) that must produce zero
+findings, next to one
 deliberately violating file per rule, each marked `// want <linter>`; this script runs
 the gate on it from the repo root:
 
@@ -400,7 +406,7 @@ while coding:
 5. Errors and panics: sentinels, `%w`, `errors.Is`/`As`; panic only for programmer bugs
 6. Context propagation: `ctx` first, never stored in structs, never dropped mid-chain
 7. Concurrency: every goroutine has an owner and a shutdown path; channels for ownership, mutexes for state
-8. Standard library first: stdlib `ServeMux`, no framework routers; dependencies cost supply-chain surface
+8. Standard library first: chi is the stack's one sanctioned router (`net/http`-native); everything else stays stdlib — dependencies cost supply-chain surface
 9. Packages and file organization: the slice topology wins; no horizontal god-directories
 10. Logging: slog only, JSON handler, structured attrs, never inside `domain.go`, never log-and-return
 11. Tests: table-driven with named fields, fakes over mocks, `t.Parallel`, `-race`
