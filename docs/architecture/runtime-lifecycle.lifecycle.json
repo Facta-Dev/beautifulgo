@@ -1,0 +1,164 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "beautifulgo — Runtime Lifecycle",
+    "quality_profile": "showcase",
+    "output": "runtime-lifecycle.lifecycle.html"
+  },
+  "mainPath": [
+    "boot",
+    "wire",
+    "serve",
+    "ready",
+    "flow"
+  ],
+  "states": [
+    {
+      "id": "boot",
+      "type": "start",
+      "label": "config.Load",
+      "sublabel": "typed env",
+      "step": "01",
+      "tag": "entry"
+    },
+    {
+      "id": "wire",
+      "type": "active",
+      "label": "wire depgraph",
+      "sublabel": "pgxpool · Register",
+      "step": "02"
+    },
+    {
+      "id": "serve",
+      "type": "active",
+      "label": "http serve",
+      "sublabel": ":8080 bind",
+      "step": "03"
+    },
+    {
+      "id": "ready",
+      "type": "decision",
+      "label": "readyz gate",
+      "sublabel": "SELECT 1 · 2s",
+      "step": "04",
+      "tag": "gate"
+    },
+    {
+      "id": "flow",
+      "type": "success",
+      "label": "Steady state",
+      "sublabel": "steady state",
+      "step": "05",
+      "tag": "done"
+    },
+    {
+      "id": "gatefail",
+      "type": "waiting",
+      "label": "402/403 gate",
+      "sublabel": "401 · 403 gates",
+      "tag": "pause"
+    },
+    {
+      "id": "drain",
+      "type": "active",
+      "label": "Outbox drain",
+      "sublabel": "claim CTE · backoff",
+      "tag": "automatic"
+    },
+    {
+      "id": "exitfail",
+      "type": "failure",
+      "label": "Exit 1",
+      "sublabel": "fail-closed boot",
+      "tag": "terminal"
+    },
+    {
+      "id": "degraded",
+      "type": "failure",
+      "label": "503 degraded",
+      "sublabel": "pool down",
+      "tag": "terminal"
+    },
+    {
+      "id": "recovered",
+      "type": "success",
+      "label": "Sent · purged",
+      "sublabel": "janitor + mark_sent",
+      "tag": "terminal"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "t1",
+      "from": "boot",
+      "to": "wire"
+    },
+    {
+      "id": "t2",
+      "from": "wire",
+      "to": "serve"
+    },
+    {
+      "id": "t3",
+      "from": "serve",
+      "to": "ready"
+    },
+    {
+      "id": "t4",
+      "from": "ready",
+      "to": "flow"
+    },
+    {
+      "id": "t5",
+      "from": "serve",
+      "to": "gatefail",
+      "variant": "security"
+    },
+    {
+      "id": "t6",
+      "from": "ready",
+      "to": "degraded",
+      "variant": "dashed",
+      "label": "DB down"
+    },
+    {
+      "id": "t7",
+      "from": "flow",
+      "to": "drain"
+    },
+    {
+      "id": "t8",
+      "from": "drain",
+      "to": "recovered",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Boot rail",
+      "items": [
+        "cmd/api never migrates — two replicas would race a startup migration; goose runs as a separate deployment step (go tool goose / migrate-up)",
+        "boot order is sequential: config → pgxpool → adapters → middleware chain → each slice's Register(mux, deps) → graceful ListenAndServe (SIGINT/SIGTERM drains)"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Gates + streams",
+      "items": [
+        "RequireAuth answers 401 envelopes AUTH_TOKEN_INVALID; RequireRole(Admin) raises the floor with rolex.AtLeast — /healthz and /readyz sit outside the middleware",
+        "WS auth happens after the handshake: a bad ?token= closes 4001 authentication_failed before any upgrade completes; SSE teardown rides r.Context()",
+        "shutdown drains in-flight handlers, then cancels baseCtx so SSE/WS pumps see ctx.Done()"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Explicit endings",
+      "items": [
+        "readyz pings the pool with a 2s timeout and answers a 503 {degraded} envelope — since migrations never run at startup, drift shows up here, loudly",
+        "config validation at boot fails in 200ms (required keys, known placeholder refusal) rather than at first use"
+      ]
+    }
+  ]
+}

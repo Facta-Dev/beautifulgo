@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "beautifulgo — Dataflow: identity + outbox",
+    "quality_profile": "showcase",
+    "output": "database-dataflow.dataflow.html"
+  },
+  "stages": [
+    {
+      "label": "Clients"
+    },
+    {
+      "label": "Use-cases"
+    },
+    {
+      "label": "Postgres"
+    },
+    {
+      "label": "Outbox"
+    },
+    {
+      "label": "Delivery"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "Auth client",
+      "sublabel": "bearer · cookie mode",
+      "stage": 0,
+      "row": 0
+    },
+    {
+      "id": "oauth",
+      "type": "external",
+      "label": "Google · GitHub",
+      "sublabel": "One-Tap · 302 callback",
+      "stage": 0,
+      "row": 2
+    },
+    {
+      "id": "slices",
+      "type": "backend",
+      "label": "Use-case slices",
+      "sublabel": "authsignup · session · admin",
+      "stage": 1,
+      "row": 1,
+      "width": 160
+    },
+    {
+      "id": "users",
+      "type": "database",
+      "label": "users · sessions",
+      "sublabel": "pgx pool · one tx",
+      "stage": 2,
+      "row": 0
+    },
+    {
+      "id": "codes",
+      "type": "database",
+      "label": "code tables",
+      "sublabel": "verifications · resets",
+      "stage": 2,
+      "row": 2
+    },
+    {
+      "id": "jobs",
+      "type": "database",
+      "label": "email_jobs",
+      "sublabel": "outbox statuses",
+      "stage": 3,
+      "row": 1,
+      "tag": "outbox"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "cmd/worker",
+      "sublabel": "poll 2s · batch 10",
+      "stage": 3,
+      "row": 2
+    },
+    {
+      "id": "sender",
+      "type": "cloud",
+      "label": "mail sender",
+      "sublabel": "Console · SMTP",
+      "stage": 4,
+      "row": 2,
+      "width": 100
+    }
+  ],
+  "flows": [
+    {
+      "id": "df1",
+      "from": "client",
+      "to": "slices",
+      "label": "REST + bearer"
+    },
+    {
+      "id": "df2",
+      "from": "oauth",
+      "to": "slices",
+      "label": "ID token · auth code"
+    },
+    {
+      "id": "df3",
+      "from": "slices",
+      "to": "users",
+      "label": "users · sessions"
+    },
+    {
+      "id": "df4",
+      "from": "slices",
+      "to": "codes",
+      "label": "6-digit codes",
+      "labelDy": -14
+    },
+    {
+      "id": "df5",
+      "from": "slices",
+      "to": "jobs",
+      "label": "enqueue in auth tx",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "df6",
+      "from": "jobs",
+      "to": "worker",
+      "label": "claim CTE",
+      "labelAt": [
+        689,
+        315
+      ]
+    },
+    {
+      "id": "df7",
+      "from": "worker",
+      "to": "sender",
+      "label": "render → send",
+      "route": "straight"
+    },
+    {
+      "id": "df8",
+      "from": "worker",
+      "to": "jobs",
+      "label": "complete · retry",
+      "variant": "dashed",
+      "labelAt": [
+        812,
+        318
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Core state",
+      "items": [
+        "users carries role/user_type, is_active · is_blocked · is_verified, retry_count, the pepper-hashed password and the google_id/github_id columns the social flows link by",
+        "sessions hold the opaque refresh token (unique) with ip/ua and an absolute expires_at; audit_logs records admin actions via a narrow Audit port"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Outbox",
+      "items": [
+        "each slice's queries.sql compiles through sqlc against migrations/ into committed internal/gen/db — adapters in postgres.go are its only consumers",
+        "email_jobs INSERT rides the same pgx transaction as the state change; the claim CTE needs the partial index on (status, scheduled_at) WHERE status = 'queued'"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Delivery + ledgers",
+      "items": [
+        "failures back off 2^n minutes ±20% jitter and dead-letter to failed at max_retries 3",
+        "the janitor (<APP>_JANITOR_POLL 1h) purges expired sessions and code rows with idempotent DELETEs — replica-safe, audit rows untouched"
+      ]
+    }
+  ]
+}

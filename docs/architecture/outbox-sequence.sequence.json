@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "beautifulgo — Outbox Sequence",
+    "quality_profile": "showcase",
+    "output": "outbox-sequence.sequence.html"
+  },
+  "participants": [
+    { "id": "slices", "type": "backend", "label": "auth slices", "sublabel": "use-cases" },
+    { "id": "pg", "type": "database", "label": "Postgres", "sublabel": "email_jobs rows" },
+    { "id": "worker", "type": "backend", "label": "outbox worker", "sublabel": "drain · janitor" },
+    { "id": "smtp", "type": "external", "label": "Mail vendor", "sublabel": "SMTP · console" }
+  ],
+  "segments": [
+    { "from": 146, "to": 216, "label": "Enqueue in tx" },
+    { "from": 240, "to": 458, "label": "Claim · send · settle" },
+    { "from": 478, "to": 548, "label": "Janitor" }
+  ],
+  "messages": [
+    { "id": "q1", "from": "slices", "to": "pg", "y": 170, "label": "INSERT user + email_jobs in one tx", "variant": "emphasis" },
+    { "id": "q2", "from": "pg", "to": "slices", "y": 206, "label": "committed", "variant": "return" },
+    { "id": "q3", "from": "worker", "to": "pg", "y": 264, "label": "poll 2s · claim CTE (SKIP LOCKED)" },
+    { "id": "q4", "from": "pg", "to": "worker", "y": 298, "label": "queued rows · sending lease", "variant": "return" },
+    { "id": "q5", "from": "worker", "to": "smtp", "y": 336, "label": "render verify_email → send" },
+    { "id": "q6", "from": "smtp", "to": "worker", "y": 370, "label": "ack · or error", "variant": "return" },
+    { "id": "q7", "from": "worker", "to": "pg", "y": 408, "label": "mark_sent" },
+    { "id": "q8", "from": "worker", "to": "pg", "y": 442, "label": "on error: backoff 2^n ±20% · dead-letter" },
+    { "id": "q9", "from": "worker", "to": "pg", "y": 504, "label": "hourly janitor: purge expired sessions + codes" },
+    { "id": "q10", "from": "pg", "to": "worker", "y": 538, "label": "purged rows", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "slices", "from": 164, "to": 214, "type": "backend" },
+    { "participant": "pg", "from": 168, "to": 214, "type": "database" },
+    { "participant": "worker", "from": 258, "to": 456, "type": "backend" },
+    { "participant": "pg", "from": 258, "to": 312, "type": "database" },
+    { "participant": "smtp", "from": 330, "to": 378, "type": "external" },
+    { "participant": "pg", "from": 402, "to": 456, "type": "database" },
+    { "participant": "pg", "from": 498, "to": 544, "type": "database" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Zero-broker outbox",
+      "items": [
+        "the enqueue rides the same pgx transaction as the auth write — no dual-write gap, at-least-once by construction",
+        "claim = queued due now OR sending older than the 5-minute lease, FOR UPDATE SKIP LOCKED, safe per replica"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Delivery",
+      "items": [
+        "render + send: templates live in platform/email; Console when <APP>_OFFLINE or host empty, else net/smtp PlainAuth STARTTLS",
+        "batch <APP>_OUTBOX_BATCH (10) per tick, poll <APP>_OUTBOX_POLL (2s) — one in-process worker in cmd/api or a standalone cmd/worker"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Failure + purge",
+      "items": [
+        "failure requeues with 2^n-minute backoff (±20% jitter) and dead-letters to failed at max_retries 3 — visible in email_jobs and in slog rows",
+        "the janitor sweeps expired sessions, email_verifications and password_resets hourly; it never touches audit rows or rotation history"
+      ]
+    }
+  ]
+}

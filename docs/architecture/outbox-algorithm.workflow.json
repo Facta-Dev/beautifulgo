@@ -1,0 +1,192 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "beautifulgo — Outbox Algorithm",
+    "quality_profile": "showcase",
+    "output": "outbox-algorithm.workflow.html"
+  },
+  "lanes": [
+    {
+      "id": "producers",
+      "label": "Producers"
+    },
+    {
+      "id": "outbox",
+      "label": "Outbox"
+    },
+    {
+      "id": "worker",
+      "label": "Drain loop"
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery"
+    },
+    {
+      "id": "ledger",
+      "label": "Ledger"
+    }
+  ],
+  "phases": [
+    {
+      "id": "enqueue",
+      "label": "Enqueue",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "drain",
+      "label": "Drain",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "settle",
+      "label": "Deliver + settle",
+      "fromCol": 4,
+      "toCol": 5
+    }
+  ],
+  "mainPath": [
+    "emit",
+    "enqueue",
+    "claim",
+    "render",
+    "send",
+    "settle"
+  ],
+  "nodes": [
+    {
+      "id": "emit",
+      "lane": "producers",
+      "col": 0,
+      "type": "backend",
+      "label": "auth use-cases",
+      "sublabel": "signup · reset · change"
+    },
+    {
+      "id": "enqueue",
+      "lane": "outbox",
+      "col": 1,
+      "type": "database",
+      "label": "email_jobs",
+      "sublabel": "transactional INSERT"
+    },
+    {
+      "id": "claim",
+      "lane": "worker",
+      "col": 2,
+      "type": "database",
+      "label": "Claim CTE",
+      "sublabel": "SKIP LOCKED · 5m lease"
+    },
+    {
+      "id": "render",
+      "lane": "worker",
+      "col": 3,
+      "type": "backend",
+      "label": "Render",
+      "sublabel": "template · locale"
+    },
+    {
+      "id": "send",
+      "lane": "delivery",
+      "col": 4,
+      "type": "cloud",
+      "label": "Sender",
+      "sublabel": "Console · SMTP"
+    },
+    {
+      "id": "backoff",
+      "lane": "delivery",
+      "col": 2,
+      "type": "backend",
+      "label": "Backoff",
+      "sublabel": "2^n ±20% jitter"
+    },
+    {
+      "id": "settle",
+      "lane": "ledger",
+      "col": 5,
+      "type": "database",
+      "label": "Settle",
+      "sublabel": "sent · failed dead-letter"
+    }
+  ],
+  "edges": [
+    {
+      "id": "o1",
+      "from": "emit",
+      "to": "enqueue"
+    },
+    {
+      "id": "o2",
+      "from": "enqueue",
+      "to": "claim",
+      "label": "poll 2s · batch 10",
+      "toSide": "top"
+    },
+    {
+      "id": "o3",
+      "from": "claim",
+      "to": "render",
+      "label": "due rows"
+    },
+    {
+      "id": "o4",
+      "from": "render",
+      "to": "send",
+      "label": "rendered body"
+    },
+    {
+      "id": "o5",
+      "from": "send",
+      "to": "settle",
+      "label": "sent"
+    },
+    {
+      "id": "o6",
+      "from": "send",
+      "to": "backoff",
+      "label": "failed"
+    },
+    {
+      "id": "o7",
+      "from": "backoff",
+      "to": "claim",
+      "route": "return-left",
+      "label": "requeue 2^n",
+      "fromSide": "left",
+      "toSide": "left",
+      "labelSegment": 1
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Transactional enqueue",
+      "items": [
+        "auth use-cases INSERT email_jobs in the same pgx transaction as the users/sessions writes — no dual-write gap (platform/email/queue.go, deliberately sqlc-free)",
+        "the claim CTE takes queued rows due now PLUS sending rows older than the 5-minute lease, FOR UPDATE SKIP LOCKED — at-least-once, replica-safe"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Drain",
+      "items": [
+        "the worker polls every <APP>_OUTBOX_POLL (2s) with batch <APP>_OUTBOX_BATCH (10); cmd/api runs one in-process worker, cmd/worker a standalone drain",
+        "SelectSender picks Console when <APP>_OFFLINE=true or the SMTP host is empty; otherwise net/smtp PlainAuth STARTTLS"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Outcomes",
+      "items": [
+        "success lands sent with sent_at; failure backs off 2^n minutes with ±20% jitter up to max_retries 3, then dead-letters to status failed",
+        "the janitor loop (<APP>_JANITOR_POLL 1h) purges expired sessions and code rows; audit_logs is never touched"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "beautifulgo — Auth Sequence",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "signup-tx",
+        "label": "Signup tx",
+        "focus": [
+          "client",
+          "api",
+          "pg"
+        ],
+        "note": "one pgx transaction stores the pending user, the code row and the outbox job"
+      },
+      {
+        "id": "deliver",
+        "label": "Deliver code",
+        "focus": [
+          "worker",
+          "mail",
+          "pg"
+        ],
+        "note": "the worker claims due email_jobs and ships the 6-digit code"
+      },
+      {
+        "id": "verify-login",
+        "label": "Verify + login",
+        "focus": [
+          "client",
+          "api",
+          "pg"
+        ],
+        "note": "code check, then one-constant password gate and token mint with in-place rotation"
+      }
+    ],
+    "output": "auth-sequence.sequence.html"
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "Client",
+      "sublabel": "SPA · SDK"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "auth slices",
+      "sublabel": "stdlib mux · authx"
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "Postgres",
+      "sublabel": "pgx/v5 pool"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "outbox worker",
+      "sublabel": "drain · janitor"
+    },
+    {
+      "id": "mail",
+      "type": "external",
+      "label": "Mail vendor",
+      "sublabel": "SMTP · console"
+    }
+  ],
+  "segments": [
+    {
+      "from": 146,
+      "to": 276,
+      "label": "Signup + enqueue"
+    },
+    {
+      "from": 298,
+      "to": 452,
+      "label": "Deliver code"
+    },
+    {
+      "from": 484,
+      "to": 686,
+      "label": "Verify + login"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "client",
+      "to": "api",
+      "y": 164,
+      "label": "POST /auth/signup",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m2",
+      "from": "api",
+      "to": "pg",
+      "y": 200,
+      "label": "INSERT user + verification code (one tx)"
+    },
+    {
+      "id": "m3",
+      "from": "api",
+      "to": "pg",
+      "y": 232,
+      "label": "INSERT email_jobs (same tx)"
+    },
+    {
+      "id": "m4",
+      "from": "api",
+      "to": "client",
+      "y": 264,
+      "label": "201 · code queued",
+      "variant": "return"
+    },
+    {
+      "id": "m5",
+      "from": "worker",
+      "to": "pg",
+      "y": 310,
+      "label": "claim due email_jobs (SKIP LOCKED)"
+    },
+    {
+      "id": "m6",
+      "from": "pg",
+      "to": "worker",
+      "y": 342,
+      "label": "rows · 5m sending lease",
+      "variant": "return"
+    },
+    {
+      "id": "m7",
+      "from": "worker",
+      "to": "mail",
+      "y": 380,
+      "label": "render verify_email → send"
+    },
+    {
+      "id": "m8",
+      "from": "mail",
+      "to": "client",
+      "y": 412,
+      "label": "email · 6-digit code"
+    },
+    {
+      "id": "m9",
+      "from": "worker",
+      "to": "pg",
+      "y": 446,
+      "label": "mark_sent"
+    },
+    {
+      "id": "m10",
+      "from": "client",
+      "to": "api",
+      "y": 496,
+      "label": "POST /auth/verify {code}"
+    },
+    {
+      "id": "m11",
+      "from": "api",
+      "to": "pg",
+      "y": 528,
+      "label": "attempts · TTL · consume"
+    },
+    {
+      "id": "m12",
+      "from": "pg",
+      "to": "api",
+      "y": 560,
+      "label": "is_verified",
+      "variant": "return"
+    },
+    {
+      "id": "m13",
+      "from": "client",
+      "to": "api",
+      "y": 598,
+      "label": "POST /auth/login"
+    },
+    {
+      "id": "m14",
+      "from": "api",
+      "to": "pg",
+      "y": 630,
+      "label": "bcrypt · state gates · rotate refresh CAS"
+    },
+    {
+      "id": "m15",
+      "from": "api",
+      "to": "client",
+      "y": 668,
+      "label": "access 15m · refresh 720h",
+      "variant": "emphasis"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "api",
+      "from": 158,
+      "to": 674,
+      "type": "backend"
+    },
+    {
+      "participant": "pg",
+      "from": 194,
+      "to": 238,
+      "type": "database"
+    },
+    {
+      "participant": "worker",
+      "from": 304,
+      "to": 452,
+      "type": "backend"
+    },
+    {
+      "participant": "mail",
+      "from": 374,
+      "to": 418,
+      "type": "external"
+    },
+    {
+      "participant": "pg",
+      "from": 522,
+      "to": 566,
+      "type": "database"
+    },
+    {
+      "participant": "pg",
+      "from": 624,
+      "to": 674,
+      "type": "database"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "One transaction",
+      "items": [
+        "signup writes the user, the code row and the email_jobs job in the same pgx transaction — zero-broker outbox",
+        "claims use FOR UPDATE SKIP LOCKED; the 5-minute sending lease recovers a crashed worker"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Code lifecycle",
+      "items": [
+        "codes expire in 24h, cap at 5 wrong guesses and are consumed on verify; resets run 30m",
+        "resend never reveals whether the account exists; re-signup of a verified email answers 409"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Login + tokens",
+      "items": [
+        "password first — one constant 401; then inactive → blocked → unverified, each a stable 403",
+        "access JWT 15m; refresh is a 128-char opaque token rotated in place (replay misses the CAS → 401)"
+      ]
+    }
+  ]
+}

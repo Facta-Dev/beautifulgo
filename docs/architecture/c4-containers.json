@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "beautifulgo — Container Architecture",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "all",
+        "label": "All",
+        "focus": [
+          "http-clients",
+          "edge",
+          "hexagon-api",
+          "outbox-worker",
+          "postgres",
+          "mail-vendor"
+        ],
+        "note": "HTTP, WS and SSE cross the edge into the hexagon; cmd/api and cmd/worker are one image, Postgres is the only state, the vendor is a port."
+      },
+      {
+        "id": "auth",
+        "label": "Auth",
+        "focus": [
+          "http-clients",
+          "edge",
+          "hexagon-api",
+          "postgres"
+        ],
+        "note": "Signup, verify and login ride the slices; codes and sessions persist in Postgres, access JWTs never leave the response."
+      },
+      {
+        "id": "realtime",
+        "label": "Realtime",
+        "focus": [
+          "http-clients",
+          "edge",
+          "hexagon-api"
+        ],
+        "note": "WS /api/v1/ws?token= closes 4001 on a bad token; SSE flushes hub events per write and dies with the request context."
+      },
+      {
+        "id": "ops",
+        "label": "Ops",
+        "focus": [
+          "edge",
+          "hexagon-api",
+          "outbox-worker",
+          "postgres",
+          "mail-vendor"
+        ],
+        "note": "readyz pings the pool; migrations are a separate goose step, never startup; the worker claims email_jobs with SKIP LOCKED."
+      }
+    ],
+    "output": "c4-containers.html"
+  },
+  "components": [
+    {
+      "id": "http-clients",
+      "type": "external",
+      "label": "HTTP clients",
+      "sublabel": "browser · SDK · WS",
+      "pos": [30, 240],
+      "size": [120, 60]
+    },
+    {
+      "id": "edge",
+      "type": "cloud",
+      "label": "Edge proxy",
+      "sublabel": "upstream :80 · TLS",
+      "pos": [280, 240],
+      "size": [130, 60]
+    },
+    {
+      "id": "hexagon-api",
+      "type": "backend",
+      "label": "cmd/api hexagon",
+      "sublabel": "stdlib mux · slices",
+      "pos": [500, 240],
+      "size": [140, 60]
+    },
+    {
+      "id": "outbox-worker",
+      "type": "backend",
+      "label": "cmd/worker",
+      "sublabel": "outbox drain · janitor",
+      "pos": [720, 240],
+      "size": [140, 60]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "PostgreSQL 17",
+      "sublabel": "pgx/v5 pool · goose",
+      "pos": [720, 80],
+      "size": [150, 60]
+    },
+    {
+      "id": "mail-vendor",
+      "type": "external",
+      "label": "Mail vendor",
+      "sublabel": "SMTP · offline console",
+      "pos": [960, 80],
+      "size": [140, 60]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "The <app> runtime — one image, two entrypoints",
+      "wraps": ["edge", "hexagon-api", "outbox-worker"]
+    },
+    {
+      "kind": "region",
+      "label": "State plane — the only persistence boundary",
+      "wraps": ["postgres", "mail-vendor"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "k1",
+      "from": "http-clients",
+      "to": "edge",
+      "label": "HTTP · WS · SSE",
+      "variant": "emphasis"
+    },
+    {
+      "id": "k2",
+      "from": "edge",
+      "to": "hexagon-api",
+      "label": "route /api"
+    },
+    {
+      "id": "k3",
+      "from": "hexagon-api",
+      "to": "postgres",
+      "label": "sqlc typed queries",
+      "fromSide": "top",
+      "toSide": "left",
+      "via": [[570, 110], [680, 110]],
+      "labelAt": [645, 102]
+    },
+    {
+      "id": "k4",
+      "from": "outbox-worker",
+      "to": "postgres",
+      "label": "claim + settle jobs",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelDx": 44
+    },
+    {
+      "id": "k5",
+      "from": "outbox-worker",
+      "to": "mail-vendor",
+      "label": "render + send",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left",
+      "via": [[930, 270], [930, 110]],
+      "labelAt": [930, 200]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "The three skills",
+      "items": [
+        "skills/go-best-practices loads on every Go edit and carries the stack contract digest (references/backend-go-stack.md)",
+        "skills/go-review writes a prioritized report where every finding cites the rule it breaks and shows the fix",
+        "skills/go-port ports any language to idiomatic Go, porting the original tests first so behavior is provable"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "The stack it teaches",
+      "items": [
+        "Go 1.27 stdlib net/http: method + wildcard ServeMux matching, no router library",
+        "pgx/v5 pool opened once at the composition root; sqlc compiles per-slice queries.sql into committed internal/gen/db",
+        "goose annotated reversible migrations applied by go tool goose — never at server startup (readyz catches drift)"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "The lint law",
+      "items": [
+        "lints/ is a drop-in golangci-lint v2 config whose depguard rules are the architecture: domain-pure, slice-isolation",
+        "every rule in the config is proven to fire against the check module in lints/check/",
+        "slog is the only logging dependency; otel is deliberately cut — ctx-first seams make it an addition, not a refactor"
+      ]
+    }
+  ]
+}

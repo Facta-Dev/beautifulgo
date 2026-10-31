@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "beautifulgo — Services & Slices",
+    "quality_profile": "showcase",
+    "output": "docs/architecture/services-slices.architecture.html"
+  },
+  "components": [
+    {
+      "id": "composition",
+      "type": "backend",
+      "label": "cmd/api",
+      "sublabel": "config · pgxpool · mux",
+      "pos": [
+        40,
+        100
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "auth-slices",
+      "type": "backend",
+      "label": "auth slices",
+      "sublabel": "signup · session · password",
+      "pos": [
+        320,
+        100
+      ],
+      "size": [
+        160,
+        60
+      ]
+    },
+    {
+      "id": "widgets-realtime",
+      "type": "backend",
+      "label": "widgets · realtime",
+      "sublabel": "CRUD · SSE · ws rooms",
+      "pos": [
+        620,
+        100
+      ],
+      "size": [
+        170,
+        60
+      ]
+    },
+    {
+      "id": "authx",
+      "type": "backend",
+      "label": "platform/authx",
+      "sublabel": "JWT HS256 · bcrypt+pepper",
+      "pos": [
+        40,
+        260
+      ],
+      "size": [
+        130,
+        60
+      ]
+    },
+    {
+      "id": "gen-db",
+      "type": "backend",
+      "label": "internal/gen/db",
+      "sublabel": "sqlc · pgx/v5",
+      "pos": [
+        330,
+        260
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "platform-email",
+      "type": "backend",
+      "label": "platform/email",
+      "sublabel": "outbox · senders",
+      "pos": [
+        635,
+        260
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "platform-hub",
+      "type": "backend",
+      "label": "platform/realtime",
+      "sublabel": "hub rooms user:<id>",
+      "pos": [
+        880,
+        260
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "kernel",
+      "type": "backend",
+      "label": "internal/shared",
+      "sublabel": "apperr · rolex · authz",
+      "pos": [
+        35,
+        420
+      ],
+      "size": [
+        140,
+        60
+      ]
+    },
+    {
+      "id": "email-jobs",
+      "type": "database",
+      "label": "email_jobs",
+      "sublabel": "outbox · SKIP LOCKED",
+      "pos": [
+        635,
+        420
+      ],
+      "size": [
+        150,
+        60
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Composition root",
+      "wraps": [
+        "composition"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Feature slices — one capability, one directory",
+      "wraps": [
+        "auth-slices",
+        "widgets-realtime"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Platform",
+      "wraps": [
+        "authx",
+        "gen-db",
+        "platform-email",
+        "platform-hub"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Kernel + outbox state",
+      "wraps": [
+        "kernel",
+        "email-jobs"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "s1",
+      "from": "composition",
+      "to": "auth-slices",
+      "label": "Register(mux)"
+    },
+    {
+      "id": "s2",
+      "from": "composition",
+      "to": "authx",
+      "label": "wire adapters"
+    },
+    {
+      "id": "s3",
+      "from": "auth-slices",
+      "to": "gen-db",
+      "label": "queries.sql"
+    },
+    {
+      "id": "s4",
+      "from": "widgets-realtime",
+      "to": "platform-email",
+      "label": "enqueue · publish"
+    },
+    {
+      "id": "s5",
+      "from": "platform-email",
+      "to": "platform-hub",
+      "label": "event bus"
+    },
+    {
+      "id": "s6",
+      "from": "platform-email",
+      "to": "email-jobs",
+      "label": "claim · mark_sent"
+    },
+    {
+      "id": "s7",
+      "from": "authx",
+      "to": "kernel",
+      "label": "rolex · apperr"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Vertical slices",
+      "items": [
+        "internal/features/<slice> ships the same files, always: domain.go · ports.go · usecase.go · http.go · postgres.go · queries.sql · module.go",
+        "module.go Register(mux, Deps) is the whole wiring contract; acceptance tests call the same Register with fakes — the root is the only knower of concretions",
+        "adding a slice = one directory + queries.sql + migration + make generate + one line in cmd/api/main.go; anything else editing means the template regressed"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Platform + gen",
+      "items": [
+        "platform/authx mints HS256 access tokens and hashes bcrypt cost 10 over a pepper pre-hash that sidesteps the 72-byte cap",
+        "sqlc compiles each slice's queries.sql against migrations/ into committed internal/gen/db; make gen-check fails on drift, never hand-edit gen/**"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Ports over imports",
+      "items": [
+        "slices never import slices: shared capability gets promoted into internal/shared or platform/, or duplicated through a port",
+        "widgets publishes created/updated/deleted through the event-bus port, never into the realtime slice's handler",
+        "depguard (lints/) makes domain-pure and slice-isolation violations red before review — fix the shape, not the lint"
+      ]
+    }
+  ]
+}
