@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: ratelimit-library
+expected_outcome: |
+  A dependency-free rate limiter package: a token-bucket limiter that is safe
+  for concurrent use, with Allow and a ctx-aware Wait, a sentinel error for a
+  canceled or over-limit wait, and a constructor with a usable zero value. The
+  public API follows Go conventions: context is the first parameter of Wait,
+  errors are wrapped with %w and matched with errors.Is, no interface is
+  declared without a second implementation or a consuming port, table-driven
+  tests with t.Run cover the boundary cases, nothing panics on bad input
+  (zero or negative rates fall back to sane behavior or return an error), and
+  any logging is slog — no fmt.Println or log.Print in library code.

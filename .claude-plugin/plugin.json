@@ -1,0 +1,24 @@
+{
+  "name": "beautiful-go",
+  "version": "0.1.0",
+  "description": "Write, review, port, and enforce idiomatic Go: three skills distilled from Effective Go, the Go Code Review Comments wiki, the Google Go Style Guide, Go Concurrency Patterns, and the facta backend-go handbook, plus a drop-in golangci-lint v2 config with the depguard architecture law.",
+  "license": "MIT",
+  "author": {
+    "name": "Facta-Dev",
+    "url": "https://github.com/Facta-Dev"
+  },
+  "homepage": "https://github.com/Facta-Dev/beautifulgo",
+  "repository": "https://github.com/Facta-Dev/beautifulgo",
+  "keywords": [
+    "api-design",
+    "best-practices",
+    "code-review",
+    "go",
+    "golang",
+    "golangci-lint",
+    "migration",
+    "porting",
+    "skill",
+    "style-guide"
+  ]
+}

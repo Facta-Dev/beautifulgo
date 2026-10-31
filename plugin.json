@@ -1,0 +1,55 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "beautiful-go",
+  "version": "0.1.0",
+  "description": "Write, review, port, and enforce idiomatic Go: three skills distilled from Effective Go, the Go Code Review Comments wiki, the Google Go Style Guide, Go Concurrency Patterns, and the facta backend-go handbook, plus a drop-in golangci-lint v2 config with the depguard architecture law.",
+  "author": {
+    "name": "Facta-Dev",
+    "url": "https://github.com/Facta-Dev"
+  },
+  "homepage": "https://github.com/Facta-Dev/beautifulgo",
+  "repository": "https://github.com/Facta-Dev/beautifulgo",
+  "license": "MIT",
+  "keywords": [
+    "api-design",
+    "best-practices",
+    "code-review",
+    "go",
+    "golang",
+    "golangci-lint",
+    "migration",
+    "porting",
+    "skill",
+    "style-guide"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Beautiful Go",
+        "shortDescription": "Write, review, and port Go",
+        "longDescription": "Three skills for Go developers, distilled from Effective Go, the Go Code Review Comments wiki, the Google Go Style Guide, Go Concurrency Patterns, and the facta backend-go handbook.\n\ngo-best-practices guides new Go code: errors as values, context propagation, goroutine ownership, table-driven tests, and the hexagonal, vertical-slice architecture contract enforced by the bundled golangci-lint config.\n\ngo-review reviews a file, package, slice, or diff and returns a prioritized report. Every finding cites a file and line, the rule it breaks, and the smallest fix.\n\ngo-port ports C, C++, Python, JavaScript, TypeScript, Java, or Rust to idiomatic Go with the same behavior. It ports the original tests first and writes a PORTING.md that lists every deliberate difference.\n\nThe skills contain instructions and reference text only. They make no network calls and collect no data. When a Go toolchain is available, the skills run gofmt, go vet, golangci-lint, and go test on your project; without one, they work from the code alone. A drop-in golangci-lint v2 config with the depguard architecture law is available in the GitHub repository.",
+        "developerName": "Facta-Dev",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Write idiomatic Go",
+          "Review Go code with cited rules",
+          "Port code to Go with the same behavior"
+        ],
+        "websiteURL": "https://github.com/Facta-Dev/beautifulgo",
+        "supportURL": "https://github.com/Facta-Dev/beautifulgo/issues",
+        "privacyPolicyURL": "https://github.com/Facta-Dev/beautifulgo/blob/main/PRIVACY.md",
+        "defaultPrompt": [
+          "Review this Go module and list what to fix first",
+          "Port this Python module to idiomatic Go",
+          "Write a Go handler for this endpoint under the hexagonal rules"
+        ],
+        "brandColor": "#00ADD8",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "publication": {
+        "release_notes": "Initial release: three skills distilled from five Go sources, plus a drop-in golangci-lint config whose depguard rules enforce the architecture."
+      }
+    }
+  }
+}

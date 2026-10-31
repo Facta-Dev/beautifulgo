@@ -1,0 +1,20 @@
+schema_version: "1.1"
+name: review-inventory-module
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  REVIEW.md is a prioritized review of inventory.go that does not modify the
+  code. The repo is a plain CLI module with no internal/features/ layout, so
+  it is reviewed under general mode, and the report says which mode it
+  reviewed under. It finds the real problems the go-review skill names for
+  general Go: the panic in mustQty on user-supplied CSV input that does not
+  parse, the log-and-return in LoadFile (log.Printf followed by returning the
+  same error), the %s wrapping in LoadFile instead of %w, the bool parameter
+  (overwrite) on Add, and Save returning nil on a failed write (a swallowed
+  error); it leaves the valid idioms alone (the ErrNotFound sentinel, the
+  zero-value-usable Store, the returned-not-panicked field-count error in
+  ParseItem, the %w wrap around ParseItem failures) and ranks the panic and
+  the swallowed error above style issues. Every finding cites a file:line
+  location and a named, look-up-able rule with its source, each fix is shown
+  as a short code change, and the report ends with a "What's already good"
+  section of 2-4 specifics.

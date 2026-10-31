@@ -1,0 +1,14 @@
+schema_version: "1.1"
+name: port-python-task-graph
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  A Go package that builds, vets, and lints cleanly and passes ported versions of every
+  test in test_scheduler.py, including each subTest case. The exception hierarchy becomes
+  error values whose data is preserved: the line number for parse errors, the task and
+  dependency for a missing dependency, the cycle path for a cycle, and the pending task
+  names for a run timeout. The waves and the run order match the Python results exactly
+  and never depend on Go map iteration order; the parallel run uses goroutines that have
+  an owner, results collected through a channel or WaitGroup, with the deadline enforced
+  by context cancellation rather than sleeps. PORTING.md maps the API and the tests and
+  lists deliberate differences.

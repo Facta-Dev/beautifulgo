@@ -1,0 +1,20 @@
+{
+  "name": "beautiful-go",
+  "interface": {
+    "displayName": "Beautiful Go"
+  },
+  "plugins": [
+    {
+      "name": "beautiful-go",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

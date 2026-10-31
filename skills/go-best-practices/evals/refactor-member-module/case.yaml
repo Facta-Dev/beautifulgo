@@ -1,0 +1,14 @@
+schema_version: "1.1"
+name: refactor-member-module
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  A refactored member.go (and a new member_test.go) that keeps the module's
+  observable behavior while fixing the idiom problems the skill names: the
+  panic on reachable bad input becomes an error, %s-wrapped errors become %w
+  matched with errors.Is, the swallowed errors are eliminated, the bool
+  parameter disappears in favor of two methods or a typed mode, the bare
+  goroutine gets an owner and a shutdown path, the one-implementation
+  interface is replaced by the concrete type, and the truncation quirk is
+  preserved and listed as deliberate. CHANGES.md lists each change with a
+  one-line reason.

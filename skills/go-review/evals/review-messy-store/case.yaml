@@ -1,0 +1,21 @@
+schema_version: "1.1"
+name: review-messy-store
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  REVIEW.md is a prioritized review of the store slice's four Go files that does
+  not modify the code. It finds the real problems: the pgx import in domain.go
+  (a depguard domain-pure violation), the use case reaching for the *Store
+  adapter directly instead of the consumer-declared ports (the constructor-arg
+  version of the architecture law that depguard cannot see), fmt.Errorf with %s
+  instead of %w around the ErrOrderNotFound sentinel, the two swallowed errors
+  (log.Printf in OrdersForEmail dropping both the count and the error, and
+  CountByEmail returning 0, nil on failure), the fire-and-forget goroutine in
+  Place with no owner, no shutdown path, and context.Background instead of the
+  scoped context, and the bool parameter on OrdersForEmail. Architecture
+  findings are ranked first, every finding cites a file:line location and a
+  named rule with its source, each fix is shown as a short code change,
+  repeated issues are grouped, the valid shapes are left alone (the
+  consumer-defined one-method ports, the errors.Is/ErrNoRows translation shape,
+  the sentinel set in domain.go), and the report ends with a "What's already good"
+  section of 2-4 specifics.

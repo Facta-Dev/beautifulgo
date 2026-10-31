@@ -1,0 +1,78 @@
+# BeautifulGo drop-in golangci-lint v2 config — the architecture law and the
+# linters behind the go-best-practices checklist. Copy this file next to your
+# go.mod; lints/README.md holds the rule table and the copy instructions.
+#
+# The four depguard rules are the contract: domain-pure, usecase-transport-free,
+# slice-isolation, platform-no-features. depguard pkg patterns PREFIX-match
+# import paths (pattern + every subpackage, `$` for exact), so internal-package
+# rules must carry the real module path. This file uses the facta template's
+# placeholder `github.com/<scope>/<app>` — the backend-go module path before
+# scripts/rename.sh runs — so on the template it works as shipped. Any other
+# project substitutes its module path once:
+#
+#     sed -i '' 's|github.com/<scope>/<app>|github.com/real/module|g' .golangci.yml
+#
+# File globs use `**/internal/...` forms, which match any module verbatim.
+version: "2"
+linters:
+  default: standard   # errcheck, govet, ineffassign, staticcheck, unused
+  enable:
+    - contextcheck    # ctx flows through; a broken chain is red
+    - depguard        # the architecture law, below
+    - errname         # sentinels are Err*, error types are *Error
+    - errorlint       # errors.Is/As and %w, never %s or type asserts
+    - noctx           # no http calls without a context
+  settings:
+    errorlint:
+      comparison: true
+      assertions: true
+      errorf: true
+    depguard:
+      rules:
+        domain-pure:
+          files: ["**/internal/features/**/domain.go"]
+          allow:
+            - $gostd
+            - github.com/<scope>/<app>/internal/shared
+          deny:
+            - pkg: net/http
+              desc: domain stays transport-agnostic — adapters live in http.go
+            - pkg: database/sql
+              desc: persistence is a port; declare it in ports.go
+            - pkg: github.com/jackc/pgx/v5
+              desc: domain must not touch pgx — adapters live in postgres.go
+            - pkg: github.com/<scope>/<app>/internal/gen
+              desc: generated db/api code is an adapter concern
+            - pkg: github.com/<scope>/<app>/internal/platform
+              desc: domain depends on its own ports, not platform infra
+            - pkg: github.com/<scope>/<app>/internal/features
+              desc: slices never depend on other slices
+        usecase-transport-free:
+          files: ["**/internal/features/**/usecase.go", "**/internal/features/**/ports.go"]
+          deny:
+            - pkg: net/http
+              desc: mechanism names belong to adapters (doc 04)
+            - pkg: database/sql
+              desc: persistence is a port
+            - pkg: github.com/jackc/pgx/v5
+              desc: pgx types stay in postgres.go
+            - pkg: github.com/<scope>/<app>/internal/gen
+              desc: use cases call ports; generated db/api code belongs to the adapters
+            - pkg: github.com/<scope>/<app>/internal/platform
+              desc: use cases depend on ports, never on platform adapters
+        slice-isolation:
+          files: ["**/internal/features/**"]
+          deny:
+            - pkg: github.com/<scope>/<app>/internal/features
+              desc: vertical slices are sealed — route composition through cmd/api
+        platform-no-features:
+          files: ["**/internal/platform/**"]
+          deny:
+            - pkg: github.com/<scope>/<app>/internal/features
+              desc: platform serves features, never consumes them
+  exclusions:
+    rules:
+      - path: (.+)_test\.go
+        linters: [errcheck]
+formatters:
+  enable: [gofmt]

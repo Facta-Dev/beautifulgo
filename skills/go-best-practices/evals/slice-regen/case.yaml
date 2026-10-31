@@ -1,0 +1,15 @@
+schema_version: "1.1"
+name: slice-regen
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  The widgets slice gains a Priority field and a ListBySize query — persisted
+  without breaking the slice's shape. The domain change is in domain.go (a
+  typed Priority constant set, a validation rule, domain errors stay sentinels);
+  the persistence change lands as a named query in the slice's queries.sql with
+  the columns added to the migration that owns those tables, including its
+  +goose Down section, in the same change; postgres.go maps the new column
+  through gen/db output without new pgx calls. domain.go imports nothing new
+  (stdlib + internal/shared only), no cross-slice import appears, the existing
+  six-file shape and Register stay untouched beyond the field/query the feature
+  needs, and no new envelope or apperr code is invented.

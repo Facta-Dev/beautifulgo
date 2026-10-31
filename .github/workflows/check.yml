@@ -1,0 +1,41 @@
+name: Check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check skill
+        run: python3 scripts/check-skill.py
+      - name: Run the checker test suites
+        run: python3 -m unittest discover tests
+
+  lints:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.27.x
+      - uses: golangci/golangci-lint-action@v7
+        with:
+          install-only: true
+      - name: Prove every depguard rule in lints/.golangci.yml fires
+        run: bash scripts/check-lints.sh
+
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Syntax-check every Go example in the skills and docs
+        run: python3 scripts/check-examples.py

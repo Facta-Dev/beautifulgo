@@ -1,0 +1,2 @@
+# PNG art is binary and needs no per-line merge or diff.
+assets/icon.png binary -text

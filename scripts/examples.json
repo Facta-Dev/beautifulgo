@@ -1,0 +1,70 @@
+{
+  "_comment": [
+    "Context that lets every Go block in the docs parse on its own. Read by",
+    "scripts/check-examples.py. Blocks are keyed by (file, order, first non-blank",
+    "line): first_line must match the block exactly, so adding, moving, or editing",
+    "a block fails the check until this file is updated.",
+    "",
+    "Extended shape: every block entry may carry first_line (required when an",
+    "entry exists) plus one of skip (reason string) or template (a list of",
+    "lines with {code} as the slot); a file entry may also carry a per-file",
+    "prelude. Blocks with no entry are auto-wrapped two ways and checked in",
+    "both forms: as `package p` + block (declaration shape) as well as",
+    "`package p` + `func _()` around the block (statement shape). A block",
+    "passes if either form parses, so ordinary fragments need no entry.",
+    "",
+    "skip, with a reason, marks a block that cannot stand as syntax (a bare",
+    "signature, an elided body, two file excerpts in one fence, or the",
+    "domain-pure counterexample that shows the forbidden import on purpose).",
+    "Skipped blocks are exempt from the domain check, counted in the summary,",
+    "and never silently dropped.",
+    "",
+    "Known exemption: only top-level ```go fences are blocks. A ```go fence",
+    "nested inside another fence (the ~~~markdown report template in",
+    "skills/go-review/SKILL.md carries one, holding a placeholder, not real",
+    "code) is not a block: it is not checked and not counted. Keep real Go",
+    "examples out of nested fences."
+  ],
+  "files": {
+    "README.md": {
+      "blocks": {
+        "1": {
+          "first_line": "// Without the skill: domain.go reaches for the database driver, so no test",
+          "skip": "deliberate counterexample: it shows domain.go importing pgx, which the domain-pure rule denies"
+        }
+      }
+    },
+    "examples/review-inventory.md": {
+      "blocks": {
+        "3": {
+          "first_line": "// usecase.go, lines 33-37:",
+          "skip": "two file excerpts from different packages in one fence"
+        },
+        "8": {
+          "first_line": "// Use cases return errors; boundaries log once, with the request context:",
+          "skip": "an import and statement from two files in one fence; neither parses alone"
+        }
+      }
+    },
+    "skills/go-best-practices/SKILL.md": {
+      "blocks": {
+        "6": {
+          "first_line": "// WRONG",
+          "skip": "a bare signature, shown without a body"
+        },
+        "11": {
+          "first_line": "// WRONG",
+          "skip": "placeholder bodies written { .. } are not literal Go"
+        },
+        "12": {
+          "first_line": "// RIGHT",
+          "skip": "placeholder bodies written { .. } are not literal Go"
+        },
+        "14": {
+          "first_line": "// RIGHT",
+          "skip": "body elided with ...; the fence shows one shape, not a program"
+        }
+      }
+    }
+  }
+}

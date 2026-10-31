@@ -1,0 +1,15 @@
+schema_version: "1.1"
+name: port-c-config-parser
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  A Go package that builds, vets, and lints cleanly and passes ported versions of every
+  test in test_config.c. It contains no cgo, no unsafe, and no raw pointers. Error codes
+  and out-parameters become error values: a parsed result returned as a value, syntax and
+  duplicate failures as sentinels wrapped with the line number, missing keys as an
+  explicit not-found error, and the config_get_int statuses as a typed result. NULL
+  returns become the comma-ok pattern; the flags bitmask becomes a typed options struct
+  with a usable zero value. Behavior matches the C version on its edge cases, including
+  duplicate handling, case-insensitive keys, value trimming, and rejection of
+  out-of-range integers. PORTING.md maps the API and the tests and lists deliberate
+  differences.
