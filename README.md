@@ -583,6 +583,21 @@ original. Read the originals for the full reasoning.
 The skill text, the digests, and the config in this repository are MIT licensed (see
 [LICENSE](LICENSE)). The icon gopher is our own art, not the official Go logo or mascot.
 
+## Siblings
+
+Beautiful Go is part of the Beautiful series for the facta playbooks:
+[beautiful-j2ee](https://github.com/Facta-Dev/beautiful-j2ee),
+[beautifulandroid](https://github.com/Facta-Dev/beautifulandroid),
+[beautifulcli](https://github.com/Facta-Dev/beautifulcli),
+[beautifulextension](https://github.com/Facta-Dev/beautifulextension),
+[beautifulios](https://github.com/Facta-Dev/beautifulios),
+[beautifulnodejs](https://github.com/Facta-Dev/beautifulnodejs),
+[beautifulpython](https://github.com/Facta-Dev/beautifulpython),
+[beautifulqt](https://github.com/Facta-Dev/beautifulqt),
+[beautifulreact](https://github.com/Facta-Dev/beautifulreact),
+[beautifulreactnative](https://github.com/Facta-Dev/beautifulreactnative),
+[beautifulrust](https://github.com/Facta-Dev/beautifulrust).
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
