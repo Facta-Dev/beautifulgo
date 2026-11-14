@@ -41,6 +41,21 @@ Where the sources disagree, the skill picks a side and says which.
        alt="Architecture overview: HTTP, WS, SSE, and CLI clients reach cmd/api (wired with google/wire, routed with chi); feature slices (auth, widgets, realtime) hold six files whose use cases call consumer-defined ports; adapters beneath the slices (pgx/v5 + sqlc, go-redis on Dragonfly, River, authx) satisfy those ports; depguard pills — slice-isolation, usecase-transport-free, domain-pure, platform-no-features — guard each ring boundary, and CI runs the checker, lints harness, examples, and unittest gates." />
 </p>
 
+## The playbooks
+
+These skills are the runnable, machine-checked enforcement of the
+[facta playbooks](https://github.com/Facta-Dev/ai-coding-playbook). That
+repository carries the sixteen root playbooks — backend, Java/J2EE, frontend,
+React Native, Android/Kotlin, iOS/Swift, desktop Qt, CLI, Chrome extension,
+URLs, tests, security, audit, install, REA and the Claude Code kit — plus the
+nine runnable kits (Go, Rust, Node.js, Python, Java, extension, desktop,
+frontend-mobile, mobile-android), the model-routing guide and the
+instruction-budget tooling. Start with
+[`PLAYBOOK_BACKEND.md`](https://github.com/Facta-Dev/ai-coding-playbook/blob/main/PLAYBOOK_BACKEND.md)
+for this stack, then use this repository as the worked example. The shared
+contracts (`PLAYBOOK_URLS.md`, `PLAYBOOK_TESTS.md`, `PLAYBOOK_SECURITY.md`,
+`PLAYBOOK_AUDIT.md`, `PLAYBOOK_CLAUDE_CODE.md`) apply across the series.
+
 ## What it changes
 
 Asked to add an order to a Go backend, an agent without the skill put the pgx import
