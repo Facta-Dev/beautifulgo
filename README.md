@@ -490,6 +490,23 @@ beautifulgo/
 └── README.md
 ```
 
+## Architecture diagrams
+
+The repository ships eight [Archify](https://github.com/tt-a1i/archify) diagrams under
+[`docs/architecture/`](docs/architecture/README.md), each a standalone HTML page you can
+open, explore and share; the `overview.svg` above is the visual summary.
+
+| Diagram | What it shows |
+|---|---|
+| [c4-containers](docs/architecture/c4-containers.html) | Clients, ingress, the chi API, the River worker, Postgres, Redis and the mail vendor |
+| [services-slices](docs/architecture/services-slices.architecture.html) | The wire composition root, feature slices, platform and adapters, with the depguard walls |
+| [auth-algorithm](docs/architecture/auth-algorithm.workflow.html) | Signup, code, verify and the password-first login gates with rotating refresh |
+| [outbox-algorithm](docs/architecture/outbox-algorithm.workflow.html) | River's same-transaction enqueue, retries, schedules and the discard path |
+| [auth-sequence](docs/architecture/auth-sequence.sequence.html) | The auth request chain across the slices, Postgres, the worker and the mail vendor |
+| [outbox-sequence](docs/architecture/outbox-sequence.sequence.html) | The worker's message trace, ack, backoff and janitor purge |
+| [database-dataflow](docs/architecture/database-dataflow.dataflow.html) | Identity data, river jobs and the sender |
+| [runtime-lifecycle](docs/architecture/runtime-lifecycle.lifecycle.html) | Boot, wire, serve, readyz and the fail-closed endings |
+
 ## Testing the skills
 
 `skills/go-best-practices/evals/` holds three test cases in the layout `claude plugin
