@@ -1,3 +1,8 @@
 .DS_Store
 dist/
 __pycache__/
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/install-state.json
+.claude/backups/
+.claude/logs/
