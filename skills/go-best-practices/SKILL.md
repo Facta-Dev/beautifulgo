@@ -16,6 +16,11 @@ description: >-
 
 # Go best practices
 
+> Playbook set: start with [`PLAYBOOK_MASTER.md`](https://github.com/Facta-Dev/ai-coding-playbook/blob/main/PLAYBOOK_MASTER.md) —
+> the catalog, precedence and cross-playbook invariants — then
+> [`PLAYBOOK_GOLANG.md`](https://github.com/Facta-Dev/ai-coding-playbook/blob/main/PLAYBOOK_GOLANG.md). This skill is the runnable companion of that
+> contract.
+
 Distilled from five Go style and design sources, with a digest of each in
 `references/`. Where they disagree, this file says which to follow and why.
 

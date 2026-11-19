@@ -44,17 +44,17 @@ Where the sources disagree, the skill picks a side and says which.
 ## The playbooks
 
 These skills are the runnable, machine-checked enforcement of the
-[facta playbooks](https://github.com/Facta-Dev/ai-coding-playbook). That
-repository carries the sixteen root playbooks — backend, Java/J2EE, frontend,
-React Native, Android/Kotlin, iOS/Swift, desktop Qt, CLI, Chrome extension,
-URLs, tests, security, audit, install, REA and the Claude Code kit — plus the
-nine runnable kits (Go, Rust, Node.js, Python, Java, extension, desktop,
-frontend-mobile, mobile-android), the model-routing guide and the
-instruction-budget tooling. Start with
-[`PLAYBOOK_BACKEND.md`](https://github.com/Facta-Dev/ai-coding-playbook/blob/main/PLAYBOOK_BACKEND.md)
-for this stack, then use this repository as the worked example. The shared
-contracts (`PLAYBOOK_URLS.md`, `PLAYBOOK_TESTS.md`, `PLAYBOOK_SECURITY.md`,
-`PLAYBOOK_AUDIT.md`, `PLAYBOOK_CLAUDE_CODE.md`) apply across the series.
+[facta playbooks](https://github.com/Facta-Dev/ai-coding-playbook). Start with
+[`PLAYBOOK_MASTER.md`](https://github.com/Facta-Dev/ai-coding-playbook/blob/main/PLAYBOOK_MASTER.md) — the catalog, precedence and
+cross-playbook invariants — then read
+[`PLAYBOOK_GOLANG.md`](https://github.com/Facta-Dev/ai-coding-playbook/blob/main/PLAYBOOK_GOLANG.md) for this stack, and use this repository as
+the worked example. The set has the master plus twenty platform playbooks,
+split into `_PART<n>` files where needed; the repository also ships twelve
+runnable kits (Go, Rust, Node.js, Python, Java, extension, desktop, React
+Native, Android, iOS, frontend, CLI), the model-routing guide and the
+instruction-budget tooling. The shared contracts (`PLAYBOOK_URLS.md`,
+`PLAYBOOK_TESTS.md`, `PLAYBOOK_SECURITY.md`, `PLAYBOOK_AUDIT.md`,
+`PLAYBOOK_CLAUDE_CODE.md`) apply across the series.
 
 ## What it changes
 
@@ -186,7 +186,7 @@ before it is committed: `domain-pure` denies `github.com/jackc/pgx/v5` in
 
 ## Agent kit (Claude Code)
 
-This repo carries the `{kit}` kit plane from
+This repo carries the `golang` kit plane from
 [`ai-coding-playbook`](https://github.com/Facta-Dev/ai-coding-playbook):
 `.claude/agents`, `.claude/skills`, `.claude/commands`, and the
 `model-routing:ollama` block in `CLAUDE.md`.
@@ -194,7 +194,7 @@ This repo carries the `{kit}` kit plane from
 Verify or repair the wiring from the playbook checkout:
 
 ```
-bash ai-coding-playbook/scripts/claude-kit/configure-repo.sh . --kit={kit} --check
+bash ai-coding-playbook/scripts/claude-kit/configure-repo.sh . --kit=golang --check
 ```
 
 `configure-repo.sh` is idempotent, never deletes, and backs up
