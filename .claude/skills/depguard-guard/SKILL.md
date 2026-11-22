@@ -1,5 +1,5 @@
 ---
-name: "<app> Depguard Guard"
+name: depguard-guard
 description: "Review import boundaries in <app> for hexagonal soundness; flag every domain.go adapter import, slice-to-slice edge, kernel-only violation, otel import, and unsafe import, and block any relaxation of the depguard deny rules in .golangci.yml across the <scope> slice."
 division: security
 ---

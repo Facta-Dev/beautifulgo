@@ -1,5 +1,5 @@
 ---
-name: "<app> Add Handler"
+name: add-handler
 description: "Scaffold a new net/http handler route in <app>: handler decode shape, envelope mapping, specs/openapi.yaml entry, route registration in internal/features/<slice>/module.go, and Deps wiring, as one change across the slice."
 division: backend
 ---

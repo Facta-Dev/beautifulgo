@@ -1,5 +1,5 @@
 ---
-name: "<app> Add Module"
+name: add-module
 description: "Scaffold a new feature slice (internal/features/<scope>) in <app>: ports.go consumer-owned interfaces, usecase.go, module.go Register(), deps wiring in cmd/api/main.go, hexagonal direction, and the fake-backed test gate, as one change."
 division: backend
 ---
