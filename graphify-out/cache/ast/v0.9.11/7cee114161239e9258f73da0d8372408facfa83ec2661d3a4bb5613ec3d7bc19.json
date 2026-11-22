@@ -1,0 +1,1 @@
+{"nodes": [{"id": "pkg_github_com_acme_inventory_cli", "label": "github.com/acme/inventory-cli", "file_type": "code", "type": "package", "ecosystem": "go", "source_file": "skills/go-review/evals/review-inventory-module/files/go.mod", "source_location": "L1"}], "edges": []}

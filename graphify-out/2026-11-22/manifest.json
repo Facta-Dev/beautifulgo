@@ -1,0 +1,1222 @@
+{
+  ".agents/plugins/marketplace.json": {
+    "mtime": 1794269696.0443578,
+    "ast_hash": "7de4b0619b906f75d5ed4da5abaf24a2",
+    "semantic_hash": ""
+  },
+  ".claude-plugin/marketplace.json": {
+    "mtime": 1794269696.0443578,
+    "ast_hash": "0be46802ad49cafa72c8b05bccddaffc",
+    "semantic_hash": ""
+  },
+  ".claude-plugin/plugin.json": {
+    "mtime": 1794269696.0447717,
+    "ast_hash": "4e9e8bedcd3ab49336f0c69198ac2f10",
+    "semantic_hash": ""
+  },
+  ".claude/settings.json": {
+    "mtime": 1795368643.3580317,
+    "ast_hash": "f5b58c5e66e4cde34dc854c2b2f36a70",
+    "semantic_hash": ""
+  },
+  "docs/architecture/auth-algorithm.workflow.json": {
+    "mtime": 1794269696.0500677,
+    "ast_hash": "f71c59f47f0413c01fda4c1ed4c9a562",
+    "semantic_hash": ""
+  },
+  "docs/architecture/auth-sequence.sequence.json": {
+    "mtime": 1794269696.0520678,
+    "ast_hash": "79c30e48be8f62abc357f14673c5fefd",
+    "semantic_hash": ""
+  },
+  "docs/architecture/c4-containers.json": {
+    "mtime": 1794269696.0540679,
+    "ast_hash": "2552aae249f8baf6b166bfdd59b3f65c",
+    "semantic_hash": ""
+  },
+  "docs/architecture/database-dataflow.dataflow.json": {
+    "mtime": 1794269696.0540679,
+    "ast_hash": "59a371a3ea93110982b148d96b9fc3bd",
+    "semantic_hash": ""
+  },
+  "docs/architecture/outbox-algorithm.workflow.json": {
+    "mtime": 1794269696.056068,
+    "ast_hash": "a09ddd77b76be9cb2b42f42988074bc8",
+    "semantic_hash": ""
+  },
+  "docs/architecture/outbox-sequence.sequence.json": {
+    "mtime": 1794269696.0590682,
+    "ast_hash": "ac8841e431d5b7d23eedb7215d7a2143",
+    "semantic_hash": ""
+  },
+  "docs/architecture/runtime-lifecycle.lifecycle.json": {
+    "mtime": 1794269696.0590682,
+    "ast_hash": "3cb676c42b5953629044f71a52ab1544",
+    "semantic_hash": ""
+  },
+  "docs/architecture/services-slices.architecture.json": {
+    "mtime": 1794269696.0600684,
+    "ast_hash": "aef3104468519bdccb41f01b3984c3be",
+    "semantic_hash": ""
+  },
+  "lints/check/go.mod": {
+    "mtime": 1794269696.0618734,
+    "ast_hash": "775072b15766b3f3b6aaa64df8508f05",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/ctxdrop/ctxdrop.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "5b7243c358a688fb246c8ef1da74ccc4",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/doc.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "8d310a97d0636b046b932003a0a8310a",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/domainhttp/domain.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "b85384988b401dc92a73e5ba23361259",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/domainpgx/domain.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "5370687b3b7c52f4d444e440f138e8f4",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/domainplatform/domain.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "7886fb73d110f208539eee4445c09e6c",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/domainsibling/domain.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "ce496f4841b13e29d596c277241589e2",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/domainsql/domain.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "9f920ef8cb47edce3a423afab7eda0fb",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/errassert/errassert.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "ffa36c30bc7033b30d4a2067f43fa878",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/errcheck/errcheck.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "3ed55fb561835e06c7fa8aa9995174dc",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/errname/errname.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "276835afb071ed68530f2b2bbce89c67",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/errwrap/errwrap.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "70ed81fd99f4b76d14607a8386a83a4e",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/noctx/noctx.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "c9d27271fa59de4a6dac2b218ef29740",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/siblingimport/usecase.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "92d8efab20cc8626866b67fd58ccf7b0",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/usecasegenapi/usecase.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "2fd245cc6cedd9f57ded088582723468",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/usecasepgx/usecase.go": {
+    "mtime": 1794269696.0624325,
+    "ast_hash": "25156bbd33fdc5e9701ad6e0d86a1ea4",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/violations/usecaseplatform/usecase.go": {
+    "mtime": 1794269696.0630686,
+    "ast_hash": "21a726eff75a87b08815b5a2321741fd",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/widgets/domain.go": {
+    "mtime": 1794269696.0630686,
+    "ast_hash": "5753951af1886ecb9614237364d41794",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/widgets/ports.go": {
+    "mtime": 1794269696.064323,
+    "ast_hash": "0ad4a21123eec5223225a22b642e1d66",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/features/widgets/usecase.go": {
+    "mtime": 1794269696.064323,
+    "ast_hash": "7ad8f587c1fc71c3a76306a44a440785",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/gen/api/api.go": {
+    "mtime": 1794269696.0644484,
+    "ast_hash": "fddbcf10930a176d26d2607a9876b8f7",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/platform/roguehub/roguehub.go": {
+    "mtime": 1794269696.064561,
+    "ast_hash": "386f7fdd33f480ab043e01817f8762c6",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/platform/stub/stub.go": {
+    "mtime": 1794269696.064561,
+    "ast_hash": "934267c55f551379e38c364ee4d06cfc",
+    "semantic_hash": ""
+  },
+  "lints/check/internal/shared/kernel.go": {
+    "mtime": 1794269696.064561,
+    "ast_hash": "508fab4ca4582c5f3307c123c1a10fe3",
+    "semantic_hash": ""
+  },
+  "plugin.json": {
+    "mtime": 1794269696.064561,
+    "ast_hash": "5a627926a7f14e5d1f52910e353aa05b",
+    "semantic_hash": ""
+  },
+  "scripts/check-examples.py": {
+    "mtime": 1794269696.0651877,
+    "ast_hash": "a3699db4ac7ebc606eec6e1bf7e9702c",
+    "semantic_hash": ""
+  },
+  "scripts/check-lints.sh": {
+    "mtime": 1794269696.0651877,
+    "ast_hash": "30d6ef3bb01ad72e192f313534dd382f",
+    "semantic_hash": ""
+  },
+  "scripts/check-skill.py": {
+    "mtime": 1794269696.0651877,
+    "ast_hash": "4748d81d49eee6b03736b3880df465a4",
+    "semantic_hash": ""
+  },
+  "scripts/examples.json": {
+    "mtime": 1794269696.0651877,
+    "ast_hash": "612a18e25e5344ae472eec38288abf8f",
+    "semantic_hash": ""
+  },
+  "scripts/hooks/guard-bash.sh": {
+    "mtime": 1795368166.1322403,
+    "ast_hash": "48209cbbe8693bba93e3aac1f976a9ac",
+    "semantic_hash": ""
+  },
+  "scripts/package-openai-plugin.py": {
+    "mtime": 1794269696.0651877,
+    "ast_hash": "a527da89fc8f73333a579eb9d1ccbdf4",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/files/member.go": {
+    "mtime": 1794269696.0677922,
+    "ast_hash": "5d192ed18a7e059d89772a65573147cc",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/place-files.sh": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "e26e05fe5705e6698033c1cb3454f33c",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/domain.go": {
+    "mtime": 1794269696.0685706,
+    "ast_hash": "cdf2e7a8a4eea30ad405e5b6625c308e",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/http.go": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "59d229b9fee9c20b191ad6f93b34f92d",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/module.go": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "c902af6031aa1d4739dc58aeca3bc6b3",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/ports.go": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "eadcaafa21f17f877a139a9d8583520a",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/postgres.go": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "72dcd88f00b39db47cea0a265772455c",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/queries.sql": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "6623185f14ef4fba063645fead7826fa",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/usecase.go": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "67e9ab9c7f75f3b0e191722455839e35",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/files/migrations/0001_init.sql": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "cfc6678cf947a4272f66a59939af3e75",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/place-files.sh": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "e26e05fe5705e6698033c1cb3454f33c",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/files/config.c": {
+    "mtime": 1794269696.0703251,
+    "ast_hash": "634aae5b7a57d4f012a2f03cea4b8e34",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/files/config.h": {
+    "mtime": 1794269696.0704257,
+    "ast_hash": "fd9efd80335106b2a9dfe4d248637e2b",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/files/test_config.c": {
+    "mtime": 1794269696.0704257,
+    "ast_hash": "539dd2061eaab388285c7e84d10aadc9",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/place-files.sh": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "06beed3474ef48aba56c50dbb81e0735",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/files/scheduler.py": {
+    "mtime": 1794269696.0711331,
+    "ast_hash": "c32d8dd1f2c39abdd437e29db80be7c3",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/files/test_scheduler.py": {
+    "mtime": 1794269696.071232,
+    "ast_hash": "f17e73931c0ab09e812a1c776631bfe1",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/place-files.sh": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "06beed3474ef48aba56c50dbb81e0735",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/files/go.mod": {
+    "mtime": 1794269696.0720856,
+    "ast_hash": "3eab64295cb199c97def84d779cf2ffc",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/files/inventory.go": {
+    "mtime": 1794269696.072152,
+    "ast_hash": "5087e2862dceb30da1126977d54cd92b",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/place-files.sh": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "e26e05fe5705e6698033c1cb3454f33c",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/files/go.mod": {
+    "mtime": 1794269696.072892,
+    "ast_hash": "95b37e2562cffd4d93c24df7cc33409e",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/files/internal/features/store/domain.go": {
+    "mtime": 1794269696.073031,
+    "ast_hash": "4883ca008afeab5e889234535f94c06e",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/files/internal/features/store/ports.go": {
+    "mtime": 1794269696.0731053,
+    "ast_hash": "52fdc2be136a90ec8ae466a18be25e72",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/files/internal/features/store/postgres.go": {
+    "mtime": 1794269696.0731053,
+    "ast_hash": "eaaee87d4b763aa70a2b55db4f8aa146",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/files/internal/features/store/usecase.go": {
+    "mtime": 1794269696.0731053,
+    "ast_hash": "bf633dc73a54db29771c2efba49ed41d",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/place-files.sh": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "06beed3474ef48aba56c50dbb81e0735",
+    "semantic_hash": ""
+  },
+  "tests/contracts/__init__.py": {
+    "mtime": 1794269696.0741544,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "tests/contracts/test_skill_wording.py": {
+    "mtime": 1794269696.0745976,
+    "ast_hash": "6226880309cfb86deaabcf48950cf9ec",
+    "semantic_hash": ""
+  },
+  "tests/test_check_examples.py": {
+    "mtime": 1794269696.0745976,
+    "ast_hash": "f36ee09f485e8dee1cc86eccfb7fcd33",
+    "semantic_hash": ""
+  },
+  "tests/test_check_skill.py": {
+    "mtime": 1794269696.0745976,
+    "ast_hash": "e84af22e29e8ac2d7c24115ca21fc614",
+    "semantic_hash": ""
+  },
+  "tests/test_package_openai_plugin.py": {
+    "mtime": 1794269696.0745976,
+    "ast_hash": "73cf516543497c177cdb202b955583d2",
+    "semantic_hash": ""
+  },
+  ".claude/CLAUDE.md": {
+    "mtime": 1795368629.0592232,
+    "ast_hash": "9b31786b637be3c13978bec4c2330752",
+    "semantic_hash": ""
+  },
+  ".claude/README.md": {
+    "mtime": 1795368643.3370302,
+    "ast_hash": "4fbaf09d5b6a4d5c365e8586336877db",
+    "semantic_hash": ""
+  },
+  ".claude/agents/backend/api-designer.md": {
+    "mtime": 1795368643.3420305,
+    "ast_hash": "16d8066f4e07dfd262970543778a7061",
+    "semantic_hash": ""
+  },
+  ".claude/agents/backend/migration-reviewer.md": {
+    "mtime": 1795368164.7392492,
+    "ast_hash": "c5bfc48a150081603ea896257ad47258",
+    "semantic_hash": ""
+  },
+  ".claude/agents/backend/ownership-reviewer.md": {
+    "mtime": 1795368164.7507446,
+    "ast_hash": "3c4dbd22d4aacb4bc0ed5d73a957d0de",
+    "semantic_hash": ""
+  },
+  ".claude/agents/core/architect.md": {
+    "mtime": 1795368164.7627783,
+    "ast_hash": "0ee8f088700fa6e6b3de30d800288219",
+    "semantic_hash": ""
+  },
+  ".claude/agents/core/build-resolver.md": {
+    "mtime": 1795368164.775839,
+    "ast_hash": "48046c808a93cfe33ab96b4d6e60c0ff",
+    "semantic_hash": ""
+  },
+  ".claude/agents/core/code-explorer.md": {
+    "mtime": 1795368643.3460307,
+    "ast_hash": "a07314b130c67b9981b1f7dcff026cf5",
+    "semantic_hash": ""
+  },
+  ".claude/agents/core/code-reviewer.md": {
+    "mtime": 1795368643.3500311,
+    "ast_hash": "bd31d8e3b2614c3117ac891764515a33",
+    "semantic_hash": ""
+  },
+  ".claude/agents/core/planner.md": {
+    "mtime": 1795368164.813555,
+    "ast_hash": "d94da6ba56dd46944610d4e7cf43018f",
+    "semantic_hash": ""
+  },
+  ".claude/agents/core/tdd-guide.md": {
+    "mtime": 1795368164.8255444,
+    "ast_hash": "11419630bddf4057fbe41d14fb156af0",
+    "semantic_hash": ""
+  },
+  ".claude/agents/security/depguard-reviewer.md": {
+    "mtime": 1795368164.8373272,
+    "ast_hash": "dfa43d9fecf7baba23cd6ea9a9a19198",
+    "semantic_hash": ""
+  },
+  ".claude/agents/testing/test-author.md": {
+    "mtime": 1795368643.3550315,
+    "ast_hash": "891461ef4a52f4bcd897fc8461f8025c",
+    "semantic_hash": ""
+  },
+  ".claude/commands/add-handler.md": {
+    "mtime": 1795368165.7003794,
+    "ast_hash": "7257fec0af2d3a5da26cb9cac17c2ece",
+    "semantic_hash": ""
+  },
+  ".claude/commands/add-module.md": {
+    "mtime": 1795368165.7121315,
+    "ast_hash": "77b1e13e28467a5b717a2ea21f43384a",
+    "semantic_hash": ""
+  },
+  ".claude/commands/claim-check.md": {
+    "mtime": 1795368165.7231832,
+    "ast_hash": "7938638ce5363193491c6d8f3755662d",
+    "semantic_hash": ""
+  },
+  ".claude/commands/clean-room-rebuild.md": {
+    "mtime": 1795368165.7346537,
+    "ast_hash": "933442e0cf8cd7858b92f5c3cf08a990",
+    "semantic_hash": ""
+  },
+  ".claude/commands/corpus-retrieval.md": {
+    "mtime": 1795368165.7457175,
+    "ast_hash": "4fd945a983d30f89a88584248f3ed130",
+    "semantic_hash": ""
+  },
+  ".claude/commands/depguard-guard.md": {
+    "mtime": 1795368165.7569127,
+    "ast_hash": "3a07bd810e6f020119d78201b833c538",
+    "semantic_hash": ""
+  },
+  ".claude/commands/diagnosing-bugs.md": {
+    "mtime": 1795368165.767888,
+    "ast_hash": "81cf7f03474119c23a8a95501f10ce63",
+    "semantic_hash": ""
+  },
+  ".claude/commands/domain-modeling.md": {
+    "mtime": 1795368165.7792726,
+    "ast_hash": "3e56c8f46161cf767701d0556562cce6",
+    "semantic_hash": ""
+  },
+  ".claude/commands/grilling.md": {
+    "mtime": 1795368165.790328,
+    "ast_hash": "59c65e57376911cb3762e5c92a85637c",
+    "semantic_hash": ""
+  },
+  ".claude/commands/learn.md": {
+    "mtime": 1795368165.8022063,
+    "ast_hash": "6dd687f378026395b9d77d168240212e",
+    "semantic_hash": ""
+  },
+  ".claude/commands/ownership-author.md": {
+    "mtime": 1795368165.8127131,
+    "ast_hash": "f5eeacb17e82bebf59c43c5bcc506170",
+    "semantic_hash": ""
+  },
+  ".claude/commands/plan.md": {
+    "mtime": 1795368165.8238738,
+    "ast_hash": "9c641b35906cd03949ee355814cde101",
+    "semantic_hash": ""
+  },
+  ".claude/commands/research.md": {
+    "mtime": 1795368165.8350077,
+    "ast_hash": "c686e96745587e2b36d94b3d3c27b56f",
+    "semantic_hash": ""
+  },
+  ".claude/commands/review.md": {
+    "mtime": 1795368165.8459795,
+    "ast_hash": "a1ab3b009e1e894291acfd8dccecd7c9",
+    "semantic_hash": ""
+  },
+  ".claude/commands/ship.md": {
+    "mtime": 1795368165.8571398,
+    "ast_hash": "3ddaab6ebc14878fb059530229320af7",
+    "semantic_hash": ""
+  },
+  ".claude/commands/spec.md": {
+    "mtime": 1795368165.8681476,
+    "ast_hash": "1b46f4f5b1907c6d7017c8643cd94977",
+    "semantic_hash": ""
+  },
+  ".claude/commands/tdd.md": {
+    "mtime": 1795368165.87945,
+    "ast_hash": "c2203fb9404af1483208402960e92a2a",
+    "semantic_hash": ""
+  },
+  ".claude/commands/verified-status.md": {
+    "mtime": 1795368165.8900933,
+    "ast_hash": "637b80867a60dc8e6931f6a64692609b",
+    "semantic_hash": ""
+  },
+  ".claude/rules/playbooks.md": {
+    "mtime": 1795368629.033968,
+    "ast_hash": "aa78fce5ad7057f6911d8b594e08e267",
+    "semantic_hash": ""
+  },
+  ".claude/skills/add-handler/SKILL.md": {
+    "mtime": 1795368643.361032,
+    "ast_hash": "1c5414e295b83795c95b086b1a747f30",
+    "semantic_hash": ""
+  },
+  ".claude/skills/add-module/SKILL.md": {
+    "mtime": 1795368165.0439954,
+    "ast_hash": "743ebadab0e9f6f8a51864bb204735d0",
+    "semantic_hash": ""
+  },
+  ".claude/skills/claim-check/CREDITS.md": {
+    "mtime": 1795368165.05592,
+    "ast_hash": "e41dd9853a80407de794b9515e01f0b1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/claim-check/SKILL.md": {
+    "mtime": 1795368165.0675857,
+    "ast_hash": "84fa3f714e875ff87b43f03a16d14dcb",
+    "semantic_hash": ""
+  },
+  ".claude/skills/clean-room-rebuild/CREDITS.md": {
+    "mtime": 1795368165.0788274,
+    "ast_hash": "08bf0d77cbc9fb36befecfbf7c12123c",
+    "semantic_hash": ""
+  },
+  ".claude/skills/clean-room-rebuild/SKILL.md": {
+    "mtime": 1795368165.0905256,
+    "ast_hash": "d44aa000b7dad1dba37e1139f70f7c89",
+    "semantic_hash": ""
+  },
+  ".claude/skills/corpus-retrieval/CREDITS.md": {
+    "mtime": 1795368165.10259,
+    "ast_hash": "b885eb4fc4e6fdde3e57c9d1a1efb967",
+    "semantic_hash": ""
+  },
+  ".claude/skills/corpus-retrieval/SKILL.md": {
+    "mtime": 1795368165.1143641,
+    "ast_hash": "c6aa2c35def81a392847704a30550f51",
+    "semantic_hash": ""
+  },
+  ".claude/skills/depguard-guard/SKILL.md": {
+    "mtime": 1795368165.1261137,
+    "ast_hash": "8b71f5f9d4c5d5c8aebd00cb28c833ba",
+    "semantic_hash": ""
+  },
+  ".claude/skills/diagnosing-bugs/CREDITS.md": {
+    "mtime": 1795368165.137474,
+    "ast_hash": "b20693b843eb8a21b7f989d477da0aec",
+    "semantic_hash": ""
+  },
+  ".claude/skills/diagnosing-bugs/SKILL.md": {
+    "mtime": 1795368165.1502714,
+    "ast_hash": "eb208e85e41d4f404c5a1120d409ed55",
+    "semantic_hash": ""
+  },
+  ".claude/skills/domain-modeling/CREDITS.md": {
+    "mtime": 1795368165.1618562,
+    "ast_hash": "d62e1616081beb2451fbc23c082e96ec",
+    "semantic_hash": ""
+  },
+  ".claude/skills/domain-modeling/SKILL.md": {
+    "mtime": 1795368165.173625,
+    "ast_hash": "8c68589fccb469eade9298c582b899db",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/SKILL.md": {
+    "mtime": 1795368629.06097,
+    "ast_hash": "e582759bfc00f68579f37c74cbb64df9",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/add-watch.md": {
+    "mtime": 1795368629.06097,
+    "ast_hash": "d59d027fe449f06aa03905a01184e779",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/exports.md": {
+    "mtime": 1795368629.0613756,
+    "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1795368629.0613756,
+    "ast_hash": "42fef56a01698118f7fd722acdadea34",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1795368629.0613756,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/hooks.md": {
+    "mtime": 1795368629.0613756,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/query.md": {
+    "mtime": 1795368629.0613756,
+    "ast_hash": "3c46f8ad006874260614ed8657d02307",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/transcribe.md": {
+    "mtime": 1795368629.0619702,
+    "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/update.md": {
+    "mtime": 1795368629.0619702,
+    "ast_hash": "c698309979460d0f02ba616417844399",
+    "semantic_hash": ""
+  },
+  ".claude/skills/grilling/CREDITS.md": {
+    "mtime": 1795368165.185294,
+    "ast_hash": "e29d885f8a2998f61bc2fcb749d418d0",
+    "semantic_hash": ""
+  },
+  ".claude/skills/grilling/SKILL.md": {
+    "mtime": 1795368165.1963122,
+    "ast_hash": "c41c24a3fa3e556a81cc1d80308e6761",
+    "semantic_hash": ""
+  },
+  ".claude/skills/learn/SKILL.md": {
+    "mtime": 1795368165.2072775,
+    "ast_hash": "2b874ee3d44cb78090e3c8a8481a3748",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ownership-author/SKILL.md": {
+    "mtime": 1795368165.2185235,
+    "ast_hash": "a665fe924627a024551a40a8cdb87bd4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/plan/SKILL.md": {
+    "mtime": 1795368165.2295964,
+    "ast_hash": "530a8b8b4832e3f4a23de35770c6175a",
+    "semantic_hash": ""
+  },
+  ".claude/skills/research/CREDITS.md": {
+    "mtime": 1795368165.2411668,
+    "ast_hash": "2e0a76fba2029391f60b247462f74a97",
+    "semantic_hash": ""
+  },
+  ".claude/skills/research/SKILL.md": {
+    "mtime": 1795368165.252508,
+    "ast_hash": "d084b309bf176d256f7d1fc3fca58b1b",
+    "semantic_hash": ""
+  },
+  ".claude/skills/review/SKILL.md": {
+    "mtime": 1795368165.2646604,
+    "ast_hash": "47d6637044042c3c0f3557fbe1d574d1",
+    "semantic_hash": ""
+  },
+  ".claude/skills/ship/SKILL.md": {
+    "mtime": 1795368165.2752895,
+    "ast_hash": "6e978727d2fc3a5fac8a73092df998c3",
+    "semantic_hash": ""
+  },
+  ".claude/skills/spec/SKILL.md": {
+    "mtime": 1795368165.2872498,
+    "ast_hash": "5a9cc390bd860690bcbd96d8bd82f308",
+    "semantic_hash": ""
+  },
+  ".claude/skills/tdd/CREDITS.md": {
+    "mtime": 1795368165.2982907,
+    "ast_hash": "740b903461b7dcb234e434b8a5aa6e25",
+    "semantic_hash": ""
+  },
+  ".claude/skills/tdd/SKILL.md": {
+    "mtime": 1795368165.3092108,
+    "ast_hash": "024e1cc60d1fc37df15fb8511f464e49",
+    "semantic_hash": ""
+  },
+  ".claude/skills/verified-status/CREDITS.md": {
+    "mtime": 1795368165.320224,
+    "ast_hash": "c7e58d8708725ee5779f67bb0344078b",
+    "semantic_hash": ""
+  },
+  ".claude/skills/verified-status/SKILL.md": {
+    "mtime": 1795368165.3312657,
+    "ast_hash": "99e4c05637b3a2e99a68f7bac00082ae",
+    "semantic_hash": ""
+  },
+  ".github/workflows/check.yml": {
+    "mtime": 1794269696.0449874,
+    "ast_hash": "3020232e654cc84a3c4ff77ef100f26c",
+    "semantic_hash": ""
+  },
+  "CHANGELOG.md": {
+    "mtime": 1794269696.0449874,
+    "ast_hash": "5aa26fc416141b7a1a703480def2f3c4",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1795368643.3690326,
+    "ast_hash": "a7f71979aa47ba42dc116db61b48c5de",
+    "semantic_hash": ""
+  },
+  "CONTRIBUTING.md": {
+    "mtime": 1794269696.0449874,
+    "ast_hash": "96d2f1635c95180c9e3659827636db9a",
+    "semantic_hash": ""
+  },
+  "PRIVACY.md": {
+    "mtime": 1794269696.0449874,
+    "ast_hash": "02cdaba2a7e38d96ba0dc3f5b38eca26",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1795368629.033968,
+    "ast_hash": "5941d7af57ad5f936e16aab9b68b6c47",
+    "semantic_hash": ""
+  },
+  "docs/architecture/README.md": {
+    "mtime": 1794269696.045889,
+    "ast_hash": "9eb02b169855c98f17db7281e7a1be89",
+    "semantic_hash": ""
+  },
+  "docs/architecture/auth-algorithm.workflow.html": {
+    "mtime": 1794269696.0500677,
+    "ast_hash": "cfa3379d217451d25e958d2f3ad91201",
+    "semantic_hash": ""
+  },
+  "docs/architecture/auth-sequence.sequence.html": {
+    "mtime": 1794269696.0520678,
+    "ast_hash": "8baaff76fb85d8df75cb298e448afa8c",
+    "semantic_hash": ""
+  },
+  "docs/architecture/c4-containers.html": {
+    "mtime": 1794269696.0540679,
+    "ast_hash": "3e71519e4fc2a24dbbe1a6e81981e10d",
+    "semantic_hash": ""
+  },
+  "docs/architecture/database-dataflow.dataflow.html": {
+    "mtime": 1794269696.0540679,
+    "ast_hash": "85c1bff684f1c80bd14a3180a83ceaae",
+    "semantic_hash": ""
+  },
+  "docs/architecture/outbox-algorithm.workflow.html": {
+    "mtime": 1794269696.056068,
+    "ast_hash": "5280520cdf6b02c10975e831336417ae",
+    "semantic_hash": ""
+  },
+  "docs/architecture/outbox-sequence.sequence.html": {
+    "mtime": 1794269696.0590682,
+    "ast_hash": "a0c9cf3c3281e362512a275a18217ede",
+    "semantic_hash": ""
+  },
+  "docs/architecture/runtime-lifecycle.lifecycle.html": {
+    "mtime": 1794269696.0590682,
+    "ast_hash": "7def1bba7f8e5f6daa53a6abe4b4ee21",
+    "semantic_hash": ""
+  },
+  "docs/architecture/services-slices.architecture.html": {
+    "mtime": 1794269696.0600684,
+    "ast_hash": "f93a36c2bb06ac42ec1e1b12e4a2ccf8",
+    "semantic_hash": ""
+  },
+  "examples/review-inventory.md": {
+    "mtime": 1794269696.0600684,
+    "ast_hash": "b6ebbc8e82c6e2c3705b5a6d8782b548",
+    "semantic_hash": ""
+  },
+  "lints/.golangci.yml": {
+    "mtime": 1794269696.0600684,
+    "ast_hash": "fab0801297ffb6c2bde108a54f1d2b48",
+    "semantic_hash": ""
+  },
+  "lints/README.md": {
+    "mtime": 1794269696.0618734,
+    "ast_hash": "b204959c8e42756934a613b3868eb030",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/SKILL.md": {
+    "mtime": 1795368629.0349681,
+    "ast_hash": "5fb967b5c27a12a8f2497f29fbcff63d",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/case.yaml": {
+    "mtime": 1794269696.0669389,
+    "ast_hash": "51b5765ed98dd1b032ba5af38fb34c03",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/01-stdlib-only.md": {
+    "mtime": 1794269696.0670805,
+    "ast_hash": "91edcd8ff9c3b21867efbfc48b02e3a1",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/02-sentinel-and-wrap.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "cef0aa6e9fe59c6093678737a0cf9e9d",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/03-no-one-impl-interface.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "2e0763c68a11c97502134eb4fa041f97",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/04-context-first-param.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "e619ec93b7ed481e78081703a3bc09b5",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/05-table-driven-tests.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "ffbced3e164aedcac7462e16b7eefa42",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/06-usable-zero-value.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "674f84a4adcde6d154ee6182694b5b5c",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/07-vet-golangci-clean.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "4412661d0f2837427a8c0237245f56a9",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/graders/08-slog-not-prints.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "a5c1c1449ffc7ba65140408c5380c096",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/ratelimit-library/prompt.md": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "045cf79db39dd307b821d8380a3f472b",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/case.yaml": {
+    "mtime": 1794269696.06716,
+    "ast_hash": "37b576f575fe0488bcd00da09e1e9795",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/01-builds-and-tests-pass.md": {
+    "mtime": 1794269696.0677922,
+    "ast_hash": "fe229d8078cb29f8251b52741ffefb7f",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/02-errors-wrapped-with-w.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "67e836804ce3ec5bdb03d36cb93c942b",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/03-no-bool-params.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "fd3aba2929fd7e43cdb66fc13813b8d7",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/04-no-panic-on-bad-input.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "ccd08478bd5fb99e5bf8ebbd8d0a0328",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/05-table-tests-added.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "22528980b1ea4a5fc1b834826e865c84",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/06-no-one-impl-interface.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "9b5b9898f0ff8869aff2a8f2c4df098b",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/07-goroutine-has-owner.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "e515b7db244f33258949c08c1796d892",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/graders/08-clipping-noted.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "0cf1f6d429fde4b547d2e9f792e35d35",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/refactor-member-module/prompt.md": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "b6797be92f237a7d4c6d4722a58c6bcd",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/case.yaml": {
+    "mtime": 1794269696.0679867,
+    "ast_hash": "774e24b80f3c0cd4c9aa3efcaa7145cd",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/01-builds-and-lints-clean.md": {
+    "mtime": 1794269696.0686653,
+    "ast_hash": "a0d74a991581be700d71cf9174564179",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/02-domain-stays-pure.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "a7db38ef1f7e29329362454132d12a04",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/03-port-not-import.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "0adea56b610757f1ef75e55d974fa20c",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/04-query-in-queries-sql.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "3bf0116ee46643ebff019dd72339ef6e",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/05-migration-ships-down.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "d2e4e238ef20c434cdb67a5571c8243c",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/06-existing-code-not-rewritten.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "ec51a7b45602a71c5b40fad6f3f7e3d8",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/graders/07-envelope-code-not-new.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "e87cb73969c6110ce62188597e6a03d6",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/evals/slice-regen/prompt.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "acd1d13979db272b00c931a4c7b72f06",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/references/backend-go-stack.md": {
+    "mtime": 1794269696.0691516,
+    "ast_hash": "26ac6e1d26412bb467f1688ae0ac8cbb",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/references/effective-go.md": {
+    "mtime": 1794269696.0696254,
+    "ast_hash": "bc796e364a0836db94befcd8ddaaf320",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/references/go-code-review-comments.md": {
+    "mtime": 1794269696.0696254,
+    "ast_hash": "83dd3b1c513e0df4a5ab2454bbd32639",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/references/go-concurrency-patterns.md": {
+    "mtime": 1794269696.0696254,
+    "ast_hash": "08fa1e86ea3d88883d56134c0c2e4ef3",
+    "semantic_hash": ""
+  },
+  "skills/go-best-practices/references/google-go-style-guide.md": {
+    "mtime": 1794269696.0696254,
+    "ast_hash": "9924d956be9968f3dd0bb62f1f3bfe6b",
+    "semantic_hash": ""
+  },
+  "skills/go-port/SKILL.md": {
+    "mtime": 1794269696.0696254,
+    "ast_hash": "37d67a48ffea8df854a1ac016751210c",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/case.yaml": {
+    "mtime": 1794269696.0702195,
+    "ast_hash": "242dba926ab0204b48a9ac09c5598eec",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/01-original-tests-passing.md": {
+    "mtime": 1794269696.0704257,
+    "ast_hash": "bd44769c508a17168230ae1442110712",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/02-error-codes-not-panics.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "f7b4444f7a485f4015f1351847ada9e6",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/03-no-cgo.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "74ef191a62b959be3fadd3b047667116",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/04-porting-notes.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "2a821c5bdd88273831d1567299d44c2c",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/05-proportionate-size.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "f11205d1c05cdb5f1157936b6a0df420",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/06-stdlib-parsing.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "827efa5b99073792679a61eb8994c39d",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/07-tests-map-one-to-one.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "671d3623eed860b31af53840bd2e298c",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/graders/08-golangci-clean.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "7932977b850ceb3c931c6150dcd04917",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-c-config-parser/prompt.md": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "fac4255f777d3cb4b0076298b87d225b",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/case.yaml": {
+    "mtime": 1794269696.070651,
+    "ast_hash": "b714b82031f9a0ec6d44f4f698fe60cc",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/01-original-tests-passing.md": {
+    "mtime": 1794269696.071232,
+    "ast_hash": "bd44769c508a17168230ae1442110712",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/02-exceptions-to-error-values.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "554c4e0d650f03fc018bd747637e0832",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/03-deterministic-iteration.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "7dc4f07d868d62bf177ab7916519d4fd",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/04-porting-notes.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "9da1163b9d1eec555ab576e94cc2fd24",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/05-proportionate-size.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "00891ec4549b32632f6e9f48377b8ed1",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/06-context-aware-concurrency.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "d829f6c4dad1a5a4cab1c07f315a2836",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/07-tests-map-one-to-one.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "d01dbef71199a1e0f041421667929d3d",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/graders/08-golangci-clean.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "7932977b850ceb3c931c6150dcd04917",
+    "semantic_hash": ""
+  },
+  "skills/go-port/evals/port-python-task-graph/prompt.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "90b839257eadc35edac996af5000c0b7",
+    "semantic_hash": ""
+  },
+  "skills/go-review/SKILL.md": {
+    "mtime": 1794269696.071355,
+    "ast_hash": "c1c183c00e4f7339a322569f8ba9438b",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/case.yaml": {
+    "mtime": 1794269696.0719256,
+    "ast_hash": "449d6c07a06e59d9130fe50adf4c13f4",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/01-review-not-rewrite.md": {
+    "mtime": 1794269696.072152,
+    "ast_hash": "4c7d561ff13fa2f102befe68edaf9e8e",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/02-flags-panic-on-bad-input.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "46e4252cde3053f1a88cc4a6a9dc1f1a",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/03-flags-log-and-return.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "c042c3fdb774a883b0b37cac273e1fcb",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/04-flags-bool-parameter.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "dcfa9260b5bb063f7b67e90242bf7af0",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/05-flags-swallowed-error.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "9c155842060243c056a8b80a659f518b",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/06-flags-percent-s-wrapping.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "f3760e925a4362232c813f4a49bf81e0",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/07-valid-idioms-left-alone.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "3ed020ce787af1d3bd4ffdfd07f1101a",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/08-findings-cite-location-and-rule.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "d70dff1c77398323abb2863489814f1c",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/09-fixes-shown-as-code.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "d8e57a1b1187ac0f85c8f0bfb1ce8b05",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/10-states-reviewed-mode.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "0b2c782b50b992e0f84912a0152cfd92",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/graders/11-already-good-section.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "6bfddf49ace0d5008adaac9af8624a47",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-inventory-module/prompt.md": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "6318f57fed55cfde036ee790cffd3051",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/case.yaml": {
+    "mtime": 1794269696.0723124,
+    "ast_hash": "1bcbf82a7cb0cc799fc314d056888693",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/01-review-not-rewrite.md": {
+    "mtime": 1794269696.0731053,
+    "ast_hash": "d08d36cc7d3b45f3bd63aa42cc25e2e8",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/02-architecture-findings-ranked-first.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "da4f0702cbd54831ab2e16a096e352ee",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/03-domain-imports-flagged.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "2ce5060f6ba261a07d695fcb643b7b4e",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/04-swallowed-errors-flagged.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "14d4be83309e3cbd7e38d65d6c9087c4",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/05-cites-file-line-and-rule.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "b91b24785acf0ed6ec65d80607577ccd",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/06-fixes-shown-as-code.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "3578c422761c68cf388a6d52655e93e6",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/07-valid-shapes-left-alone.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "685801f1b4ffd8a90e28f618c2e74527",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/08-review-file-written.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "54e7cbc8a1856748b2ce89bad8775755",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/graders/09-already-good-section.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "c2d3ec75e8562d0514dd623dde988583",
+    "semantic_hash": ""
+  },
+  "skills/go-review/evals/review-messy-store/prompt.md": {
+    "mtime": 1794269696.0733368,
+    "ast_hash": "18560c997fce5cb912a440de352f72ea",
+    "semantic_hash": ""
+  },
+  "assets/icon.png": {
+    "mtime": 1794269696.0449874,
+    "ast_hash": "36a20f0e219d238bf8b0494cdb236c69",
+    "semantic_hash": ""
+  },
+  "docs/architecture/overview.svg": {
+    "mtime": 1794269696.0590682,
+    "ast_hash": "7141406368594fdc84f382a43735ea12",
+    "semantic_hash": ""
+  }
+}

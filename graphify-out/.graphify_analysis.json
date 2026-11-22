@@ -1,0 +1,1803 @@
+{
+  "communities": {
+    "0": [
+      "scripts_check_skill",
+      "scripts_check_skill_check_repo",
+      "scripts_check_skill_checker",
+      "scripts_check_skill_checker_add",
+      "scripts_check_skill_checker_check",
+      "scripts_check_skill_checker_check_changelog",
+      "scripts_check_skill_checker_check_doc_links",
+      "scripts_check_skill_checker_check_eval_case",
+      "scripts_check_skill_checker_check_evals",
+      "scripts_check_skill_checker_check_grader_file",
+      "scripts_check_skill_checker_check_graders",
+      "scripts_check_skill_checker_check_openai_icon",
+      "scripts_check_skill_checker_check_openai_interface",
+      "scripts_check_skill_checker_check_orphans",
+      "scripts_check_skill_checker_check_place_files",
+      "scripts_check_skill_checker_check_plugin_files",
+      "scripts_check_skill_checker_check_portable_plugin",
+      "scripts_check_skill_checker_check_relative_url",
+      "scripts_check_skill_checker_check_skill",
+      "scripts_check_skill_checker_code_free",
+      "scripts_check_skill_checker_init",
+      "scripts_check_skill_checker_load_frontmatter",
+      "scripts_check_skill_checker_load_json",
+      "scripts_check_skill_checker_load_yaml",
+      "scripts_check_skill_checker_loc",
+      "scripts_check_skill_checker_read",
+      "scripts_check_skill_checker_reference_hit",
+      "scripts_check_skill_checker_skill_dirs",
+      "scripts_check_skill_fold_block",
+      "scripts_check_skill_format_problem",
+      "scripts_check_skill_is_relative",
+      "scripts_check_skill_json_key_line",
+      "scripts_check_skill_main",
+      "scripts_check_skill_normalize_url",
+      "scripts_check_skill_parse_quoted",
+      "scripts_check_skill_parse_yaml",
+      "scripts_check_skill_png_size",
+      "scripts_check_skill_problem",
+      "scripts_check_skill_problems_to_json",
+      "scripts_check_skill_py_any",
+      "scripts_check_skill_py_exception",
+      "scripts_check_skill_py_path",
+      "scripts_check_skill_rationale_105",
+      "scripts_check_skill_rationale_1220",
+      "scripts_check_skill_rationale_978",
+      "scripts_check_skill_rel",
+      "scripts_check_skill_split_flow",
+      "scripts_check_skill_split_frontmatter",
+      "scripts_check_skill_strip_comment",
+      "scripts_check_skill_summary_line",
+      "scripts_check_skill_yamlerror",
+      "scripts_check_skill_yamlerror_init",
+      "scripts_check_skill_yamlparser",
+      "scripts_check_skill_yamlparser_indent",
+      "scripts_check_skill_yamlparser_init",
+      "scripts_check_skill_yamlparser_is_empty",
+      "scripts_check_skill_yamlparser_parse",
+      "scripts_check_skill_yamlparser_parse_block",
+      "scripts_check_skill_yamlparser_parse_flow_map",
+      "scripts_check_skill_yamlparser_parse_flow_seq",
+      "scripts_check_skill_yamlparser_parse_map",
+      "scripts_check_skill_yamlparser_parse_scalar",
+      "scripts_check_skill_yamlparser_parse_seq",
+      "scripts_check_skill_yamlparser_parse_value",
+      "scripts_check_skill_yamlparser_skip_empty",
+      "scripts_check_skill_yamlparser_split_key"
+    ],
+    "1": [
+      "tests_test_check_skill",
+      "tests_test_check_skill_add_portable_plugin",
+      "tests_test_check_skill_build_valid_repo",
+      "tests_test_check_skill_checkskilltests",
+      "tests_test_check_skill_checkskilltests_assert_has_error",
+      "tests_test_check_skill_checkskilltests_run_root",
+      "tests_test_check_skill_checkskilltests_setupclass",
+      "tests_test_check_skill_checkskilltests_test_bad_name",
+      "tests_test_check_skill_checkskilltests_test_broken_link",
+      "tests_test_check_skill_checkskilltests_test_broken_references_mention",
+      "tests_test_check_skill_checkskilltests_test_case_name_must_match_folder",
+      "tests_test_check_skill_checkskilltests_test_claude_manifest_stale_skills_entry",
+      "tests_test_check_skill_checkskilltests_test_cli_help",
+      "tests_test_check_skill_checkskilltests_test_cross_skill_mention_resolves",
+      "tests_test_check_skill_checkskilltests_test_description_not_folded",
+      "tests_test_check_skill_checkskilltests_test_description_without_trigger_verbs",
+      "tests_test_check_skill_checkskilltests_test_directory_link_resolves",
+      "tests_test_check_skill_checkskilltests_test_empty_grader_body",
+      "tests_test_check_skill_checkskilltests_test_fenced_link_is_ignored",
+      "tests_test_check_skill_checkskilltests_test_gap_in_grader_numbers",
+      "tests_test_check_skill_checkskilltests_test_invalid_semver",
+      "tests_test_check_skill_checkskilltests_test_long_skill_body_warns",
+      "tests_test_check_skill_checkskilltests_test_markdown_link_covers_reference",
+      "tests_test_check_skill_checkskilltests_test_marketplace_source_must_be_root",
+      "tests_test_check_skill_checkskilltests_test_missing_frontmatter_key",
+      "tests_test_check_skill_checkskilltests_test_missing_grader_frontmatter_key",
+      "tests_test_check_skill_checkskilltests_test_missing_skill_description",
+      "tests_test_check_skill_checkskilltests_test_name_must_match_folder",
+      "tests_test_check_skill_checkskilltests_test_orphan_reference",
+      "tests_test_check_skill_checkskilltests_test_output_format_and_json_flag",
+      "tests_test_check_skill_checkskilltests_test_place_files_existing_target_ok",
+      "tests_test_check_skill_checkskilltests_test_place_files_missing_target",
+      "tests_test_check_skill_checkskilltests_test_plugin_name_mismatch",
+      "tests_test_check_skill_checkskilltests_test_portable_display_name_too_long",
+      "tests_test_check_skill_checkskilltests_test_portable_http_url_rejected",
+      "tests_test_check_skill_checkskilltests_test_portable_icon_must_be_square",
+      "tests_test_check_skill_checkskilltests_test_portable_manifest_must_name_every_skill",
+      "tests_test_check_skill_checkskilltests_test_portable_missing_icon",
+      "tests_test_check_skill_checkskilltests_test_portable_too_many_prompts",
+      "tests_test_check_skill_checkskilltests_test_portable_unknown_top_level_key",
+      "tests_test_check_skill_checkskilltests_test_portable_version_must_match",
+      "tests_test_check_skill_checkskilltests_test_short_description",
+      "tests_test_check_skill_checkskilltests_test_unknown_frontmatter_key",
+      "tests_test_check_skill_checkskilltests_test_valid_fixture_repo_passes",
+      "tests_test_check_skill_checkskilltests_test_valid_portable_plugin_passes",
+      "tests_test_check_skill_checkskilltests_test_version_mismatch",
+      "tests_test_check_skill_error_messages",
+      "tests_test_check_skill_formatted",
+      "tests_test_check_skill_load_checker",
+      "tests_test_check_skill_messages",
+      "tests_test_check_skill_png_header",
+      "tests_test_check_skill_portable_with",
+      "tests_test_check_skill_rationale_144",
+      "tests_test_check_skill_write"
+    ],
+    "2": [
+      "tests_test_check_examples",
+      "tests_test_check_examples_checkrepotest",
+      "tests_test_check_examples_checkrepotest_setup",
+      "tests_test_check_examples_checkrepotest_teardown",
+      "tests_test_check_examples_checkrepotest_test_adapter_snippet_may_import_http",
+      "tests_test_check_examples_checkrepotest_test_domain_snippet_imports_are_denied",
+      "tests_test_check_examples_checkrepotest_test_fallback_passes_clean_fragments",
+      "tests_test_check_examples_checkrepotest_test_fallback_reports_unbalanced_block",
+      "tests_test_check_examples_checkrepotest_test_skip_exempts_domain_and_syntax",
+      "tests_test_check_examples_checkrepotest_use",
+      "tests_test_check_examples_domaintest",
+      "tests_test_check_examples_domaintest_test_domain_comment_flag",
+      "tests_test_check_examples_domaintest_test_forbidden_imports",
+      "tests_test_check_examples_domaintest_test_imports_of",
+      "tests_test_check_examples_findblockstest",
+      "tests_test_check_examples_findblockstest_test_dedents_indented_blocks",
+      "tests_test_check_examples_findblockstest_test_fence_tags_carry_domain_flag",
+      "tests_test_check_examples_findblockstest_test_finds_go_blocks_only",
+      "tests_test_check_examples_findblockstest_test_ignores_go_fences_nested_in_other_blocks",
+      "tests_test_check_examples_findblockstest_test_skips_eval_fixtures",
+      "tests_test_check_examples_gofmtmodetest",
+      "tests_test_check_examples_gofmtmodetest_setup",
+      "tests_test_check_examples_gofmtmodetest_teardown",
+      "tests_test_check_examples_gofmtmodetest_test_declaration_snippet_parses_in_its_variant",
+      "tests_test_check_examples_gofmtmodetest_test_gofmt_errors_map_to_the_markdown_line",
+      "tests_test_check_examples_gofmtmodetest_test_require_toolchain_exit_code_2",
+      "tests_test_check_examples_gofmtmodetest_test_wrapped_fragment_parses",
+      "tests_test_check_examples_harnesstest",
+      "tests_test_check_examples_harnesstest_apply",
+      "tests_test_check_examples_harnesstest_test_first_line_mismatch_reports_drift_at_the_block",
+      "tests_test_check_examples_harnesstest_test_skip_needs_a_reason",
+      "tests_test_check_examples_harnesstest_test_skip_with_reason_is_not_an_error",
+      "tests_test_check_examples_harnesstest_test_template_and_prelude_are_attached",
+      "tests_test_check_examples_harnesstest_test_template_without_code_slot_is_an_error",
+      "tests_test_check_examples_harnesstest_test_unknown_block_and_file_are_errors",
+      "tests_test_check_examples_load_checker",
+      "tests_test_check_examples_realrepotest",
+      "tests_test_check_examples_realrepotest_test_real_repo_passes",
+      "tests_test_check_examples_repotest",
+      "tests_test_check_examples_repotest_blocks",
+      "tests_test_check_examples_repotest_harness",
+      "tests_test_check_examples_repotest_setup",
+      "tests_test_check_examples_repotest_teardown",
+      "tests_test_check_examples_wraptest",
+      "tests_test_check_examples_wraptest_auto_blocks",
+      "tests_test_check_examples_wraptest_test_package_blocks_stay_unwrapped",
+      "tests_test_check_examples_wraptest_test_statement_fragments_get_the_statement_variant",
+      "tests_test_check_examples_write"
+    ],
+    "3": [
+      "changelog",
+      "changelog_0_1_0_draft",
+      "changelog_added",
+      "changelog_added_19",
+      "changelog_changelog",
+      "changelog_unreleased",
+      "contributing",
+      "contributing_contributing",
+      "contributing_good_first_contributions",
+      "contributing_license",
+      "contributing_making_a_change",
+      "contributing_style",
+      "contributing_the_one_rule_every_rule_needs_a_source",
+      "docs_architecture_readme",
+      "docs_architecture_readme_beautifulgo_architecture_diagrams",
+      "examples_review_inventory",
+      "examples_review_inventory_10_store_keeps_a_pool_field_it_never_uses_postgres_go_16_19",
+      "examples_review_inventory_11_speculative_fields_and_self_incriminating_comments",
+      "examples_review_inventory_1_the_domain_imports_pgx_internal_features_store_domain_go_8_26",
+      "examples_review_inventory_2_the_use_case_reaches_for_the_adapter_not_its_ports",
+      "examples_review_inventory_3_two_errors_are_swallowed_usecase_go_34_35_postgres_go_57_58",
+      "examples_review_inventory_4_the_receipt_mail_goroutine_has_no_owner_usecase_go_18_22",
+      "examples_review_inventory_5_sentinel_wrapped_with_s_breaks_errors_is_usecase_go_12",
+      "examples_review_inventory_6_byemail_silently_drops_items_and_tags",
+      "examples_review_inventory_7_the_verbose_bool_parameter_switches_behavior_at_a_distance",
+      "examples_review_inventory_8_log_print_where_slog_is_the_one_logging_policy_usecase_go_6",
+      "examples_review_inventory_9_no_tests_on_any_of_the_four_files_whole_slice",
+      "examples_review_inventory_consider",
+      "examples_review_inventory_go_review_the_store_slice",
+      "examples_review_inventory_must_fix",
+      "examples_review_inventory_should_fix",
+      "examples_review_inventory_suggested_lints",
+      "examples_review_inventory_what_s_already_good",
+      "readme",
+      "skills_go_best_practices_references_backend_go_stack",
+      "skills_go_best_practices_references_backend_go_stack_allowed_and_forbidden_edges",
+      "skills_go_best_practices_references_backend_go_stack_backend_go_stack_digest",
+      "skills_go_best_practices_references_backend_go_stack_enforcement_notes",
+      "skills_go_best_practices_references_backend_go_stack_error_envelope_and_slog_policy_handbook_doc_10",
+      "skills_go_best_practices_references_backend_go_stack_persistence_rules_handbook_doc_08",
+      "skills_go_best_practices_references_backend_go_stack_ports_consumer_defined_one_or_two_methods",
+      "skills_go_best_practices_references_backend_go_stack_request_lifecycle_handbook_doc_07",
+      "skills_go_best_practices_references_backend_go_stack_testing_shape_and_the_gate",
+      "skills_go_best_practices_references_backend_go_stack_the_four_depguard_rules",
+      "skills_go_best_practices_references_backend_go_stack_the_one_rule",
+      "skills_go_best_practices_references_backend_go_stack_the_six_file_slice"
+    ],
+    "4": [
+      "files_member",
+      "files_membership",
+      "files_membership_enroll",
+      "files_membership_lookup",
+      "files_membership_startsync",
+      "files_memberstore",
+      "files_memorystore",
+      "files_memorystore_all",
+      "files_memorystore_byemail",
+      "files_memorystore_save",
+      "files_synconce",
+      "item",
+      "mutex",
+      "pool",
+      "skills_go_best_practices_evals_refactor_member_module_files_member",
+      "skills_go_best_practices_evals_refactor_member_module_files_member_go_context",
+      "skills_go_best_practices_evals_refactor_member_module_files_member_new",
+      "skills_go_best_practices_evals_refactor_member_module_files_member_normalizeemail",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_domain",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_ports",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_postgres",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_postgres_go_context",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_postgres_go_queries",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_postgres_newstore",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_postgres_todomain",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_usecase",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_usecase_go_context",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_usecase_go_store",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_usecase_ordersforemail",
+      "skills_go_review_evals_review_messy_store_files_internal_features_store_usecase_place",
+      "store_id",
+      "store_item",
+      "store_mailqueue",
+      "store_order",
+      "store_order_total",
+      "store_order_validate",
+      "store_orderreader",
+      "store_status",
+      "store_store",
+      "store_store_byemail",
+      "store_store_countbyemail",
+      "store_store_insertorder",
+      "textarray"
+    ],
+    "5": [
+      "skills_go_port_evals_port_python_task_graph_files_scheduler",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_cycleerror",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_cycleerror_init",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_execution_order",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_find_cycle",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_missingdependency",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_missingdependency_init",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_parse_schedule",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_parseerror",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_parseerror_init",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_py_exception",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_rationale_1",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_rationale_112",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_rationale_131",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_rationale_17",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_rationale_56",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_rationale_88",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_run_all",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_runtimeout",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_runtimeout_init",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_schedulererror",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_task",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_task_init",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_task_repr",
+      "skills_go_port_evals_port_python_task_graph_files_scheduler_wave_plan",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_ordertests",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_ordertests_test_cycle_is_named",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_ordertests_test_empty",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_ordertests_test_missing_dependency",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_ordertests_test_order_respects_deps",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_parsetests",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_parsetests_test_errors_share_a_base_class",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_parsetests_test_parse_errors_report_line",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_parsetests_test_parses_fields",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_runner",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_runtests",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_runtests_test_run_all_empty",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_runtests_test_run_all_runs_every_task_once",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_runtests_test_run_all_timeout_lists_pending",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_slow_runner",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_wavetests",
+      "skills_go_port_evals_port_python_task_graph_files_test_scheduler_wavetests_test_waves_group_and_sort_names"
+    ],
+    "6": [
+      "request",
+      "responsewriter",
+      "router",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_domain",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_domain_go_time",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_domain_go_widgets_widget",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_http",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_http_newhandler",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_http_writewidgeterr",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_module",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_module_go_time",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_module_register",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_ports",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres_go_context",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres_go_queries",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres_go_widget",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres_go_widgets_store",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres_newstore",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_postgres_todomain",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_usecase",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_usecase_go_context",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_usecase_go_time",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_usecase_go_widget",
+      "skills_go_best_practices_evals_slice_regen_files_internal_features_widgets_usecase_newcreator",
+      "widgets_createinput",
+      "widgets_creator",
+      "widgets_creator_byid",
+      "widgets_creator_create",
+      "widgets_deps",
+      "widgets_handler",
+      "widgets_handler_byid",
+      "widgets_handler_create",
+      "widgets_size",
+      "widgets_store_byid",
+      "widgets_store_listbysize",
+      "widgets_store_save",
+      "widgets_widget_valid",
+      "widgets_widgetid",
+      "widgets_widgetstore"
+    ],
+    "7": [
+      "scripts_check_examples",
+      "scripts_check_examples_apply_harness",
+      "scripts_check_examples_as_text",
+      "scripts_check_examples_balance_problems",
+      "scripts_check_examples_block",
+      "scripts_check_examples_check_repo",
+      "scripts_check_examples_doc_files",
+      "scripts_check_examples_find_blocks",
+      "scripts_check_examples_first_code_line",
+      "scripts_check_examples_format_problem",
+      "scripts_check_examples_gofmt_exe",
+      "scripts_check_examples_imports_of",
+      "scripts_check_examples_is_forbidden_domain_import",
+      "scripts_check_examples_load_harness",
+      "scripts_check_examples_looks_like_domain",
+      "scripts_check_examples_main",
+      "scripts_check_examples_problem",
+      "scripts_check_examples_py_any",
+      "scripts_check_examples_py_path",
+      "scripts_check_examples_rationale_135",
+      "scripts_check_examples_rationale_188",
+      "scripts_check_examples_rationale_198",
+      "scripts_check_examples_rationale_221",
+      "scripts_check_examples_rationale_318",
+      "scripts_check_examples_rationale_348",
+      "scripts_check_examples_rationale_363",
+      "scripts_check_examples_rationale_370",
+      "scripts_check_examples_rel",
+      "scripts_check_examples_render",
+      "scripts_check_examples_run_gofmt",
+      "scripts_check_examples_summary_line",
+      "scripts_check_examples_variants_of"
+    ],
+    "8": [
+      "plugin",
+      "plugin_author",
+      "plugin_author_name",
+      "plugin_author_url",
+      "plugin_com_openai_interface",
+      "plugin_com_openai_publication",
+      "plugin_description",
+      "plugin_extensions",
+      "plugin_extensions_com_openai",
+      "plugin_homepage",
+      "plugin_interface_brandcolor",
+      "plugin_interface_capabilities",
+      "plugin_interface_category",
+      "plugin_interface_composericon",
+      "plugin_interface_defaultprompt",
+      "plugin_interface_developername",
+      "plugin_interface_displayname",
+      "plugin_interface_logo",
+      "plugin_interface_longdescription",
+      "plugin_interface_privacypolicyurl",
+      "plugin_interface_shortdescription",
+      "plugin_interface_supporturl",
+      "plugin_interface_websiteurl",
+      "plugin_keywords",
+      "plugin_license",
+      "plugin_name",
+      "plugin_publication_release_notes",
+      "plugin_repository",
+      "plugin_schema",
+      "plugin_version"
+    ],
+    "9": [
+      "readme_agent_kit_claude_code",
+      "readme_any_agent_one_command",
+      "readme_architecture_diagrams",
+      "readme_beautiful_go",
+      "readme_claude_ai",
+      "readme_claude_code",
+      "readme_contributing",
+      "readme_cursor_or_anything_else_copy_the_folder",
+      "readme_enforcing_the_rules_with_golangci_lint",
+      "readme_gemini_cli",
+      "readme_github_copilot",
+      "readme_install",
+      "readme_layout",
+      "readme_license",
+      "readme_openai_codex",
+      "readme_porting_code_to_go",
+      "readme_reviewing_existing_code",
+      "readme_siblings",
+      "readme_sources_and_attribution",
+      "readme_testing_the_skills",
+      "readme_the_playbooks",
+      "readme_the_stack",
+      "readme_updating",
+      "readme_what_it_changes",
+      "readme_what_the_libraries_do_and_why",
+      "readme_what_the_writing_skill_covers"
+    ],
+    "10": [
+      "claude_skills_graphify_skill",
+      "claude_skills_graphify_skill_for_graphify_add_and_watch",
+      "claude_skills_graphify_skill_for_graphify_query",
+      "claude_skills_graphify_skill_for_the_commit_hook_and_native_claude_md_integration",
+      "claude_skills_graphify_skill_for_update_and_cluster_only",
+      "claude_skills_graphify_skill_graphify",
+      "claude_skills_graphify_skill_honesty_rules",
+      "claude_skills_graphify_skill_interpreter_guard_for_subcommands",
+      "claude_skills_graphify_skill_part_a_structural_extraction_for_code_files",
+      "claude_skills_graphify_skill_part_b_semantic_extraction_parallel_subagents",
+      "claude_skills_graphify_skill_part_c_merge_ast_semantic_into_final_extraction",
+      "claude_skills_graphify_skill_step_0_github_repos_and_multi_path_merge_only_if_a_url_or_several_paths",
+      "claude_skills_graphify_skill_step_1_ensure_graphify_is_installed",
+      "claude_skills_graphify_skill_step_2_5_video_and_audio_only_if_video_files_detected",
+      "claude_skills_graphify_skill_step_2_detect_files",
+      "claude_skills_graphify_skill_step_3_extract_entities_and_relationships",
+      "claude_skills_graphify_skill_step_4_5_graph_health_check_read_only_integrity_gate",
+      "claude_skills_graphify_skill_step_4_build_graph_cluster_analyze_generate_outputs",
+      "claude_skills_graphify_skill_step_5_label_communities",
+      "claude_skills_graphify_skill_step_6_generate_obsidian_vault_opt_in_html",
+      "claude_skills_graphify_skill_step_9_save_manifest_update_cost_tracker_clean_up_and_report",
+      "claude_skills_graphify_skill_steps_6b_8_wiki_neo4j_falkordb_svg_graphml_mcp_benchmark_only_on_their_flags",
+      "claude_skills_graphify_skill_usage",
+      "claude_skills_graphify_skill_what_graphify_is_for",
+      "claude_skills_graphify_skill_what_you_must_do_when_invoked"
+    ],
+    "11": [
+      "config_t",
+      "skills_go_port_evals_port_c_config_parser_files_config_c_skills_go_port_evals_port_c_config_parser_files_config",
+      "skills_go_port_evals_port_c_config_parser_files_config_config_count",
+      "skills_go_port_evals_port_c_config_parser_files_config_config_free",
+      "skills_go_port_evals_port_c_config_parser_files_config_config_get",
+      "skills_go_port_evals_port_c_config_parser_files_config_config_get_int",
+      "skills_go_port_evals_port_c_config_parser_files_config_config_parse",
+      "skills_go_port_evals_port_c_config_parser_files_config_dup_range",
+      "skills_go_port_evals_port_c_config_parser_files_config_fail",
+      "skills_go_port_evals_port_c_config_parser_files_config_find",
+      "skills_go_port_evals_port_c_config_parser_files_config_h_skills_go_port_evals_port_c_config_parser_files_config",
+      "skills_go_port_evals_port_c_config_parser_files_config_put",
+      "skills_go_port_evals_port_c_config_parser_files_config_trim",
+      "skills_go_port_evals_port_c_config_parser_files_test_config",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_main",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_basic",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_case_insensitive",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_duplicates",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_empty_input",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_get_int_errors",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_syntax_errors",
+      "skills_go_port_evals_port_c_config_parser_files_test_config_test_untrimmed_values_keep_whitespace"
+    ],
+    "12": [
+      "skills_go_best_practices_skill",
+      "skills_go_best_practices_skill_10_logging",
+      "skills_go_best_practices_skill_11_tests",
+      "skills_go_best_practices_skill_12_performance_in_order",
+      "skills_go_best_practices_skill_13_final_checklist",
+      "skills_go_best_practices_skill_14_references",
+      "skills_go_best_practices_skill_1_mindset",
+      "skills_go_best_practices_skill_2_architecture_contract_the_backend_go_stack",
+      "skills_go_best_practices_skill_3_before_you_hand_back_code",
+      "skills_go_best_practices_skill_4_types_and_interfaces",
+      "skills_go_best_practices_skill_5_errors_and_panics",
+      "skills_go_best_practices_skill_6_context_propagation",
+      "skills_go_best_practices_skill_7_concurrency",
+      "skills_go_best_practices_skill_8_standard_library_first",
+      "skills_go_best_practices_skill_9_packages_and_file_organization",
+      "skills_go_best_practices_skill_accept_interfaces_return_concrete_types",
+      "skills_go_best_practices_skill_constructors_conversion_and_shapes",
+      "skills_go_best_practices_skill_go_best_practices",
+      "skills_go_best_practices_skill_naming"
+    ],
+    "13": [
+      "tests_contracts_test_skill_wording",
+      "tests_contracts_test_skill_wording_chi_mentions",
+      "tests_contracts_test_skill_wording_chimandatepresent",
+      "tests_contracts_test_skill_wording_chimandatepresent_test_chi_mentioned_across_skill_files",
+      "tests_contracts_test_skill_wording_exactreadmepins",
+      "tests_contracts_test_skill_wording_exactreadmepins_test_migrations_row_names_golang_migrate",
+      "tests_contracts_test_skill_wording_exactreadmepins_test_routing_row_names_chi_required",
+      "tests_contracts_test_skill_wording_lockstep",
+      "tests_contracts_test_skill_wording_lockstep_test_chi_prefix_pinned_in_all_checkers",
+      "tests_contracts_test_skill_wording_oldprohibitionremoved",
+      "tests_contracts_test_skill_wording_oldprohibitionremoved_test_readme_routing_row_no_longer_bans_chi",
+      "tests_contracts_test_skill_wording_oldprohibitionremoved_test_reference_no_longer_bans_chi",
+      "tests_contracts_test_skill_wording_oldprohibitionremoved_test_skill_no_longer_bans_chi",
+      "tests_contracts_test_skill_wording_rationale_1",
+      "tests_contracts_test_skill_wording_rationale_39",
+      "tests_contracts_test_skill_wording_rationale_44",
+      "tests_contracts_test_skill_wording_rationale_74",
+      "tests_contracts_test_skill_wording_rationale_93",
+      "tests_contracts_test_skill_wording_text_of"
+    ],
+    "14": [
+      "skills_go_review_skill",
+      "skills_go_review_skill_1_decide_the_scope",
+      "skills_go_review_skill_1_short_title_internal_features_store_domain_go_26",
+      "skills_go_review_skill_2",
+      "skills_go_review_skill_2_run_the_tools_first_if_you_can",
+      "skills_go_review_skill_3",
+      "skills_go_review_skill_3_what_to_look_for_in_priority_order",
+      "skills_go_review_skill_4_write_the_report",
+      "skills_go_review_skill_5_offer_the_lints",
+      "skills_go_review_skill_consider",
+      "skills_go_review_skill_go_review",
+      "skills_go_review_skill_go_review_what_was_reviewed",
+      "skills_go_review_skill_must_fix",
+      "skills_go_review_skill_should_fix",
+      "skills_go_review_skill_what_s_already_good"
+    ],
+    "15": [
+      "lints_check_internal_features_violations_noctx_noctx",
+      "lints_check_internal_features_violations_noctx_noctx_fetch",
+      "lints_check_internal_features_widgets_ports",
+      "lints_check_internal_features_widgets_ports_go_widgets_store",
+      "lints_check_internal_features_widgets_usecase",
+      "lints_check_internal_features_widgets_usecase_go_context",
+      "lints_check_internal_features_widgets_usecase_go_store",
+      "lints_check_internal_features_widgets_usecase_go_widget",
+      "lints_check_internal_features_widgets_usecase_new",
+      "widgets_now",
+      "widgets_usecase",
+      "widgets_usecase_create",
+      "widgets_usecase_get"
+    ],
+    "16": [
+      "skills_go_port_skill",
+      "skills_go_port_skill_1_understand_the_original_before_writing_anything",
+      "skills_go_port_skill_2_port_the_tests_first",
+      "skills_go_port_skill_3_design_the_go_api_then_implement_it",
+      "skills_go_port_skill_4_land_it_under_the_stack_when_the_destination_is_a_facta_backend_go_repo",
+      "skills_go_port_skill_5_keep_the_port_proportionate",
+      "skills_go_port_skill_6_verify",
+      "skills_go_port_skill_7_write_the_porting_notes",
+      "skills_go_port_skill_from_c_and_c",
+      "skills_go_port_skill_from_javascript_typescript_java_and_rust",
+      "skills_go_port_skill_from_legacy_go",
+      "skills_go_port_skill_from_python",
+      "skills_go_port_skill_go_port"
+    ],
+    "17": [
+      "skills_go_best_practices_references_google_go_style_guide",
+      "skills_go_best_practices_references_google_go_style_guide_application_vs_library_code",
+      "skills_go_best_practices_references_google_go_style_guide_concurrency",
+      "skills_go_best_practices_references_google_go_style_guide_core_principles",
+      "skills_go_best_practices_references_google_go_style_guide_documentation",
+      "skills_go_best_practices_references_google_go_style_guide_error_handling_decisions",
+      "skills_go_best_practices_references_google_go_style_guide_functions_and_design",
+      "skills_go_best_practices_references_google_go_style_guide_google_go_style_guide_digest",
+      "skills_go_best_practices_references_google_go_style_guide_naming",
+      "skills_go_best_practices_references_google_go_style_guide_package_design",
+      "skills_go_best_practices_references_google_go_style_guide_types_and_interfaces"
+    ],
+    "18": [
+      "files_item",
+      "files_store",
+      "files_store_add",
+      "files_store_loadfile",
+      "files_store_lookup",
+      "files_store_save",
+      "skills_go_review_evals_review_inventory_module_files_inventory",
+      "skills_go_review_evals_review_inventory_module_files_inventory_go_context",
+      "skills_go_review_evals_review_inventory_module_files_inventory_mustqty",
+      "skills_go_review_evals_review_inventory_module_files_inventory_parseitem"
+    ],
+    "19": [
+      "claude_skills_graphify_references_exports",
+      "claude_skills_graphify_references_exports_graphify_reference_extra_exports_and_benchmark",
+      "claude_skills_graphify_references_exports_step_6b_wiki_only_if_wiki_flag",
+      "claude_skills_graphify_references_exports_step_7_neo4j_export_only_if_neo4j_or_neo4j_push_flag",
+      "claude_skills_graphify_references_exports_step_7a_falkordb_export_only_if_falkordb_or_falkordb_push_flag",
+      "claude_skills_graphify_references_exports_step_7b_svg_export_only_if_svg_flag",
+      "claude_skills_graphify_references_exports_step_7c_graphml_export_only_if_graphml_flag",
+      "claude_skills_graphify_references_exports_step_7d_mcp_server_only_if_mcp_flag",
+      "claude_skills_graphify_references_exports_step_8_token_reduction_benchmark_only_if_total_words_5000"
+    ],
+    "20": [
+      "skills_go_best_practices_references_effective_go",
+      "skills_go_best_practices_references_effective_go_concurrency_flavor",
+      "skills_go_best_practices_references_effective_go_control_flow_and_declarations",
+      "skills_go_best_practices_references_effective_go_data_structs_slices_maps",
+      "skills_go_best_practices_references_effective_go_effective_go_digest",
+      "skills_go_best_practices_references_effective_go_formatting_and_naming",
+      "skills_go_best_practices_references_effective_go_functions_and_multiple_returns",
+      "skills_go_best_practices_references_effective_go_methods_interfaces_and_errors",
+      "skills_go_best_practices_references_effective_go_where_this_document_is_dated"
+    ],
+    "21": [
+      "skills_go_best_practices_references_go_code_review_comments",
+      "skills_go_best_practices_references_go_code_review_comments_api_shape",
+      "skills_go_best_practices_references_go_code_review_comments_concurrency",
+      "skills_go_best_practices_references_go_code_review_comments_error_handling",
+      "skills_go_best_practices_references_go_code_review_comments_functions_and_parameters",
+      "skills_go_best_practices_references_go_code_review_comments_go_code_review_comments_digest",
+      "skills_go_best_practices_references_go_code_review_comments_naming_and_imports",
+      "skills_go_best_practices_references_go_code_review_comments_types_and_data",
+      "skills_go_best_practices_references_go_code_review_comments_where_the_wiki_and_other_digests_disagree"
+    ],
+    "22": [
+      "tests_test_package_openai_plugin",
+      "tests_test_package_openai_plugin_load_packager",
+      "tests_test_package_openai_plugin_packagetests",
+      "tests_test_package_openai_plugin_packagetests_build",
+      "tests_test_package_openai_plugin_packagetests_setupclass",
+      "tests_test_package_openai_plugin_packagetests_test_package_holds_manifest_skills_and_icon",
+      "tests_test_package_openai_plugin_packagetests_test_package_icon_paths_resolve",
+      "tests_test_package_openai_plugin_packagetests_test_package_is_reproducible",
+      "tests_test_package_openai_plugin_packagetests_test_package_leaves_out_evals_and_scripts"
+    ],
+    "23": [
+      "skills_go_best_practices_references_go_concurrency_patterns",
+      "skills_go_best_practices_references_go_concurrency_patterns_cancellation_discipline",
+      "skills_go_best_practices_references_go_concurrency_patterns_correctness_notes_review_looks_for",
+      "skills_go_best_practices_references_go_concurrency_patterns_go_concurrency_patterns_digest",
+      "skills_go_best_practices_references_go_concurrency_patterns_patterns_from_the_talk",
+      "skills_go_best_practices_references_go_concurrency_patterns_the_model",
+      "skills_go_best_practices_references_go_concurrency_patterns_when_not_to_reach_for_channels",
+      "skills_go_best_practices_references_go_concurrency_patterns_where_this_digest_and_skill_md_differ"
+    ],
+    "24": [
+      "claude_agents_backend_api_designer",
+      "claude_agents_backend_api_designer_app_api_designer",
+      "claude_agents_backend_api_designer_core_mission",
+      "claude_agents_backend_api_designer_expertise_areas",
+      "claude_agents_backend_api_designer_guiding_principles",
+      "claude_agents_backend_api_designer_output_format",
+      "claude_agents_backend_api_designer_quality_standards"
+    ],
+    "25": [
+      "claude_agents_backend_migration_reviewer",
+      "claude_agents_backend_migration_reviewer_app_migration_reviewer",
+      "claude_agents_backend_migration_reviewer_core_mission",
+      "claude_agents_backend_migration_reviewer_expertise_areas",
+      "claude_agents_backend_migration_reviewer_guiding_principles",
+      "claude_agents_backend_migration_reviewer_output_format",
+      "claude_agents_backend_migration_reviewer_quality_standards"
+    ],
+    "26": [
+      "claude_agents_backend_ownership_reviewer",
+      "claude_agents_backend_ownership_reviewer_app_ownership_reviewer",
+      "claude_agents_backend_ownership_reviewer_core_mission",
+      "claude_agents_backend_ownership_reviewer_expertise_areas",
+      "claude_agents_backend_ownership_reviewer_guiding_principles",
+      "claude_agents_backend_ownership_reviewer_output_format",
+      "claude_agents_backend_ownership_reviewer_quality_standards"
+    ],
+    "27": [
+      "claude_agents_core_architect",
+      "claude_agents_core_architect_app_architect_agent",
+      "claude_agents_core_architect_core_mission",
+      "claude_agents_core_architect_expertise_areas",
+      "claude_agents_core_architect_guiding_principles",
+      "claude_agents_core_architect_output_format",
+      "claude_agents_core_architect_quality_standards"
+    ],
+    "28": [
+      "claude_agents_core_build_resolver",
+      "claude_agents_core_build_resolver_app_build_resolver_agent",
+      "claude_agents_core_build_resolver_core_mission",
+      "claude_agents_core_build_resolver_expertise_areas",
+      "claude_agents_core_build_resolver_guiding_principles",
+      "claude_agents_core_build_resolver_output_format",
+      "claude_agents_core_build_resolver_quality_standards"
+    ],
+    "29": [
+      "claude_agents_core_code_explorer",
+      "claude_agents_core_code_explorer_app_code_explorer_agent",
+      "claude_agents_core_code_explorer_core_mission",
+      "claude_agents_core_code_explorer_expertise_areas",
+      "claude_agents_core_code_explorer_guiding_principles",
+      "claude_agents_core_code_explorer_output_format",
+      "claude_agents_core_code_explorer_quality_standards"
+    ],
+    "30": [
+      "claude_agents_core_code_reviewer",
+      "claude_agents_core_code_reviewer_app_code_reviewer_agent",
+      "claude_agents_core_code_reviewer_core_mission",
+      "claude_agents_core_code_reviewer_expertise_areas",
+      "claude_agents_core_code_reviewer_guiding_principles",
+      "claude_agents_core_code_reviewer_output_format",
+      "claude_agents_core_code_reviewer_quality_standards"
+    ],
+    "31": [
+      "claude_agents_core_planner",
+      "claude_agents_core_planner_app_planner_agent",
+      "claude_agents_core_planner_core_mission",
+      "claude_agents_core_planner_expertise_areas",
+      "claude_agents_core_planner_guiding_principles",
+      "claude_agents_core_planner_output_format",
+      "claude_agents_core_planner_quality_standards"
+    ],
+    "32": [
+      "claude_agents_core_tdd_guide",
+      "claude_agents_core_tdd_guide_app_tdd_guide_agent",
+      "claude_agents_core_tdd_guide_core_mission",
+      "claude_agents_core_tdd_guide_expertise_areas",
+      "claude_agents_core_tdd_guide_guiding_principles",
+      "claude_agents_core_tdd_guide_output_format",
+      "claude_agents_core_tdd_guide_quality_standards"
+    ],
+    "33": [
+      "claude_agents_security_depguard_reviewer",
+      "claude_agents_security_depguard_reviewer_app_depguard_reviewer",
+      "claude_agents_security_depguard_reviewer_core_mission",
+      "claude_agents_security_depguard_reviewer_expertise_areas",
+      "claude_agents_security_depguard_reviewer_guiding_principles",
+      "claude_agents_security_depguard_reviewer_output_format",
+      "claude_agents_security_depguard_reviewer_quality_standards"
+    ],
+    "34": [
+      "claude_agents_testing_test_author",
+      "claude_agents_testing_test_author_app_go_test_author",
+      "claude_agents_testing_test_author_core_mission",
+      "claude_agents_testing_test_author_expertise_areas",
+      "claude_agents_testing_test_author_guiding_principles",
+      "claude_agents_testing_test_author_output_format",
+      "claude_agents_testing_test_author_quality_standards"
+    ],
+    "35": [
+      "claude_skills_add_handler_skill",
+      "claude_skills_add_handler_skill_app_add_handler",
+      "claude_skills_add_handler_skill_core_principles",
+      "claude_skills_add_handler_skill_output_format",
+      "claude_skills_add_handler_skill_research_references",
+      "claude_skills_add_handler_skill_rules",
+      "claude_skills_add_handler_skill_when_to_activate"
+    ],
+    "36": [
+      "claude_skills_add_module_skill",
+      "claude_skills_add_module_skill_app_add_module",
+      "claude_skills_add_module_skill_core_principles",
+      "claude_skills_add_module_skill_output_format",
+      "claude_skills_add_module_skill_research_references",
+      "claude_skills_add_module_skill_rules",
+      "claude_skills_add_module_skill_when_to_activate"
+    ],
+    "37": [
+      "claude_skills_claim_check_skill",
+      "claude_skills_claim_check_skill_app_claim_check_skill",
+      "claude_skills_claim_check_skill_core_principles",
+      "claude_skills_claim_check_skill_output_format",
+      "claude_skills_claim_check_skill_research_references",
+      "claude_skills_claim_check_skill_rules",
+      "claude_skills_claim_check_skill_when_to_activate"
+    ],
+    "38": [
+      "claude_skills_clean_room_rebuild_skill",
+      "claude_skills_clean_room_rebuild_skill_app_clean_room_rebuild_skill",
+      "claude_skills_clean_room_rebuild_skill_core_principles",
+      "claude_skills_clean_room_rebuild_skill_output_format",
+      "claude_skills_clean_room_rebuild_skill_research_references",
+      "claude_skills_clean_room_rebuild_skill_rules",
+      "claude_skills_clean_room_rebuild_skill_when_to_activate"
+    ],
+    "39": [
+      "claude_skills_corpus_retrieval_skill",
+      "claude_skills_corpus_retrieval_skill_app_corpus_retrieval_skill",
+      "claude_skills_corpus_retrieval_skill_core_principles",
+      "claude_skills_corpus_retrieval_skill_output_format",
+      "claude_skills_corpus_retrieval_skill_research_references",
+      "claude_skills_corpus_retrieval_skill_rules",
+      "claude_skills_corpus_retrieval_skill_when_to_activate"
+    ],
+    "40": [
+      "claude_skills_depguard_guard_skill",
+      "claude_skills_depguard_guard_skill_app_depguard_guard",
+      "claude_skills_depguard_guard_skill_core_principles",
+      "claude_skills_depguard_guard_skill_output_format",
+      "claude_skills_depguard_guard_skill_research_references",
+      "claude_skills_depguard_guard_skill_rules",
+      "claude_skills_depguard_guard_skill_when_to_activate"
+    ],
+    "41": [
+      "claude_skills_diagnosing_bugs_skill",
+      "claude_skills_diagnosing_bugs_skill_app_diagnosing_bugs_skill",
+      "claude_skills_diagnosing_bugs_skill_core_principles",
+      "claude_skills_diagnosing_bugs_skill_output_format",
+      "claude_skills_diagnosing_bugs_skill_research_references",
+      "claude_skills_diagnosing_bugs_skill_rules",
+      "claude_skills_diagnosing_bugs_skill_when_to_activate"
+    ],
+    "42": [
+      "claude_skills_domain_modeling_skill",
+      "claude_skills_domain_modeling_skill_app_domain_modeling_skill",
+      "claude_skills_domain_modeling_skill_core_principles",
+      "claude_skills_domain_modeling_skill_output_format",
+      "claude_skills_domain_modeling_skill_research_references",
+      "claude_skills_domain_modeling_skill_rules",
+      "claude_skills_domain_modeling_skill_when_to_activate"
+    ],
+    "43": [
+      "claude_skills_grilling_skill",
+      "claude_skills_grilling_skill_app_grilling_skill",
+      "claude_skills_grilling_skill_core_principles",
+      "claude_skills_grilling_skill_output_format",
+      "claude_skills_grilling_skill_research_references",
+      "claude_skills_grilling_skill_rules",
+      "claude_skills_grilling_skill_when_to_activate"
+    ],
+    "44": [
+      "claude_skills_learn_skill",
+      "claude_skills_learn_skill_app_learn_skill",
+      "claude_skills_learn_skill_core_principles",
+      "claude_skills_learn_skill_output_format",
+      "claude_skills_learn_skill_research_references",
+      "claude_skills_learn_skill_rules",
+      "claude_skills_learn_skill_when_to_activate"
+    ],
+    "45": [
+      "claude_skills_ownership_author_skill",
+      "claude_skills_ownership_author_skill_app_ownership_author",
+      "claude_skills_ownership_author_skill_core_principles",
+      "claude_skills_ownership_author_skill_output_format",
+      "claude_skills_ownership_author_skill_research_references",
+      "claude_skills_ownership_author_skill_rules",
+      "claude_skills_ownership_author_skill_when_to_activate"
+    ],
+    "46": [
+      "claude_skills_plan_skill",
+      "claude_skills_plan_skill_app_plan_skill",
+      "claude_skills_plan_skill_core_principles",
+      "claude_skills_plan_skill_output_format",
+      "claude_skills_plan_skill_research_references",
+      "claude_skills_plan_skill_rules",
+      "claude_skills_plan_skill_when_to_activate"
+    ],
+    "47": [
+      "claude_skills_research_skill",
+      "claude_skills_research_skill_app_research_skill",
+      "claude_skills_research_skill_core_principles",
+      "claude_skills_research_skill_output_format",
+      "claude_skills_research_skill_research_references",
+      "claude_skills_research_skill_rules",
+      "claude_skills_research_skill_when_to_activate"
+    ],
+    "48": [
+      "claude_skills_review_skill",
+      "claude_skills_review_skill_app_review_skill",
+      "claude_skills_review_skill_core_principles",
+      "claude_skills_review_skill_output_format",
+      "claude_skills_review_skill_research_references",
+      "claude_skills_review_skill_rules",
+      "claude_skills_review_skill_when_to_activate"
+    ],
+    "49": [
+      "claude_skills_ship_skill",
+      "claude_skills_ship_skill_app_ship_skill",
+      "claude_skills_ship_skill_core_principles",
+      "claude_skills_ship_skill_output_format",
+      "claude_skills_ship_skill_research_references",
+      "claude_skills_ship_skill_rules",
+      "claude_skills_ship_skill_when_to_activate"
+    ],
+    "50": [
+      "claude_skills_spec_skill",
+      "claude_skills_spec_skill_app_spec_skill",
+      "claude_skills_spec_skill_core_principles",
+      "claude_skills_spec_skill_output_format",
+      "claude_skills_spec_skill_research_references",
+      "claude_skills_spec_skill_rules",
+      "claude_skills_spec_skill_when_to_activate"
+    ],
+    "51": [
+      "claude_skills_tdd_skill",
+      "claude_skills_tdd_skill_app_tdd_skill",
+      "claude_skills_tdd_skill_core_principles",
+      "claude_skills_tdd_skill_output_format",
+      "claude_skills_tdd_skill_research_references",
+      "claude_skills_tdd_skill_rules",
+      "claude_skills_tdd_skill_when_to_activate"
+    ],
+    "52": [
+      "claude_skills_verified_status_skill",
+      "claude_skills_verified_status_skill_app_verified_status_skill",
+      "claude_skills_verified_status_skill_core_principles",
+      "claude_skills_verified_status_skill_output_format",
+      "claude_skills_verified_status_skill_research_references",
+      "claude_skills_verified_status_skill_rules",
+      "claude_skills_verified_status_skill_when_to_activate"
+    ],
+    "53": [
+      "claude_skills_graphify_references_query",
+      "claude_skills_graphify_references_query_for_graphify_explain",
+      "claude_skills_graphify_references_query_for_graphify_path",
+      "claude_skills_graphify_references_query_graphify_reference_query_path_explain",
+      "claude_skills_graphify_references_query_step_0_constrained_query_expansion_required_before_traversal",
+      "claude_skills_graphify_references_query_step_1_traversal"
+    ],
+    "54": [
+      "scripts_package_openai_plugin",
+      "scripts_package_openai_plugin_build",
+      "scripts_package_openai_plugin_main",
+      "scripts_package_openai_plugin_package_files",
+      "scripts_package_openai_plugin_py_path",
+      "scripts_package_openai_plugin_rationale_30"
+    ],
+    "55": [
+      "lints_check_internal_features_violations_usecaseplatform_usecase",
+      "lints_check_internal_features_violations_usecaseplatform_usecase_hub",
+      "lints_check_internal_platform_stub_stub",
+      "stub_hub",
+      "stub_hub_publish"
+    ],
+    "56": [
+      "lints_readme",
+      "lints_readme_beautifulgo_lints",
+      "lints_readme_copying_it",
+      "lints_readme_the_check_directory",
+      "lints_readme_what_each_rule_enforces"
+    ],
+    "57": [
+      "api_error",
+      "lints_check_internal_features_violations_usecasegenapi_usecase",
+      "lints_check_internal_features_violations_usecasegenapi_usecase_shape",
+      "lints_check_internal_gen_api_api"
+    ],
+    "58": [
+      "claude",
+      "claude_beautifulgo_agent_instructions",
+      "claude_graphify",
+      "claude_model_routing_claude_code_ollama"
+    ],
+    "59": [
+      "claude_skills_graphify_references_add_watch",
+      "claude_skills_graphify_references_add_watch_for_graphify_add",
+      "claude_skills_graphify_references_add_watch_for_watch",
+      "claude_skills_graphify_references_add_watch_graphify_reference_add_a_url_and_watch_a_folder"
+    ],
+    "60": [
+      "claude_skills_graphify_references_hooks",
+      "claude_skills_graphify_references_hooks_for_git_commit_hook",
+      "claude_skills_graphify_references_hooks_for_native_claude_md_integration",
+      "claude_skills_graphify_references_hooks_graphify_reference_commit_hook_and_native_claude_md_integration"
+    ],
+    "61": [
+      "claude_skills_graphify_references_update",
+      "claude_skills_graphify_references_update_for_cluster_only",
+      "claude_skills_graphify_references_update_for_update_incremental_re_extraction",
+      "claude_skills_graphify_references_update_graphify_reference_incremental_update_and_cluster_only"
+    ],
+    "62": [
+      "errcheck_janitor",
+      "errcheck_janitor_sweep",
+      "lints_check_internal_features_violations_errcheck_errcheck",
+      "lints_check_internal_features_violations_errcheck_errcheck_tidy"
+    ],
+    "63": [
+      "lints_check_internal_features_violations_ctxdrop_ctxdrop",
+      "lints_check_internal_features_violations_ctxdrop_ctxdrop_go_context",
+      "lints_check_internal_features_violations_ctxdrop_ctxdrop_runhealth",
+      "lints_check_internal_features_violations_ctxdrop_ctxdrop_runner"
+    ],
+    "64": [
+      "scripts_hooks_guard_bash",
+      "scripts_hooks_guard_bash_has",
+      "scripts_hooks_guard_bash_has_i",
+      "scripts_hooks_guard_bash_sh__entry"
+    ],
+    "65": [
+      "claude_commands_add_handler",
+      "claude_commands_add_handler_add_handler",
+      "claude_commands_add_handler_delegate"
+    ],
+    "66": [
+      "claude_commands_add_module",
+      "claude_commands_add_module_add_module",
+      "claude_commands_add_module_delegate"
+    ],
+    "67": [
+      "claude_commands_claim_check",
+      "claude_commands_claim_check_claim_check",
+      "claude_commands_claim_check_delegate"
+    ],
+    "68": [
+      "claude_commands_clean_room_rebuild",
+      "claude_commands_clean_room_rebuild_clean_room_rebuild",
+      "claude_commands_clean_room_rebuild_delegate"
+    ],
+    "69": [
+      "claude_commands_corpus_retrieval",
+      "claude_commands_corpus_retrieval_corpus_retrieval",
+      "claude_commands_corpus_retrieval_delegate"
+    ],
+    "70": [
+      "claude_commands_depguard_guard",
+      "claude_commands_depguard_guard_delegate",
+      "claude_commands_depguard_guard_depguard_guard"
+    ],
+    "71": [
+      "claude_commands_diagnosing_bugs",
+      "claude_commands_diagnosing_bugs_delegate",
+      "claude_commands_diagnosing_bugs_diagnosing_bugs"
+    ],
+    "72": [
+      "claude_commands_domain_modeling",
+      "claude_commands_domain_modeling_delegate",
+      "claude_commands_domain_modeling_domain_modeling"
+    ],
+    "73": [
+      "claude_commands_grilling",
+      "claude_commands_grilling_delegate",
+      "claude_commands_grilling_grilling"
+    ],
+    "74": [
+      "claude_commands_learn",
+      "claude_commands_learn_delegate",
+      "claude_commands_learn_learn"
+    ],
+    "75": [
+      "claude_commands_ownership_author",
+      "claude_commands_ownership_author_delegate",
+      "claude_commands_ownership_author_ownership_author"
+    ],
+    "76": [
+      "claude_commands_plan",
+      "claude_commands_plan_delegate",
+      "claude_commands_plan_plan"
+    ],
+    "77": [
+      "claude_commands_research",
+      "claude_commands_research_delegate",
+      "claude_commands_research_research"
+    ],
+    "78": [
+      "claude_commands_review",
+      "claude_commands_review_delegate",
+      "claude_commands_review_review"
+    ],
+    "79": [
+      "claude_commands_ship",
+      "claude_commands_ship_delegate",
+      "claude_commands_ship_ship"
+    ],
+    "80": [
+      "claude_commands_spec",
+      "claude_commands_spec_delegate",
+      "claude_commands_spec_spec"
+    ],
+    "81": [
+      "claude_commands_tdd",
+      "claude_commands_tdd_delegate",
+      "claude_commands_tdd_tdd"
+    ],
+    "82": [
+      "claude_commands_verified_status",
+      "claude_commands_verified_status_delegate",
+      "claude_commands_verified_status_verified_status"
+    ],
+    "83": [
+      "claude_rules_playbooks",
+      "claude_rules_playbooks_cross_repo_relationship_1_n",
+      "claude_rules_playbooks_playbooks_for_beautifulgo_load_on_demand"
+    ],
+    "84": [
+      "claude_skills_graphify_references_github_and_merge",
+      "claude_skills_graphify_references_github_and_merge_graphify_reference_github_clone_and_cross_repo_merge",
+      "claude_skills_graphify_references_github_and_merge_step_0_clone_github_repo_s_only_if_a_github_url_was_given"
+    ],
+    "85": [
+      "claude_skills_graphify_references_transcribe",
+      "claude_skills_graphify_references_transcribe_graphify_reference_transcribe_video_and_audio",
+      "claude_skills_graphify_references_transcribe_step_2_5_transcribe_video_audio_files_only_if_video_files_detected"
+    ],
+    "86": [
+      "domainpgx_row",
+      "lints_check_internal_features_violations_domainpgx_domain",
+      "lints_check_internal_features_violations_domainpgx_domain_go_rows"
+    ],
+    "87": [
+      "lints_check_internal_features_violations_domainsibling_domain",
+      "lints_check_internal_features_violations_domainsibling_domain_go_widget",
+      "lints_check_internal_features_violations_domainsibling_domain_name"
+    ],
+    "88": [
+      "lints_check_internal_features_violations_errwrap_errwrap",
+      "lints_check_internal_features_violations_errwrap_errwrap_withchain",
+      "lints_check_internal_features_violations_errwrap_errwrap_wrap"
+    ],
+    "89": [
+      "lints_check_internal_features_violations_siblingimport_usecase",
+      "lints_check_internal_features_violations_siblingimport_usecase_go_widget",
+      "lints_check_internal_features_violations_siblingimport_usecase_load"
+    ],
+    "90": [
+      "lints_check_internal_features_violations_usecasepgx_usecase",
+      "lints_check_internal_features_violations_usecasepgx_usecase_go_rows",
+      "usecasepgx_fetcher"
+    ],
+    "91": [
+      "lints_check_internal_features_widgets_domain",
+      "lints_check_internal_features_widgets_domain_go_time",
+      "lints_check_internal_features_widgets_domain_go_widgets_widget"
+    ],
+    "92": [
+      "lints_check_internal_platform_roguehub_roguehub",
+      "lints_check_internal_platform_roguehub_roguehub_go_widget",
+      "lints_check_internal_platform_roguehub_roguehub_peek"
+    ],
+    "93": [
+      "scripts_check_lints",
+      "scripts_check_lints_die",
+      "scripts_check_lints_sh__entry"
+    ],
+    "94": [
+      "claude_claude",
+      "claude_claude_graphify"
+    ],
+    "95": [
+      "claude_readme",
+      "claude_readme_claude_this_repo_s_claude_code_kit"
+    ],
+    "96": [
+      "claude_skills_claim_check_credits",
+      "claude_skills_claim_check_credits_credits"
+    ],
+    "97": [
+      "claude_skills_clean_room_rebuild_credits",
+      "claude_skills_clean_room_rebuild_credits_credits"
+    ],
+    "98": [
+      "claude_skills_corpus_retrieval_credits",
+      "claude_skills_corpus_retrieval_credits_credits"
+    ],
+    "99": [
+      "claude_skills_diagnosing_bugs_credits",
+      "claude_skills_diagnosing_bugs_credits_credits"
+    ],
+    "100": [
+      "claude_skills_domain_modeling_credits",
+      "claude_skills_domain_modeling_credits_credits"
+    ],
+    "101": [
+      "claude_skills_graphify_references_extraction_spec",
+      "claude_skills_graphify_references_extraction_spec_graphify_reference_extraction_subagent_prompt"
+    ],
+    "102": [
+      "claude_skills_grilling_credits",
+      "claude_skills_grilling_credits_credits"
+    ],
+    "103": [
+      "claude_skills_research_credits",
+      "claude_skills_research_credits_credits"
+    ],
+    "104": [
+      "claude_skills_tdd_credits",
+      "claude_skills_tdd_credits_credits"
+    ],
+    "105": [
+      "claude_skills_verified_status_credits",
+      "claude_skills_verified_status_credits_credits"
+    ],
+    "106": [
+      "lints_check_internal_features_violations_domainhttp_domain",
+      "lints_check_internal_features_violations_domainhttp_domain_status"
+    ],
+    "107": [
+      "lints_check_internal_features_violations_errassert_errassert",
+      "lints_check_internal_features_violations_errassert_errassert_ismissing"
+    ],
+    "108": [
+      "lints_check_internal_shared_kernel",
+      "shared_clock"
+    ],
+    "109": [
+      "privacy",
+      "privacy_privacy_policy"
+    ],
+    "110": [
+      "skills_go_best_practices_evals_refactor_member_module_place_files",
+      "skills_go_best_practices_evals_refactor_member_module_place_files_sh__entry"
+    ],
+    "111": [
+      "skills_go_best_practices_evals_slice_regen_place_files",
+      "skills_go_best_practices_evals_slice_regen_place_files_sh__entry"
+    ],
+    "112": [
+      "skills_go_port_evals_port_c_config_parser_place_files",
+      "skills_go_port_evals_port_c_config_parser_place_files_sh__entry"
+    ],
+    "113": [
+      "skills_go_port_evals_port_python_task_graph_place_files",
+      "skills_go_port_evals_port_python_task_graph_place_files_sh__entry"
+    ],
+    "114": [
+      "skills_go_review_evals_review_inventory_module_place_files",
+      "skills_go_review_evals_review_inventory_module_place_files_sh__entry"
+    ],
+    "115": [
+      "skills_go_review_evals_review_messy_store_place_files",
+      "skills_go_review_evals_review_messy_store_place_files_sh__entry"
+    ],
+    "116": [
+      "lints_check_internal_features_violations_doc"
+    ],
+    "117": [
+      "lints_check_internal_features_violations_domainplatform_domain"
+    ],
+    "118": [
+      "lints_check_internal_features_violations_domainsql_domain"
+    ],
+    "119": [
+      "lints_check_internal_features_violations_errname_errname"
+    ],
+    "120": [
+      "pkg_github_com_acme_inventory_cli"
+    ],
+    "121": [
+      "pkg_github_com_acme_store_manager"
+    ],
+    "122": [
+      "pkg_github_com_beautifulgo_check"
+    ],
+    "123": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_01_stdlib_only"
+    ],
+    "124": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_02_sentinel_and_wrap"
+    ],
+    "125": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_03_no_one_impl_interface"
+    ],
+    "126": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_04_context_first_param"
+    ],
+    "127": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_05_table_driven_tests"
+    ],
+    "128": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_06_usable_zero_value"
+    ],
+    "129": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_07_vet_golangci_clean"
+    ],
+    "130": [
+      "skills_go_best_practices_evals_ratelimit_library_graders_08_slog_not_prints"
+    ],
+    "131": [
+      "skills_go_best_practices_evals_ratelimit_library_prompt"
+    ],
+    "132": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_01_builds_and_tests_pass"
+    ],
+    "133": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_02_errors_wrapped_with_w"
+    ],
+    "134": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_03_no_bool_params"
+    ],
+    "135": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_04_no_panic_on_bad_input"
+    ],
+    "136": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_05_table_tests_added"
+    ],
+    "137": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_06_no_one_impl_interface"
+    ],
+    "138": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_07_goroutine_has_owner"
+    ],
+    "139": [
+      "skills_go_best_practices_evals_refactor_member_module_graders_08_clipping_noted"
+    ],
+    "140": [
+      "skills_go_best_practices_evals_refactor_member_module_prompt"
+    ],
+    "141": [
+      "skills_go_best_practices_evals_slice_regen_graders_01_builds_and_lints_clean"
+    ],
+    "142": [
+      "skills_go_best_practices_evals_slice_regen_graders_02_domain_stays_pure"
+    ],
+    "143": [
+      "skills_go_best_practices_evals_slice_regen_graders_03_port_not_import"
+    ],
+    "144": [
+      "skills_go_best_practices_evals_slice_regen_graders_04_query_in_queries_sql"
+    ],
+    "145": [
+      "skills_go_best_practices_evals_slice_regen_graders_05_migration_ships_down"
+    ],
+    "146": [
+      "skills_go_best_practices_evals_slice_regen_graders_06_existing_code_not_rewritten"
+    ],
+    "147": [
+      "skills_go_best_practices_evals_slice_regen_graders_07_envelope_code_not_new"
+    ],
+    "148": [
+      "skills_go_best_practices_evals_slice_regen_prompt"
+    ],
+    "149": [
+      "skills_go_port_evals_port_c_config_parser_graders_01_original_tests_passing"
+    ],
+    "150": [
+      "skills_go_port_evals_port_c_config_parser_graders_02_error_codes_not_panics"
+    ],
+    "151": [
+      "skills_go_port_evals_port_c_config_parser_graders_03_no_cgo"
+    ],
+    "152": [
+      "skills_go_port_evals_port_c_config_parser_graders_04_porting_notes"
+    ],
+    "153": [
+      "skills_go_port_evals_port_c_config_parser_graders_05_proportionate_size"
+    ],
+    "154": [
+      "skills_go_port_evals_port_c_config_parser_graders_06_stdlib_parsing"
+    ],
+    "155": [
+      "skills_go_port_evals_port_c_config_parser_graders_07_tests_map_one_to_one"
+    ],
+    "156": [
+      "skills_go_port_evals_port_c_config_parser_graders_08_golangci_clean"
+    ],
+    "157": [
+      "skills_go_port_evals_port_c_config_parser_prompt"
+    ],
+    "158": [
+      "skills_go_port_evals_port_python_task_graph_graders_01_original_tests_passing"
+    ],
+    "159": [
+      "skills_go_port_evals_port_python_task_graph_graders_02_exceptions_to_error_values"
+    ],
+    "160": [
+      "skills_go_port_evals_port_python_task_graph_graders_03_deterministic_iteration"
+    ],
+    "161": [
+      "skills_go_port_evals_port_python_task_graph_graders_04_porting_notes"
+    ],
+    "162": [
+      "skills_go_port_evals_port_python_task_graph_graders_05_proportionate_size"
+    ],
+    "163": [
+      "skills_go_port_evals_port_python_task_graph_graders_06_context_aware_concurrency"
+    ],
+    "164": [
+      "skills_go_port_evals_port_python_task_graph_graders_07_tests_map_one_to_one"
+    ],
+    "165": [
+      "skills_go_port_evals_port_python_task_graph_graders_08_golangci_clean"
+    ],
+    "166": [
+      "skills_go_port_evals_port_python_task_graph_prompt"
+    ],
+    "167": [
+      "skills_go_review_evals_review_inventory_module_graders_01_review_not_rewrite"
+    ],
+    "168": [
+      "skills_go_review_evals_review_inventory_module_graders_02_flags_panic_on_bad_input"
+    ],
+    "169": [
+      "skills_go_review_evals_review_inventory_module_graders_03_flags_log_and_return"
+    ],
+    "170": [
+      "skills_go_review_evals_review_inventory_module_graders_04_flags_bool_parameter"
+    ],
+    "171": [
+      "skills_go_review_evals_review_inventory_module_graders_05_flags_swallowed_error"
+    ],
+    "172": [
+      "skills_go_review_evals_review_inventory_module_graders_06_flags_percent_s_wrapping"
+    ],
+    "173": [
+      "skills_go_review_evals_review_inventory_module_graders_07_valid_idioms_left_alone"
+    ],
+    "174": [
+      "skills_go_review_evals_review_inventory_module_graders_08_findings_cite_location_and_rule"
+    ],
+    "175": [
+      "skills_go_review_evals_review_inventory_module_graders_09_fixes_shown_as_code"
+    ],
+    "176": [
+      "skills_go_review_evals_review_inventory_module_graders_10_states_reviewed_mode"
+    ],
+    "177": [
+      "skills_go_review_evals_review_inventory_module_graders_11_already_good_section"
+    ],
+    "178": [
+      "skills_go_review_evals_review_inventory_module_prompt"
+    ],
+    "179": [
+      "skills_go_review_evals_review_messy_store_graders_01_review_not_rewrite"
+    ],
+    "180": [
+      "skills_go_review_evals_review_messy_store_graders_02_architecture_findings_ranked_first"
+    ],
+    "181": [
+      "skills_go_review_evals_review_messy_store_graders_03_domain_imports_flagged"
+    ],
+    "182": [
+      "skills_go_review_evals_review_messy_store_graders_04_swallowed_errors_flagged"
+    ],
+    "183": [
+      "skills_go_review_evals_review_messy_store_graders_05_cites_file_line_and_rule"
+    ],
+    "184": [
+      "skills_go_review_evals_review_messy_store_graders_06_fixes_shown_as_code"
+    ],
+    "185": [
+      "skills_go_review_evals_review_messy_store_graders_07_valid_shapes_left_alone"
+    ],
+    "186": [
+      "skills_go_review_evals_review_messy_store_graders_08_review_file_written"
+    ],
+    "187": [
+      "skills_go_review_evals_review_messy_store_graders_09_already_good_section"
+    ],
+    "188": [
+      "skills_go_review_evals_review_messy_store_prompt"
+    ],
+    "189": [
+      "tests_contracts_init"
+    ]
+  },
+  "cohesion": {
+    "0": 0.1020979020979021,
+    "1": 0.14675052410901468,
+    "2": 0.07801418439716312,
+    "3": 0.04541062801932367,
+    "4": 0.08305647840531562,
+    "5": 0.12403100775193798,
+    "6": 0.08974358974358974,
+    "7": 0.12298387096774194,
+    "8": 0.06666666666666667,
+    "9": 0.07692307692307693,
+    "10": 0.08,
+    "11": 0.27705627705627706,
+    "12": 0.10526315789473684,
+    "13": 0.15204678362573099,
+    "14": 0.13333333333333333,
+    "15": 0.21794871794871795,
+    "16": 0.15384615384615385,
+    "17": 0.18181818181818182,
+    "18": 0.37777777777777777,
+    "19": 0.2222222222222222,
+    "20": 0.2222222222222222,
+    "21": 0.2222222222222222,
+    "22": 0.3611111111111111,
+    "23": 0.25,
+    "24": 0.2857142857142857,
+    "25": 0.2857142857142857,
+    "26": 0.2857142857142857,
+    "27": 0.2857142857142857,
+    "28": 0.2857142857142857,
+    "29": 0.2857142857142857,
+    "30": 0.2857142857142857,
+    "31": 0.2857142857142857,
+    "32": 0.2857142857142857,
+    "33": 0.2857142857142857,
+    "34": 0.2857142857142857,
+    "35": 0.2857142857142857,
+    "36": 0.2857142857142857,
+    "37": 0.2857142857142857,
+    "38": 0.2857142857142857,
+    "39": 0.2857142857142857,
+    "40": 0.2857142857142857,
+    "41": 0.2857142857142857,
+    "42": 0.2857142857142857,
+    "43": 0.2857142857142857,
+    "44": 0.2857142857142857,
+    "45": 0.2857142857142857,
+    "46": 0.2857142857142857,
+    "47": 0.2857142857142857,
+    "48": 0.2857142857142857,
+    "49": 0.2857142857142857,
+    "50": 0.2857142857142857,
+    "51": 0.2857142857142857,
+    "52": 0.2857142857142857,
+    "53": 0.3333333333333333,
+    "54": 0.5333333333333333,
+    "55": 0.4,
+    "56": 0.4,
+    "57": 0.5,
+    "58": 0.5,
+    "59": 0.5,
+    "60": 0.5,
+    "61": 0.5,
+    "62": 0.6666666666666666,
+    "63": 0.6666666666666666,
+    "64": 0.8333333333333334,
+    "65": 0.6666666666666666,
+    "66": 0.6666666666666666,
+    "67": 0.6666666666666666,
+    "68": 0.6666666666666666,
+    "69": 0.6666666666666666,
+    "70": 0.6666666666666666,
+    "71": 0.6666666666666666,
+    "72": 0.6666666666666666,
+    "73": 0.6666666666666666,
+    "74": 0.6666666666666666,
+    "75": 0.6666666666666666,
+    "76": 0.6666666666666666,
+    "77": 0.6666666666666666,
+    "78": 0.6666666666666666,
+    "79": 0.6666666666666666,
+    "80": 0.6666666666666666,
+    "81": 0.6666666666666666,
+    "82": 0.6666666666666666,
+    "83": 0.6666666666666666,
+    "84": 0.6666666666666666,
+    "85": 0.6666666666666666,
+    "86": 0.6666666666666666,
+    "87": 0.6666666666666666,
+    "88": 0.6666666666666666,
+    "89": 0.6666666666666666,
+    "90": 0.6666666666666666,
+    "91": 0.6666666666666666,
+    "92": 0.6666666666666666,
+    "93": 1.0,
+    "94": 1.0,
+    "95": 1.0,
+    "96": 1.0,
+    "97": 1.0,
+    "98": 1.0,
+    "99": 1.0,
+    "100": 1.0,
+    "101": 1.0,
+    "102": 1.0,
+    "103": 1.0,
+    "104": 1.0,
+    "105": 1.0,
+    "106": 1.0,
+    "107": 1.0,
+    "108": 1.0,
+    "109": 1.0,
+    "110": 1.0,
+    "111": 1.0,
+    "112": 1.0,
+    "113": 1.0,
+    "114": 1.0,
+    "115": 1.0,
+    "116": 1.0,
+    "117": 1.0,
+    "118": 1.0,
+    "119": 1.0,
+    "120": 1.0,
+    "121": 1.0,
+    "122": 1.0,
+    "123": 1.0,
+    "124": 1.0,
+    "125": 1.0,
+    "126": 1.0,
+    "127": 1.0,
+    "128": 1.0,
+    "129": 1.0,
+    "130": 1.0,
+    "131": 1.0,
+    "132": 1.0,
+    "133": 1.0,
+    "134": 1.0,
+    "135": 1.0,
+    "136": 1.0,
+    "137": 1.0,
+    "138": 1.0,
+    "139": 1.0,
+    "140": 1.0,
+    "141": 1.0,
+    "142": 1.0,
+    "143": 1.0,
+    "144": 1.0,
+    "145": 1.0,
+    "146": 1.0,
+    "147": 1.0,
+    "148": 1.0,
+    "149": 1.0,
+    "150": 1.0,
+    "151": 1.0,
+    "152": 1.0,
+    "153": 1.0,
+    "154": 1.0,
+    "155": 1.0,
+    "156": 1.0,
+    "157": 1.0,
+    "158": 1.0,
+    "159": 1.0,
+    "160": 1.0,
+    "161": 1.0,
+    "162": 1.0,
+    "163": 1.0,
+    "164": 1.0,
+    "165": 1.0,
+    "166": 1.0,
+    "167": 1.0,
+    "168": 1.0,
+    "169": 1.0,
+    "170": 1.0,
+    "171": 1.0,
+    "172": 1.0,
+    "173": 1.0,
+    "174": 1.0,
+    "175": 1.0,
+    "176": 1.0,
+    "177": 1.0,
+    "178": 1.0,
+    "179": 1.0,
+    "180": 1.0,
+    "181": 1.0,
+    "182": 1.0,
+    "183": 1.0,
+    "184": 1.0,
+    "185": 1.0,
+    "186": 1.0,
+    "187": 1.0,
+    "188": 1.0,
+    "189": 1.0
+  },
+  "gods": [
+    {
+      "id": "tests_test_check_skill_checkskilltests",
+      "label": "CheckSkillTests",
+      "degree": 43
+    },
+    {
+      "id": "tests_test_check_skill_build_valid_repo",
+      "label": "build_valid_repo()",
+      "degree": 40
+    },
+    {
+      "id": "tests_test_check_skill_write",
+      "label": "write()",
+      "degree": 31
+    },
+    {
+      "id": "scripts_check_skill_checker",
+      "label": "Checker",
+      "degree": 27
+    },
+    {
+      "id": "readme_beautiful_go",
+      "label": "Beautiful Go",
+      "degree": 19
+    },
+    {
+      "id": "scripts_check_examples_check_repo",
+      "label": "check_repo()",
+      "degree": 17
+    },
+    {
+      "id": "scripts_check_skill_yamlparser",
+      "label": "YamlParser",
+      "degree": 16
+    },
+    {
+      "id": "skills_go_best_practices_skill_go_best_practices",
+      "label": "Go best practices",
+      "degree": 15
+    },
+    {
+      "id": "plugin_com_openai_interface",
+      "label": "interface",
+      "degree": 14
+    },
+    {
+      "id": "skills_go_port_evals_port_c_config_parser_files_config_config_parse",
+      "label": "config_parse()",
+      "degree": 14
+    }
+  ],
+  "surprises": [
+    {
+      "source": "NewStore()",
+      "target": "New()",
+      "source_files": [
+        "skills/go-review/evals/review-messy-store/files/internal/features/store/postgres.go",
+        "skills/go-best-practices/evals/refactor-member-module/files/member.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "Register()",
+      "target": "NewHandler()",
+      "source_files": [
+        "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/module.go",
+        "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/http.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "Register()",
+      "target": "NewCreator()",
+      "source_files": [
+        "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/module.go",
+        "skills/go-best-practices/evals/slice-regen/files/internal/features/widgets/usecase.go"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "test_basic()",
+      "target": "config_parse()",
+      "source_files": [
+        "skills/go-port/evals/port-c-config-parser/files/test_config.c",
+        "skills/go-port/evals/port-c-config-parser/files/config.c"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "test_case_insensitive()",
+      "target": "config_parse()",
+      "source_files": [
+        "skills/go-port/evals/port-c-config-parser/files/test_config.c",
+        "skills/go-port/evals/port-c-config-parser/files/config.c"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `render()` connect `check-examples.py` to `Checker`?",
+      "why": "High betweenness centrality (0.005) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `github.com/beautifulgo/check`, `Store`, `Clock` to the rest of the system?",
+      "why": "403 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Checker` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1020979020979021 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `CheckSkillTests` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.14675052410901468 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `write` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07801418439716312 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `backend-go stack (digest)` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.04541062801932367 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Order` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08305647840531562 - nodes in this community are weakly interconnected."
+    }
+  ]
+}
