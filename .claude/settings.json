@@ -27,6 +27,15 @@
             "command": "/home/rebelius/.local/bin/graphify hook-guard read"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -35,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "Read(./.env.*)"
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/hooks/knowledge-sync.sh\""
           }
         ]
       }
@@ -53,8 +62,7 @@
       "Read(~/.claude/.credentials.json)",
       "Bash(git push --force*)",
       "Bash(git reset --hard*)",
-      "Bash(rm -rf *)",
-      "bash \"$CLAUDE_PROJECT_DIR/scripts/hooks/knowledge-sync.sh\""
+      "Bash(rm -rf *)"
     ]
   }
 }
