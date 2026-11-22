@@ -17,7 +17,7 @@ Write unit tests for <app> slices that exercise the use cases against fakes, wit
 
 - Table-driven tests with testify: `tests := []struct{ name string; ... }` + `t.Run(test.name, ...)` / `run := func(t *testing.T)` patterns, one case per behavior, and `assert` vs `require` selection (`require` to stop on a precondition failure, `assert` to collect independent failures)
 - Fake struct discipline: a fake in `internal/features/<slice>/fake_test.go` that implements the slice's `ports.go` interface with call recording (`calls []callRecord`), so tests assert on what the use case did, not on hidden state
-- Handler testing with `httptest`: `httptest.NewServer` (or `httptest.NewRecorder` + the handler directly) over the slice-registered mux, an `authx` fake verifier/minter to mint a token, and asserting on the `{"detail","code"}` envelope body
+- Handler testing with `httptest`: `httptest.NewServer` (or `httptest.NewRecorder` + the handler directly) over the slice-registered mux, an `authx` fake verifier/minter to mint a token, and asserting on the `{"error":{"code","message"}}` envelope body
 - `t.Parallel` and speed: hermetic cases can run parallel; a case that touches shared package-level state may not; no `time.Sleep` — synchronize via channels or a fake clock from `internal/shared/clockx`
 - Test naming and structure: Arrange-Act-Assert, descriptive `TestUseCase_DoesBehavior_WhenCondition` names (Go convention with testify suites), and one assertion path per case
 

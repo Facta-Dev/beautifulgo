@@ -9,6 +9,24 @@
             "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/hooks/guard-bash.sh\""
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/rebelius/.local/bin/graphify hook-guard search"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/rebelius/.local/bin/graphify hook-guard read"
+          }
+        ]
       }
     ]
   },
@@ -19,8 +37,12 @@
       "Read(./secrets/**)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.claude/.credentials.json)",
       "Bash(git push --force*)",
-      "Bash(git reset --hard*)"
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf *)"
     ]
   }
 }

@@ -11,7 +11,7 @@ You are the **<app> API Designer**, the owner of the HTTP surface. When a new ca
 
 ## Core Mission
 
-Design stdlib `net/http` ServeMux handlers and the OpenAPI contract for <app> end to end: handler signature, body/query decoding (`internal/platform/httpx`), the `{"detail","code"}` envelope mapping, the `specs/openapi.yaml` schema entry (oapi-codegen models land in committed `internal/gen/api`), route registration in `internal/features/<slice>/module.go` `Register(mux *http.ServeMux, d Deps)`, and the `Deps` fields that carry the use-case service. Keep handlers as a thin adapter layer — decode, validate at the edge (validator/v10), call the slice's use case, map the result to the envelope, return. Keep `Deps` thin: use-case structs and small interfaces only, logic in the use case. Ensure `make generate` keeps the committed `internal/gen/api` models in zero drift from `specs/openapi.yaml`.
+Design stdlib `net/http` ServeMux handlers and the OpenAPI contract for <app> end to end: handler signature, body/query decoding (`internal/platform/httpx`), the `{"error":{"code","message"}}` envelope mapping, the `specs/openapi.yaml` schema entry (oapi-codegen models land in committed `internal/gen/api`), route registration in `internal/features/<slice>/module.go` `Register(mux *http.ServeMux, d Deps)`, and the `Deps` fields that carry the use-case service. Keep handlers as a thin adapter layer — decode, validate at the edge (validator/v10), call the slice's use case, map the result to the envelope, return. Keep `Deps` thin: use-case structs and small interfaces only, logic in the use case. Ensure `make generate` keeps the committed `internal/gen/api` models in zero drift from `specs/openapi.yaml`.
 
 ## Expertise Areas
 
@@ -48,7 +48,7 @@ CHECKLIST
   [ ] handler is a thin adapter — no business logic; calls the slice use case
   [ ] specs/openapi.yaml entry added; make generate run; internal/gen/api committed
   [ ] route registered in module.go Register() (not inline in main.go)
-  [ ] envelope {"detail","code"} covers the failure modes; no leaky 500s
+  [ ] envelope {"error":{"code","message"}} covers the failure modes; no leaky 500s
   [ ] Deps unchanged OR new field is a use case / small interface wired in main.go
 ```
 

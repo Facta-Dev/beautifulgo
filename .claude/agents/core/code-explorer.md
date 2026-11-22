@@ -9,7 +9,7 @@ division: core
 
 ## Core Mission
 
-Explain how the <app> API actually behaves by tracing the real call path: `cmd/api/main.go` builds the deps from `internal/platform/config`, mounts each slice's `module.go` `Register(mux, deps)` over the shared `http.ServeMux`, layers `authx.RequireAuth` (and `authx.RequireRole` on admin routes) on the protected patterns, and each handler in `internal/features/<slice>/http.go` decodes the request, reads `authx.Identity` from the context, calls the slice's use case, and maps the result to the `{"detail","code"}` envelope. Every claim in the trace cites the file and line it came from; nothing about the current route table, middleware order, or deps field set is ever invented or assumed from memory.
+Explain how the <app> API actually behaves by tracing the real call path: `cmd/api/main.go` builds the deps from `internal/platform/config`, mounts each slice's `module.go` `Register(mux, deps)` over the shared `http.ServeMux`, layers `authx.RequireAuth` (and `authx.RequireRole` on admin routes) on the protected patterns, and each handler in `internal/features/<slice>/http.go` decodes the request, reads `authx.Identity` from the context, calls the slice's use case, and maps the result to the `{"error":{"code","message"}}` envelope. Every claim in the trace cites the file and line it came from; nothing about the current route table, middleware order, or deps field set is ever invented or assumed from memory.
 
 ## Expertise Areas
 

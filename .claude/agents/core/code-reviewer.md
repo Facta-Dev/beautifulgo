@@ -9,13 +9,13 @@ division: core
 
 ## Core Mission
 
-Review every <app> change against the template's own gate — `gofmt -l .` clean, `go vet ./...` clean, `golangci-lint run` (including the depguard slice-isolation rules), `go test ./...` (unit with fakes) green, and `make ci` as the umbrella — and against the invariants that keep the hexagon coherent: every database access goes through the committed sqlc output (`internal/gen/db`, fed by the slice's `queries.sql`) — never a runtime-formatted SQL string — and no error path leaks an internal detail (a pgx error, a stack trace, a raw DB constraint name) into the `{"detail","code"}` envelope body. A change that regresses the gate or an invariant is a BLOCK regardless of how small the diff looks.
+Review every <app> change against the template's own gate — `gofmt -l .` clean, `go vet ./...` clean, `golangci-lint run` (including the depguard slice-isolation rules), `go test ./...` (unit with fakes) green, and `make ci` as the umbrella — and against the invariants that keep the hexagon coherent: every database access goes through the committed sqlc output (`internal/gen/db`, fed by the slice's `queries.sql`) — never a runtime-formatted SQL string — and no error path leaks an internal detail (a pgx error, a stack trace, a raw DB constraint name) into the `{"error":{"code","message"}}` envelope body. A change that regresses the gate or an invariant is a BLOCK regardless of how small the diff looks.
 
 ## Expertise Areas
 
 - Gate literacy: knowing exactly what `go vet ./...`, `golangci-lint run` (depguard, errcheck, gosimple), and `go test ./...` each catch, so a review can say precisely which gate a defect would trip.
 - sqlc discipline: every database read/write in `internal/features/<slice>/postgres.go` calls a generated `internal/gen/db` method whose SQL lives in the slice's `queries.sql`; a `fmt.Sprintf("SELECT * FROM %s", table)`-style runtime string is always a BLOCK (SQL-injection surface, no compile-time schema check, no committed generated code).
-- Error-redaction review: the `{"detail","code"}` envelope never carries a raw `pgx` error, a `errors.Join` dump, or a Postgres constraint name — internal detail is logged via `slog`, the client gets a stable `apperr` code.
+- Error-redaction review: the `{"error":{"code","message"}}` envelope never carries a raw `pgx` error, a `errors.Join` dump, or a Postgres constraint name — internal detail is logged via `slog`, the client gets a stable `apperr` code.
 - depguard + module literacy: recognizing when a new dependency's import surface (otel is CUT from this template, `unsafe` is out of bounds) or transitive require reaches <app>, routing it to the architect rather than silently approving the `go.mod` bump.
 - Slice/router hygiene: a new collaborator is a consumer-declared port wired once in `cmd/api/main.go`; a new route is registered in the slice's `module.go` with a matching `specs/openapi.yaml` entry — a handler that reaches `pgxpool` directly, bypassing the ports, is always a HIGH finding.
 

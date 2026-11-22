@@ -73,7 +73,7 @@ CHECKLIST
   [ ] handler is a thin adapter — no business logic; calls the use case
   [ ] specs/openapi.yaml entry added; make generate run; internal/gen/api committed
   [ ] route registered in module.go Register() (not inline in main.go)
-  [ ] envelope {"detail","code"} covers the failure modes; no leaky 500s
+  [ ] envelope {"error":{"code","message"}} covers the failure modes; no leaky 500s
   [ ] Deps unchanged OR new field is a use case / port wired in main.go
 ```
 
